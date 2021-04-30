@@ -9,4 +9,6 @@
 
 int main() {
 	std::cout << "Hello World.\n";
+
+	std::cout << "Esto es una prueba.\n";
 }
