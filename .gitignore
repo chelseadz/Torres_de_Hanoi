@@ -1,3 +1,10 @@
+
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/Torres_de_Hanoi/v16/Browse.VC.opendb
+
 # Prerequisites
 *.d
 
