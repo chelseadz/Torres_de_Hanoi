@@ -39,3 +39,7 @@
 *.idp
 *.pdb
 *.ilk
+*.db
+*.json
+*.sqlite
+*.opendb
