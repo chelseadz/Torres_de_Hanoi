@@ -56,3 +56,4 @@
 *.VC.db-wal
 *.recipe
 *.idb
+*.log
