@@ -17,6 +17,7 @@
 # Precompiled Headers
 *.gch
 *.pch
+*.ipch
 
 # Compiled Dynamic libraries
 *.so
@@ -46,3 +47,10 @@
 *.idp
 *.pdb
 *.ilk
+*.db
+*.json
+*.sqlite
+*.opendb
+*.suo
+*.VC.db-shm
+*.VC.db-wal
