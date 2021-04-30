@@ -54,3 +54,5 @@
 *.suo
 *.VC.db-shm
 *.VC.db-wal
+*.recipe
+*.idb
