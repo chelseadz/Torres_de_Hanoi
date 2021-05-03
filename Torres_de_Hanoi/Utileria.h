@@ -1,16 +1,14 @@
 /*****************************************************************//**
- * \file   main.cpp
- * \brief  Archivo principal del proyecto.
+ * \file   Utileria.h
+ * \brief  Funciones de utileria para todo el proyecto.
  * 
  * \author Equipo Rocket
- * \date   29/04/2021
+ * \date   3/05/2021
  *********************************************************************/
+#pragma once
+#ifndef _UTILERIA_H
+#define _UTILERIA_H
 
-#include <iostream>
 
-int main() {
-	std::cout << "Hello World.\n";
 
-	std::cout << ":P\n";
-
-}
+#endif

@@ -1,16 +1,15 @@
 /*****************************************************************//**
- * \file   main.cpp
- * \brief  Archivo principal del proyecto.
+ * \file   Menu.h
+ * \brief  Responsable del menú principal de la aplicación.
  * 
  * \author Equipo Rocket
- * \date   29/04/2021
+ * \date   3/05/2021
  *********************************************************************/
+#pragma once
+#ifndef _MENU_H
+#define _MENU_H
 
-#include <iostream>
 
-int main() {
-	std::cout << "Hello World.\n";
 
-	std::cout << ":P\n";
 
-}
+#endif 

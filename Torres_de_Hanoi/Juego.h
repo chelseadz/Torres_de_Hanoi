@@ -1,16 +1,15 @@
 /*****************************************************************//**
- * \file   main.cpp
- * \brief  Archivo principal del proyecto.
+ * \file   Juego.h
+ * \brief  Responsable del juego y toda sus dinámicas.
  * 
  * \author Equipo Rocket
- * \date   29/04/2021
+ * \date   3/05/2021
  *********************************************************************/
+#pragma once
+#ifndef _JUEGO_H
+#define _JUEGO_H
 
-#include <iostream>
 
-int main() {
-	std::cout << "Hello World.\n";
 
-	std::cout << ":P\n";
 
-}
+#endif 

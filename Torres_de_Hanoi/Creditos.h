@@ -1,16 +1,15 @@
 /*****************************************************************//**
- * \file   main.cpp
- * \brief  Archivo principal del proyecto.
+ * \file   Creditos.h
+ * \brief  Encargado de página de creditos.
  * 
  * \author Equipo Rocket
- * \date   29/04/2021
+ * \date   3/05/2021
  *********************************************************************/
+#pragma once
+#ifndef _CREDITOS_H
+#define _CREDITOS_H
 
-#include <iostream>
 
-int main() {
-	std::cout << "Hello World.\n";
 
-	std::cout << ":P\n";
 
-}
+#endif 

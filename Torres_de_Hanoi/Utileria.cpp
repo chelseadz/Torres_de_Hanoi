@@ -1,16 +1,11 @@
 /*****************************************************************//**
- * \file   main.cpp
- * \brief  Archivo principal del proyecto.
+ * \file   Utileria.cpp
+ * \brief  Implementaciones de Utileria.h
  * 
  * \author Equipo Rocket
- * \date   29/04/2021
+ * \date   3/05/2021
  *********************************************************************/
 
-#include <iostream>
+#include "Utileria.h"
 
-int main() {
-	std::cout << "Hello World.\n";
 
-	std::cout << ":P\n";
-
-}
