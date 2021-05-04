@@ -57,3 +57,4 @@
 *.recipe
 *.idb
 *.log
+*.sqlite-journal
