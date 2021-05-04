@@ -8,6 +8,8 @@
 
 #include <iostream>
 #include <allegro5/allegro5.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_primitives.h>
 
 #include "Utileria.h"
 #include "Menu.h"
@@ -46,9 +48,17 @@ int main() {
 	//Crear pantalla.
 	ALLEGRO_DISPLAY* disp = al_create_display(_WINDOW_WIDTH, _WINDOW_HEIGTH);
 	initialize_al_component(disp, "pantalla");
-	
+
+	//Inicializar tipo de letra.
+	ALLEGRO_FONT* font = al_create_builtin_font();
+	initialize_al_component(font, "font");
+
+	initialize_al_component(al_init_primitives_addon(), "primitives");
+
 	//Mover pantalla a posición inicial.
 	al_set_window_position(disp, _WINDOW_POS_X, _WINDOW_POS_Y);
+
+	
 
 	//Pedir el registro eventos relevantes en la cola de eventos.
 	al_register_event_source(queue, al_get_keyboard_event_source());
@@ -61,6 +71,7 @@ int main() {
 	Menu(queue);
 
 	//Liberar variables de Allegro
+	al_destroy_font(font);
 	al_destroy_display(disp);
 	al_destroy_timer(timer);
 	al_destroy_event_queue(queue);
