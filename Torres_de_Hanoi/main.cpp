@@ -55,6 +55,8 @@ int main() {
 	al_register_event_source(queue, al_get_display_event_source(disp));
 	al_register_event_source(queue, al_get_timer_event_source(timer));
 
+	al_start_timer(timer);
+
 	//Pasar control a función menu hasta que el usuario quiera salir.
 	Menu(queue);
 
