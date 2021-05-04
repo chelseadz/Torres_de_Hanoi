@@ -10,6 +10,7 @@
 #include <allegro5/allegro5.h>
 
 #include "Utileria.h"
+#include "Menu.h"
 
 /*< Medidas en px de la pantalla. */
 enum {
@@ -55,7 +56,7 @@ int main() {
 	al_register_event_source(queue, al_get_timer_event_source(timer));
 
 	//Pasar control a función menu hasta que el usuario quiera salir.
-	//Menu();
+	Menu(queue);
 
 	//Liberar variables de Allegro
 	al_destroy_display(disp);
