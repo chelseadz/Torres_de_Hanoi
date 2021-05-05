@@ -10,6 +10,9 @@
 #define _MENU_H
 
 #include <allegro5/allegro5.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_primitives.h>
+#include "Utileria.h"
 
 /**
  * \brief Función que se encarga de mostrar el menú principal
