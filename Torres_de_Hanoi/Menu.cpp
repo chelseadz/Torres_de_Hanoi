@@ -14,6 +14,7 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue) {
 
     //Inicializar tipo de letra.
     ALLEGRO_FONT* font = al_create_builtin_font();
+    
     initialize_al_component(font, "font");
 
     initialize_al_component(al_init_primitives_addon(), "primitives");
@@ -45,7 +46,7 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue) {
         if (redraw && al_is_event_queue_empty(queue))
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
-            al_draw_text(font, al_map_rgb(255, 255, 255), _WINDOS_WIDTH/2, 0, 0, "Hello world!");
+            al_draw_text(font, al_map_rgb(255, 255, 255), 0,0, 0, "chinga tu madre");
 
             al_draw_filled_triangle(35, 350, 85, 375, 35, 400, al_map_rgb_f(0, 1, 0));
             al_draw_filled_rectangle(240, 260, 340, 340, al_map_rgba_f(0, 0, 0.5, 0.5));
