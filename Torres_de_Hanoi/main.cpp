@@ -12,21 +12,6 @@
 #include "Utileria.h"
 #include "Menu.h"
 
-/*< Medidas en px de la pantalla. */
-enum {
-	_WINDOW_HEIGTH = 684, /*< Altura de la pantalla del programa en pixeles. */
-	_WINDOW_WIDTH = 1216 /*< Ancho de la pantalla del programa en pixeles. */
-};
-
-/*< Posicion inicial de la pantalla (px desde la esquina superior izquierda) en x y en y. */
-enum {
-	_WINDOW_POS_X = 0, /*< Posición inicial de la pantalla en x en px, iniciando del margen izuqierdo. */
-	_WINDOW_POS_Y = 0 /*< Posición inicial de la pantalla en y en px, iniciando del margen superior. */
-};
-
-#define _FPS 30.0 /*< Cantidad de cuadros por segundo que se actualiza la pantalla */
-
-
 int main() {
 
 	//Inicializar componentes principal de Allegro.
@@ -46,9 +31,10 @@ int main() {
 	//Crear pantalla.
 	ALLEGRO_DISPLAY* disp = al_create_display(_WINDOW_WIDTH, _WINDOW_HEIGTH);
 	initialize_al_component(disp, "pantalla");
-	
+
 	//Mover pantalla a posición inicial.
 	al_set_window_position(disp, _WINDOW_POS_X, _WINDOW_POS_Y);
+
 
 	//Pedir el registro eventos relevantes en la cola de eventos.
 	al_register_event_source(queue, al_get_keyboard_event_source());
@@ -58,8 +44,11 @@ int main() {
 	al_start_timer(timer);
 
 	//Pasar control a función menu hasta que el usuario quiera salir.
-	Menu(queue);
-
+	try {
+		Menu(queue);
+	} catch (const std::runtime_error& e) {
+		std::cerr << e.what();
+	}
 	//Liberar variables de Allegro
 	al_destroy_display(disp);
 	al_destroy_timer(timer);
