@@ -23,5 +23,16 @@
  */
 void Menu(ALLEGRO_EVENT_QUEUE* queue);
 
+/**
+ * \brief Función que se encarga de mostrar el menú principal
+ *
+ * \param queue Cola de eventos principal.
+ * \return void
+ */
+void MenuDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text);
+
+
+
+
 
 #endif 
