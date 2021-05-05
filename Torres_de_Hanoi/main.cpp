@@ -44,8 +44,11 @@ int main() {
 	al_start_timer(timer);
 
 	//Pasar control a función menu hasta que el usuario quiera salir.
-	Menu(queue);
-
+	try {
+		Menu(queue);
+	} catch (const std::runtime_error& e) {
+		std::cerr << e.what();
+	}
 	//Liberar variables de Allegro
 	al_destroy_display(disp);
 	al_destroy_timer(timer);

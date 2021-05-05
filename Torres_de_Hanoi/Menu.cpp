@@ -9,7 +9,6 @@
 #include "Menu.h"
 
 enum {
-
     _JUGAR = 0,
     _INSTRUCCIONES,
     _CREDITOS,
@@ -21,15 +20,15 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue) {
     //y de tomar acción cuando el usuario de una entrada.
 
     //Inicializar texto.
-    al_init_font_addon();
+    initialize_al_component(al_init_font_addon(), "font component");
     //Inicializar ttf (True Type Font)
-    al_init_ttf_addon();
+    initialize_al_component(al_init_ttf_addon(), "ttf font componenent");
 
-    ALLEGRO_FONT* font_title = al_load_ttf_font("ROBOTECH GP.ttf", 72, 0);
-    ALLEGRO_FONT* font = al_load_ttf_font("ROBOTECH GP.ttf", 36, 0);
+    ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 72, 0);
+    ALLEGRO_FONT* font = al_load_font("ROBOTECH_GP.ttf", 36, 0);
 
     initialize_al_component(font, "font");
-    initialize_al_component(font_title, "font");
+    initialize_al_component(font_title, "font titulo");
     initialize_al_component(al_init_primitives_addon(), "primitives");
 
     bool done = false;
@@ -86,7 +85,9 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue) {
         }
     }
 
+    //Destruir fuentes creadas
     al_destroy_font(font);
+    al_destroy_font(font_title);
 }
 
 void MenuDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text) {
