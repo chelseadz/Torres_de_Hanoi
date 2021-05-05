@@ -46,11 +46,13 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue) {
         if (redraw && al_is_event_queue_empty(queue))
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
-            al_draw_text(font, al_map_rgb(255, 255, 255), 0,0, 0, "chinga tu madre");
 
-            al_draw_filled_triangle(35, 350, 85, 375, 35, 400, al_map_rgb_f(0, 1, 0));
-            al_draw_filled_rectangle(240, 260, 340, 340, al_map_rgba_f(0, 0, 0.5, 0.5));
-           
+
+            al_draw_text(font, al_map_rgb(255, 255, 255), _WINDOW_WIDTH/2,0, 0, "its a tiny cow");
+
+            al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 3 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3, 4 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0, 0, 0.5, 0.5));
+            al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 5 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3, 6 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0, 0, 0.5, 0.5));
+            al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 7 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3, 8 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0, 0, 0.5, 0.5));
 
             al_flip_display();
 

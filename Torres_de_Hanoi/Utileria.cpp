@@ -18,5 +18,5 @@ void initialize_al_component(bool flag, const char* comp_name) {
 	
 	throw std::runtime_error(except_msg.append("."));
 
-	exit(1);
+	
 }
