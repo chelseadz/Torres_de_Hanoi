@@ -8,6 +8,14 @@
 
 #include "Menu.h"
 
+enum {
+
+    _JUGAR = 0,
+    _INSTRUCCIONES,
+    _CREDITOS,
+    _SALIR
+};
+
 void Menu(ALLEGRO_EVENT_QUEUE* queue) {
     //Esta función se tiene que encargar de mostrar un menú
     //y de tomar acción cuando el usuario de una entrada.
@@ -28,6 +36,8 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue) {
     bool redraw = true;
     ALLEGRO_EVENT event;
 
+    int button_place = _JUGAR;
+
     while (1)
     {
         al_wait_for_event(queue, &event);
@@ -35,11 +45,27 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue) {
         switch (event.type)
         {
         case ALLEGRO_EVENT_TIMER:
-            // game logic goes here.
+            // nada por ahora.
             redraw = true;
             break;
 
         case ALLEGRO_EVENT_KEY_DOWN:
+
+            if (event.keyboard.keycode == ALLEGRO_KEY_UP) {
+                button_place = (button_place - 1) % 4;
+                if (button_place < 0)
+                    button_place = _SALIR;
+            }
+               
+            if (event.keyboard.keycode == ALLEGRO_KEY_DOWN)
+                button_place = (button_place + 1) % 4;
+
+            if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
+                done = true;
+
+            redraw = true;
+            break;
+           
         case ALLEGRO_EVENT_DISPLAY_CLOSE:
             done = true;
             break;
@@ -51,6 +77,8 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue) {
         if (redraw && al_is_event_queue_empty(queue))
         {
             MenuDisplay(font_title, font);
+
+            MoverSeleccion(button_place);
 
             al_flip_display();
 
@@ -68,7 +96,7 @@ void MenuDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text) {
     //Titulo
     al_draw_text(title, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 2, _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "TORRES DE HANOI");
     //Boton Jugar
-    al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 3 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3, 4 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0, 0, 0.5, 0.5));
+    al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 3 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3, 4 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0, 0, 0.5, 0.3));
     al_draw_text(text, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 2, 3 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "JUGAR");
     //Boton Instrucciones
     al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 4.5 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3, 5.5 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0, 0, 0.5, 0.5));
@@ -79,6 +107,26 @@ void MenuDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text) {
     //Boton Salir
     al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 7.5 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3, 8.5 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0, 0, 0.5, 0.5));
     al_draw_text(text, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 2, 7.5 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "SALIR");
-
+    
     al_flip_display();
+}
+
+void MoverSeleccion(int Button) {
+
+    switch (Button)
+    {
+    case _JUGAR:
+        al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 3 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3, 4 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0.5, 0.5, 0.5, 0.5));
+        break;
+    case _INSTRUCCIONES:
+        al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 4.5 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3, 5.5 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0.5, 0.5, 0.5, 0.5));
+        break;
+    case _CREDITOS:
+        al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 6 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3, 7 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0.5, 0.5, 0.5, 0.5));
+        break;
+    case _SALIR:
+        al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 7.5 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3, 8.5 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0.5, 0.5, 0.5, 0.5));
+        break;
+    }
+
 }

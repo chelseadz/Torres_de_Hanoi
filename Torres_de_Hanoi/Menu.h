@@ -24,12 +24,14 @@
 void Menu(ALLEGRO_EVENT_QUEUE* queue);
 
 /**
- * \brief Función que se encarga de mostrar el menú principal
+ * \brief Muesta el titulo y los botones en pantalla
  *
- * \param queue Cola de eventos principal.
+ * \param 
  * \return void
  */
 void MenuDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text);
+
+void MoverSeleccion(int Button);
 
 
 
