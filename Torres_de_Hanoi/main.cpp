@@ -12,21 +12,6 @@
 #include "Utileria.h"
 #include "Menu.h"
 
-/*< Medidas en px de la pantalla. */
-enum {
-	_WINDOW_HEIGTH = 684, /*< Altura de la pantalla del programa en pixeles. */
-	_WINDOW_WIDTH = 1216 /*< Ancho de la pantalla del programa en pixeles. */
-};
-
-/*< Posicion inicial de la pantalla (px desde la esquina superior izquierda) en x y en y. */
-enum {
-	_WINDOW_POS_X = 0, /*< Posición inicial de la pantalla en x en px, iniciando del margen izuqierdo. */
-	_WINDOW_POS_Y = 0 /*< Posición inicial de la pantalla en y en px, iniciando del margen superior. */
-};
-
-#define _FPS 30.0 /*< Cantidad de cuadros por segundo que se actualiza la pantalla */
-
-
 int main() {
 
 	//Inicializar componentes principal de Allegro.
