@@ -1,4 +1,4 @@
-/*********************************************************************
+/*****************************************************************//**
  * \file   Menu.cpp
  * \brief  Implementaciones de Menu.h
  * 
@@ -7,13 +7,6 @@
  *********************************************************************/
 
 #include "Menu.h"
-
-enum {
-    _JUGAR = 0,
-    _INSTRUCCIONES,
-    _CREDITOS,
-    _SALIR
-};
 
 void Menu(ALLEGRO_EVENT_QUEUE* queue) {
     //Esta función se tiene que encargar de mostrar un menú
