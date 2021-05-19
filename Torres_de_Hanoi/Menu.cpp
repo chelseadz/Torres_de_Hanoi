@@ -66,8 +66,15 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue) {
             if (event.keyboard.keycode == ALLEGRO_KEY_SPACE) {
                 switch(button_place)
                     case _INSTRUCCIONES:
+                    {
                         Instrucciones(queue);
                         break;
+                    }
+                    case _SALIR:
+                    {
+                        done = true;
+                        break;
+                    }
             }
 
 
