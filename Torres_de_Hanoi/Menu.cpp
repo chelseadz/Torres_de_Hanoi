@@ -64,10 +64,19 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue) {
                 done = true;
 
             if (event.keyboard.keycode == ALLEGRO_KEY_SPACE) {
-                switch(button_place)
+                switch (button_place)
+                {
+                    case _JUGAR:
+                    {
+                        break;
+                    }
                     case _INSTRUCCIONES:
                     {
                         Instrucciones(queue);
+                        break;
+                    }
+                    case _CREDITOS:
+                    {
                         break;
                     }
                     case _SALIR:
@@ -75,10 +84,8 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue) {
                         done = true;
                         break;
                     }
+                }
             }
-
-
-            redraw = true;
             break;
            
         case ALLEGRO_EVENT_DISPLAY_CLOSE:

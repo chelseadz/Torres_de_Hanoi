@@ -29,7 +29,7 @@ void Instrucciones(ALLEGRO_EVENT_QUEUE* queue);
  * \param
  * \return void
  */
-void InstruccionesDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text);
+void InstruccionesDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph);
 
 void MoverSeleccion_Instrucciones(int Button);
 
