@@ -56,7 +56,7 @@ void Instrucciones(ALLEGRO_EVENT_QUEUE* queue) {
             if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
                 done = true;
 
-            if (event.keyboard.keycode == ALLEGRO_KEY_SPACE) {
+            if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
                 switch (button_place)
                     case _REGRESAR:
                         done = true;
