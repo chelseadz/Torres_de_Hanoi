@@ -1,4 +1,4 @@
-/*********************************************************************
+/*****************************************************************//**
  * \file   Menu.cpp
  * \brief  Implementaciones de Menu.h
  * 
@@ -7,6 +7,7 @@
  *********************************************************************/
 
 #include "Menu.h"
+#include "Instrucciones.h"
 
 enum {
     _JUGAR = 0,
@@ -62,7 +63,29 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue) {
             if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
                 done = true;
 
-            redraw = true;
+            if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
+                switch (button_place)
+                {
+                    case _JUGAR:
+                    {
+                        break;
+                    }
+                    case _INSTRUCCIONES:
+                    {
+                        Instrucciones(queue);
+                        break;
+                    }
+                    case _CREDITOS:
+                    {
+                        break;
+                    }
+                    case _SALIR:
+                    {
+                        done = true;
+                        break;
+                    }
+                }
+            }
             break;
            
         case ALLEGRO_EVENT_DISPLAY_CLOSE:
