@@ -53,6 +53,9 @@
     <ClInclude Include="Creditos.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Disco_y_Estaca.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Font Include="ROBOTECH_GP.ttf">
