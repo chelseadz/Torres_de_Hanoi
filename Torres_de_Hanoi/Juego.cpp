@@ -7,3 +7,7 @@
  *********************************************************************/
 
 #include "Juego.h"
+
+void Juego(ALLEGRO_EVENT_QUEUE* queue) {
+
+}
