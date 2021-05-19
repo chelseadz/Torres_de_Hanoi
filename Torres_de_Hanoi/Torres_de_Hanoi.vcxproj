@@ -184,6 +184,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Creditos.cpp" />
+    <ClCompile Include="Disco_y_Estaca.cpp" />
     <ClCompile Include="Instrucciones.cpp" />
     <ClCompile Include="Juego.cpp" />
     <ClCompile Include="main.cpp" />
