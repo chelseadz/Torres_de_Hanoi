@@ -7,6 +7,14 @@
  *********************************************************************/
 
 #include "Menu.h"
+#include "Instrucciones.h"
+
+enum {
+    _JUGAR = 0,
+    _INSTRUCCIONES,
+    _CREDITOS,
+    _SALIR
+};
 
 void Menu(ALLEGRO_EVENT_QUEUE* queue) {
     //Esta función se tiene que encargar de mostrar un menú
@@ -54,6 +62,14 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue) {
 
             if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
                 done = true;
+
+            if (event.keyboard.keycode == ALLEGRO_KEY_SPACE) {
+                switch(button_place)
+                    case _INSTRUCCIONES:
+                        Instrucciones(queue);
+                        break;
+            }
+
 
             redraw = true;
             break;
