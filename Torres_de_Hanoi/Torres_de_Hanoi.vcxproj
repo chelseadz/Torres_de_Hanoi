@@ -202,6 +202,9 @@
   </ItemGroup>
   <ItemGroup>
     <Font Include="ROBOTECH_GP.ttf" />
+    <Font Include="Starjedi.ttf" />
+    <Font Include="StarJediHollow.ttf" />
+    <Font Include="StarJediOutline.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
