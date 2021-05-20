@@ -9,18 +9,23 @@
 #include "Juego.h"
 #include "Disco_y_Estaca.h"
 
-
+#include <iostream>
+#include <stdexcept>
 
 void Juego(ALLEGRO_EVENT_QUEUE* queue) {
 
 	//Solo para probar
     int num = 3;
 
+    Estaca::Initialize_stakes(500, 20, 8);
 
-    Estaca Prueba(_WINDOW_WIDTH / 2, 8 * _WINDOW_HEIGTH / 9);
+    Estaca Prueba(_WINDOW_WIDTH / 2 - 300, 8 * _WINDOW_HEIGTH / 9);
 
-    Prueba.Initialize_stakes(300, 20, 10);
-    Prueba.numDisks(num);
+    Estaca Prueba_2(_WINDOW_WIDTH / 2 + 300, 8 * _WINDOW_HEIGTH / 9);
+
+    Prueba.push_back(Disco{ 300, 50, 0, 0, al_map_rgb(255, 0, 0) });
+    Prueba.push_back(Disco{ 160, 40, 0, 0, al_map_rgb(0, 255, 0) });
+    Prueba.push_back(Disco{ 130, 30, 0, 0, al_map_rgb(0, 0, 255) });
 
     bool done = false;
     bool redraw = true;
@@ -37,8 +42,12 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue) {
             redraw = true;
             break;
 
+        case ALLEGRO_EVENT_KEY_DOWN:
             if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
                 done = true;
+            else if (event.keyboard.keycode == ALLEGRO_KEY_RIGHT)
+                ;
+
 
         case ALLEGRO_EVENT_DISPLAY_CLOSE:
             done = true;
@@ -51,12 +60,14 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue) {
         if (redraw && al_is_event_queue_empty(queue))
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
+
             Prueba.PrintRod();
 
             al_flip_display();
 
             redraw = false;
         }
+  
     }
 }
 
@@ -75,11 +86,12 @@ void PrintRod(double pos_x, double pos_y, int numDisks) {
 	al_draw_filled_rectangle((-stick_width)/2 + pos_x, pos_y, (stick_width)/2 + pos_x, stick_height, al_map_rgba_f(0, 0, 0.5, 0.3));
 
     //Discos
-    int color_pruebas = 10;
-    double ShrinkFactor = (disk_width / 2) * (0.1);
-    for (int i = 1; i <= numDisks; i++) {
-        al_draw_filled_rectangle(((-disk_width)/2) - (1-i)*ShrinkFactor + pos_x, -(i - 1) * disk_height + pos_y, ((disk_width) / 2) + (1 - i) * ShrinkFactor + pos_x, -i*disk_height + pos_y, al_map_rgba_f(0.1*i, 0.05*i, 0.5, 0.3));
-    }
+    //int color_pruebas = 10;
+   // double ShrinkFactor = (disk_width / 2) * (0.1);
+ /*   for (int i = 0; i < numDisks; i++) {
+        al_draw_filled_rectangle(((-disk_width)/2) - (1.0-i)*ShrinkFactor + pos_x, -(i - 1.0) * disk_height + pos_y, ((disk_width) / 2) + (1.0 - i) * ShrinkFactor + pos_x, -i*disk_height + pos_y, al_map_rgba_f(0.1*i, 0.05*i, 0.5, 0.3));
+        
+    }*/
     
 
 }
