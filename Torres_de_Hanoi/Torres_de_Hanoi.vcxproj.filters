@@ -36,6 +36,9 @@
     <ClCompile Include="Creditos.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Disco_y_Estaca.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
