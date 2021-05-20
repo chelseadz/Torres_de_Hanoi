@@ -126,6 +126,7 @@ bool Estaca::move_to_stake(Estaca& dest, ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DIS
 					moving_disc.x_pos != x_base_pos) {
 					moving_disc.y_pos += vy_1;
 				} else if (moving_disc.y_pos >= Estaca::stick_height)
+					;
 		}
 	}
 
