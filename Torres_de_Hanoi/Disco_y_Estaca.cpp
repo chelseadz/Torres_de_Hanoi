@@ -115,14 +115,9 @@ void Estaca::InitDiscsAndRods() {
 	const int _INIT_D_WIDTH = 300;
 	const int _INIT_D_HEIGHT = 50;
 
-	double ShrinkFactor = (_INIT_D_WIDTH / 2) * (0.1);
-/*   for (int i = 0; i < numDisks; i++) {
-	   al_draw_filled_rectangle(((-disk_width)/2) - (1.0-i)*ShrinkFactor + pos_x, -(i - 1.0) * disk_height + pos_y, ((disk_width) / 2) + (1.0 - i) * ShrinkFactor + pos_x, -i*disk_height + pos_y, al_map_rgba_f(0.1*i, 0.05*i, 0.5, 0.3));
-
-   }*/
-
 	for (double i = 0; i < max_discs; i++) {
-		push_back(Disco{ _INIT_D_WIDTH - (0.1)*i* _INIT_D_WIDTH, _INIT_D_HEIGHT, 0, 0, al_map_rgb(255, 0, 0) });
+		//colores temporales
+		push_back(Disco{ _INIT_D_WIDTH - (0.1)*i* _INIT_D_WIDTH, _INIT_D_HEIGHT, 0, 0, al_map_rgb(255 -20*i, 30* i, 25*i) });
 	}
 }
 
