@@ -25,7 +25,7 @@ float Elipse(float a, float b, float p, float q, float x) {
 
 	temp = pow((x - p) / a, 2.0f);
 	temp = pow(b, 2.0f) * (1.0f - temp);
-	temp = sqrt(temp) + q;
+	temp = -sqrt(temp) + q;
 
 	return temp;
 }

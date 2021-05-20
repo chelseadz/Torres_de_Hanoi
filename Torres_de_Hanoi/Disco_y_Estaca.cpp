@@ -12,7 +12,7 @@
 
 #include <cstdlib>
 
-#define _ARC_HEIGHT 60
+#define _ARC_HEIGHT 100
 
 #define _AN_TIME 2.0f
 
@@ -24,7 +24,7 @@ bool Estaca::Initialize_stakes(int height, int width, int _max_discs) {
 	if (_max_discs < 0 || _max_discs > _MAX_DISC_CAPACTITY)
 		return false;
 
-	max_discs = _max_discs;
+	Estaca::max_discs = _max_discs;
 	Estaca::stick_height = height;
 	Estaca::stick_width = width;
 
@@ -101,7 +101,8 @@ void Estaca::PrintRod() {
 	//Palo Estaca
 	
 	//Estaca
-	al_draw_filled_rectangle((-stick_width) / 2 + x_base_pos, y_base_pos, (stick_width) / 2 + x_base_pos, stick_height, al_map_rgba_f(0, 0, 0.5, 0.3));
+	al_draw_filled_rectangle((-stick_width) / 2 + x_base_pos, y_base_pos, 
+		(stick_width) / 2 + x_base_pos, y_base_pos - stick_height, al_map_rgba_f(0, 0, 0.5, 0.3));
 
 	////Discos
 	////Tamanios Temporales(?)
@@ -125,20 +126,20 @@ void Estaca::PrintRod() {
 
 }
 
-=======
 
 bool Estaca::move_to_stake(Estaca& dest, ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 	//Guardar buffer que ya tiene lo dibujado en pantalla.
-	ALLEGRO_BITMAP* backbuffer = al_get_backbuffer(display);
+	//ALLEGRO_BITMAP* backbuffer = al_get_backbuffer(display);
 
+	if (curr_n_discs == 0) return false;
 	Disco moving_disc = discs[curr_n_discs - 1];
-	if ( curr_n_discs == 0 || !dest.push_back(last())) return false;
+	if (!(dest.push_back(moving_disc))) return false;
 	pop_back();
 
 	//Calcular velocidadades en px / cuadro
-	float vy_1 = 3.0f * (Estaca::stick_height - moving_disc.y_pos) / (_AN_TIME * _FPS);
+	float vy_1 = 3.0f * (moving_disc.y_pos - (y_base_pos - Estaca::stick_height)) / (_AN_TIME * _FPS);
 	float vx_2 = 3.0f * (dest.x_base_pos - x_base_pos) / (_AN_TIME * _FPS);
-	float vy_3 = 3.0f * (Estaca::stick_height - dest.last().y_pos) / (_AN_TIME * _FPS);
+	float vy_3 = 3.0f * (Estaca::stick_height - dest.curr_disc_column_height) / (_AN_TIME * _FPS);
 
 
 	ALLEGRO_EVENT event;
@@ -146,41 +147,53 @@ bool Estaca::move_to_stake(Estaca& dest, ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DIS
 	bool done = false;
 	bool redraw = false;
 
+
 	while (!done) {
 		al_wait_for_event(queue, &event);
 
 		switch (event.type) {
 			case ALLEGRO_EVENT_TIMER:
 
-				if (moving_disc.y_pos < Estaca::stick_height &&
-					moving_disc.x_pos != x_base_pos) {
+				if (moving_disc.y_pos > y_base_pos - Estaca::stick_height &&
+					moving_disc.x_pos == x_base_pos) {
 
-					moving_disc.y_pos += vy_1;
+					moving_disc.y_pos -= vy_1;
 
-				} else if (moving_disc.y_pos >= Estaca::stick_height && moving_disc.x_pos < dest.x_base_pos) {
+				} else if ( moving_disc.y_pos <= y_base_pos - Estaca::stick_height && 
+					moving_disc.x_pos < dest.x_base_pos) {
 
 					moving_disc.x_pos += vx_2;
 					moving_disc.y_pos = Elipse((dest.x_base_pos - x_base_pos) / 2.0f,
-						_ARC_HEIGHT, (x_base_pos + dest.x_base_pos) / 2.0f, y_base_pos + Estaca::stick_height,
+						_ARC_HEIGHT, (x_base_pos + dest.x_base_pos) / 2.0f, y_base_pos - Estaca::stick_height,
 						moving_disc.x_pos);
+
 
 				} else if (moving_disc.x_pos >= dest.x_base_pos) {
 					moving_disc.x_pos = dest.x_base_pos;
-					moving_disc.y_pos -= vy_3;
+					moving_disc.y_pos += vy_3;
 
-					if (moving_disc.y_pos <= dest.last().y_pos)
+					if (moving_disc.y_pos >= dest.last().y_pos)
 						done = true;
 				}
 
 				redraw = true;
+				break;
+
+			case ALLEGRO_EVENT_KEY_DOWN:
+				if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
+					done = true;
+				break;
 					
 		}
 
 		if (done) break;
 
-		if (redraw) {
-			al_draw_bitmap(backbuffer, 0, 0, 0);
+		if (redraw && al_is_event_queue_empty(queue)) {
+			al_clear_to_color(al_map_rgb(0, 0, 0));
+			//al_draw_bitmap(backbuffer, 0, 0, 0);
 			moving_disc.draw();
+
+			al_flip_display();
 		}
 	}
 
