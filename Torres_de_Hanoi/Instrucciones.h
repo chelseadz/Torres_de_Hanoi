@@ -39,10 +39,13 @@ void MoverSeleccion_Instrucciones(int Button);
  * \param queue Cola de eventos principal.
  * \return void
  */
-void OriginOfTheGame(ALLEGRO_EVENT_QUEUE* queue);
+void Origen(ALLEGRO_EVENT_QUEUE* queue);
 
-void OriginOfTheGameDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph);
+void OrigenDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph);
 
-void MoveSelection_OriginOfTheGame(int Button);
+
+void Acertijo(ALLEGRO_EVENT_QUEUE* queue);
+
+void AcertijoDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph);
 
 #endif
