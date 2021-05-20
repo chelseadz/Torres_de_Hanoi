@@ -18,7 +18,7 @@ void Instrucciones(ALLEGRO_EVENT_QUEUE* queue) {
 
     ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 36, 0);
     ALLEGRO_FONT* font = al_load_font("ROBOTECH_GP.ttf", 36, 0);
-    ALLEGRO_FONT* font_paragraph = al_load_font("ROBOTECH_GP.ttf", 22, 0);
+    ALLEGRO_FONT* font_paragraph = al_load_font("HelveticaLTStdLight.ttf", 22, 0);
 
     initialize_al_component(font, "font");
     initialize_al_component(font_title, "font titulo");
@@ -159,7 +159,7 @@ void Origen(ALLEGRO_EVENT_QUEUE* queue) {
 
     ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 36, 0);
     ALLEGRO_FONT* font = al_load_font("ROBOTECH_GP.ttf", 36, 0);
-    ALLEGRO_FONT* font_paragraph = al_load_font("ROBOTECH_GP.ttf", 22, 0);
+    ALLEGRO_FONT* font_paragraph = al_load_font("HelveticaLTStdLight.ttf", 22, 0);
 
     initialize_al_component(font, "font");
     initialize_al_component(font_title, "font titulo");

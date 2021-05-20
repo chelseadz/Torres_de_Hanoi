@@ -9,7 +9,25 @@
 #ifndef _UTILERIA_H
 #define _UTILERIA_H
 
+#include <allegro5/allegro5.h>
 #include <stdexcept>
+
+/** Colores usados para imprimir los discos y para los textos.
+ */
+enum Color {
+	VERY_PALE_YELLOW=0,
+	PALE_YELLOW,
+	PALE_YELLOW_RED,
+	YELLOW_RED,
+	MAXIMUM_YELLOW_RED,
+	ORANGE,
+	BRORANGE,
+	BRONZE,
+	METALIC_BRONZE,
+	INDIGO,
+	HANBLUE,
+	UNITED_NATIONS_BLUE
+};
 
  /*< Medidas en px de la pantalla. */
 enum {
@@ -37,6 +55,26 @@ enum {
   */
 void initialize_al_component(bool flag, const char* comp_name);
 
+/**
+ * \brief 
+ * \details 
+ *
+ * \param 
+ * \param
+ * \param
+ * \param
+ * \param
+ * 
+ * \return 
+ */
 float Elipse(float a, float b, float p, float q, float x);
+
+/**
+ * \brief Asigna el mapa RGB al color recibido
+ * 
+ * \param nombre_color Nombre del color de que se requiere el mapa
+ * \return al_map_rgb() El mapa de color correspondiente
+ */
+ALLEGRO_COLOR MapaDeColor(Color nombre_color);
 
 #endif
