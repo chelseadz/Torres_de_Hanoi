@@ -17,7 +17,7 @@ enum {
     _SALIR
 };
 
-void Menu(ALLEGRO_EVENT_QUEUE* queue) {
+void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     //Esta función se tiene que encargar de mostrar un menú
     //y de tomar acción cuando el usuario de una entrada.
 
@@ -69,7 +69,7 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue) {
                 {
                     case _JUGAR:
                     {
-                        Juego(queue);
+                        Juego(queue, display);
                         break;
                     }
                     case _INSTRUCCIONES:

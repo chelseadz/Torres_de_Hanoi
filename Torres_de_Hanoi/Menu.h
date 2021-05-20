@@ -21,7 +21,7 @@
  * \param queue Cola de eventos principal.
  * \return void
  */
-void Menu(ALLEGRO_EVENT_QUEUE* queue);
+void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display);
 
 /**
  * \brief Muesta el titulo y los botones en pantalla
