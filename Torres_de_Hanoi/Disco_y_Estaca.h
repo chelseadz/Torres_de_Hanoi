@@ -38,6 +38,10 @@ public:
 
 	bool pop_back();
 
+	void PrintRod();
+
+	void numDisks(unsigned short int n); //Provisional para prueba
+
 	~Estaca();
 
 private:

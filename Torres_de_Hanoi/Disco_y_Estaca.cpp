@@ -79,3 +79,35 @@ void Disco::draw() {
 	al_draw_filled_rectangle(x_pos + width / 2, y_pos + height / 2,
 		x_pos - width / 2, y_pos - height / 2, color);
 }
+
+void Estaca::PrintRod() {
+	//Palo Estaca
+	
+	//Estaca
+	al_draw_filled_rectangle((-stick_width) / 2 + x_base_pos, y_base_pos, (stick_width) / 2 + x_base_pos, stick_height, al_map_rgba_f(0, 0, 0.5, 0.3));
+
+	//Discos
+	//Tamanios Temporales(?)
+	for (int i = 0; i < curr_n_discs; i++) {
+		discs[i].width = 200;
+		discs[i].height = 30;
+		discs[i].x_pos = x_base_pos;
+		discs[i].y_pos = y_base_pos - i * discs[0].height;
+		discs[i].color = al_map_rgba_f(0.1 * i, 0.05 * i, 0.5, 0.3);
+	}
+	//Colores Temporales ... 
+	for (int i = 1; i <= curr_n_discs; i++) {
+		discs[i].draw();
+		}
+
+	/*double ShrinkFactor = (discs[i].width / 2) * (0.1);
+		al_draw_filled_rectangle(((-discs[i].width) / 2) - (1 - i) * ShrinkFactor + x_base_pos, -(i - 1) * discs[i].height + y_base_pos, ((discs[i].width) / 2) + (1 - i) * ShrinkFactor + x_base_pos, -i * discs[i].height + y_base_pos, al_map_rgba_f(0.1 * i, 0.05 * i, 0.5, 0.3));
+	
+	
+	*/
+
+}
+
+void Estaca::numDisks(unsigned short int n) {
+	curr_n_discs = n;
+}

@@ -29,4 +29,11 @@
 void Juego(ALLEGRO_EVENT_QUEUE* queue);
 
 
+/**
+ * \brief Imprime una estaca en una posicion y numero de discos dados
+ *
+ * \param queue cola de evento que recibe entrada de usuario.
+ * \return void
+ */
+void PrintRod(double pos_x, double pos_y, int numDisks);
 #endif 
