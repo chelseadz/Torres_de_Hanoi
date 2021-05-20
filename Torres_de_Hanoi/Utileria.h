@@ -37,4 +37,6 @@ enum {
   */
 void initialize_al_component(bool flag, const char* comp_name);
 
+float Elipse(float a, float b, float p, float q, float x);
+
 #endif
