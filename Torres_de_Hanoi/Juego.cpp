@@ -61,6 +61,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
         case ALLEGRO_EVENT_DISPLAY_CLOSE:
             done = true;
+            exit(0);
             break;
         }
 
@@ -134,6 +135,7 @@ int DiskNumber(ALLEGRO_EVENT_QUEUE* queue) {
 
         case ALLEGRO_EVENT_DISPLAY_CLOSE:
             done = true;
+            exit(0);
             break;
         }
 
