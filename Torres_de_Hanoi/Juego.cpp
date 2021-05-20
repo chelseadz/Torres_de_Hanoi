@@ -12,6 +12,7 @@
 #include <iostream>
 #include <stdexcept>
 
+void FirstRod(int numDiscs);
 
 void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
@@ -26,9 +27,8 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
     Estaca Prueba_2(_WINDOW_WIDTH / 2 + 300, 8 * _WINDOW_HEIGTH / 9);
 
-    Prueba.push_back(Disco{ 300, 50, 0, 0, al_map_rgb(255, 0, 0) });
-    Prueba.push_back(Disco{ 160, 40, 0, 0, al_map_rgb(0, 255, 0) });
-    Prueba.push_back(Disco{ 130, 30, 0, 0, al_map_rgb(0, 0, 255) });
+    Prueba.InitDiscsAndRods();
+
 
     bool done = false;
     bool redraw = true;
@@ -218,6 +218,5 @@ void PrintRod(double pos_x, double pos_y, int numDisks) {
         al_draw_filled_rectangle(((-disk_width)/2) - (1.0-i)*ShrinkFactor + pos_x, -(i - 1.0) * disk_height + pos_y, ((disk_width) / 2) + (1.0 - i) * ShrinkFactor + pos_x, -i*disk_height + pos_y, al_map_rgba_f(0.1*i, 0.05*i, 0.5, 0.3));
         
     }*/
-    
-
 }
+
