@@ -44,6 +44,7 @@ Estaca::Estaca(unsigned short base_x_pos, unsigned short base_y_pos) {
 	try {
 		discs = new Disco[max_discs];
 	} catch (const std::bad_alloc&) {
+		discs = NULL;
 		throw std::runtime_error("No se pudo alocar memoria para los discos.");
 	}
 
@@ -60,9 +61,11 @@ bool Estaca::push_back(const Disco& disc) {
 	discs[curr_n_discs] = disc;
 
 	discs[curr_n_discs].x_pos = x_base_pos;
-	discs[curr_n_discs].y_pos = y_base_pos + curr_disc_column_height + discs[curr_n_discs].height / 2;
+	discs[curr_n_discs].y_pos = y_base_pos - curr_disc_column_height - discs[curr_n_discs].height / 2;
 
 	curr_disc_column_height += disc.height;
+
+	++curr_n_discs;
 
 	return true;
 
@@ -74,7 +77,7 @@ const Disco& Estaca::last() {
 }
 
 bool Estaca::pop_back() {
-	if (curr_n_discs == 0) return false;
+	if (curr_n_discs < 1) return false;
 	
 	curr_disc_column_height -= discs[curr_n_discs - 1].height;
 	--curr_n_discs;
@@ -93,6 +96,36 @@ void Disco::draw() {
 		al_map_rgb(100, 60, 0));
 }
 
+
+void Estaca::PrintRod() {
+	//Palo Estaca
+	
+	//Estaca
+	al_draw_filled_rectangle((-stick_width) / 2 + x_base_pos, y_base_pos, (stick_width) / 2 + x_base_pos, stick_height, al_map_rgba_f(0, 0, 0.5, 0.3));
+
+	////Discos
+	////Tamanios Temporales(?)
+	//for (int i = 0; i < curr_n_discs; i++) {
+	//	discs[i].width = 200;
+	//	discs[i].height = 30;
+	//	discs[i].x_pos = x_base_pos;
+	//	discs[i].y_pos = y_base_pos - i * discs[0].height;
+	//	discs[i].color = al_map_rgba_f(0.1 * i, 0.05 * i, 0.5, 0.3);
+	//}
+	////Colores Temporales ... d
+	for (int i = 0; i < curr_n_discs; i++) {
+		discs[i].draw();
+	}
+
+	/*double ShrinkFactor = (discs[i].width / 2) * (0.1);
+		al_draw_filled_rectangle(((-discs[i].width) / 2) - (1 - i) * ShrinkFactor + x_base_pos, -(i - 1) * discs[i].height + y_base_pos, ((discs[i].width) / 2) + (1 - i) * ShrinkFactor + x_base_pos, -i * discs[i].height + y_base_pos, al_map_rgba_f(0.1 * i, 0.05 * i, 0.5, 0.3));
+	
+	
+	*/
+
+}
+
+=======
 
 bool Estaca::move_to_stake(Estaca& dest, ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 	//Guardar buffer que ya tiene lo dibujado en pantalla.
@@ -154,5 +187,5 @@ bool Estaca::move_to_stake(Estaca& dest, ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DIS
 	return true;
 }
 
- 
+
 

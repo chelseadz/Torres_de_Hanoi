@@ -38,7 +38,11 @@ public:
 
 	bool pop_back();
 
+
+	void PrintRod();
+
 	bool move_to_stake(Estaca& dest, ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display);
+
 
 	~Estaca();
 
