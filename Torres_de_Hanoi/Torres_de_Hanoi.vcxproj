@@ -210,6 +210,8 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="base_con_estacas.png" />
+    <Image Include="estaca_media.png" />
+    <Image Include="estaca_media_mas_larga.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
