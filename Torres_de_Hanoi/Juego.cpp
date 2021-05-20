@@ -11,6 +11,6 @@
 
 
 
-void Juego(ALLEGRO_EVENT_QUEUE* queue) {
+void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
 }

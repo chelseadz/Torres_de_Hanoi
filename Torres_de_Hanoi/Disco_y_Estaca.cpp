@@ -1,6 +1,6 @@
 /*****************************************************************//**
  * \file   Disco_y_Estaca.cpp
- * \brief  ImplementaciÛn de funciones para disco y estaca.
+ * \brief  Implementaci√≥n de funciones para disco y estaca.
  * 
  * \author Equipo Rocket
  * \date   19/05/2021
@@ -9,6 +9,12 @@
 #include "Disco_y_Estaca.h"
 
 #include "Utileria.h"
+
+#include <cstdlib>
+
+#define _ARC_HEIGHT 60
+
+#define _AN_TIME 2
 
 int Estaca::max_discs;
 int Estaca::stick_height;
@@ -78,11 +84,53 @@ void Disco::draw() {
 	//Elipse de abajo
 	al_draw_filled_ellipse(x_pos, y_pos+height/3,  width / 2,
 		- height / 3, color);
-	//rect·ngulo del centro
+	//rect√°ngulo del centro
 	al_draw_filled_rectangle(x_pos - width / 2, y_pos, x_pos + width /2,
 		y_pos + height/3, color);
 	//elipse de arriba
 	al_draw_filled_ellipse(x_pos, y_pos, width / 2, height / 3, 
 		al_map_rgb(100, 60, 0));
 }
+
+
+bool Estaca::move_to_stake(Estaca& dest, ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
+	//Guardar buffer que ya tiene lo dibujado en pantalla.
+	ALLEGRO_BITMAP* backbuffer = al_get_backbuffer(display);
+
+	Disco moving_disc = discs[curr_n_discs - 1];
+	dest.push_back(last());
+	pop_back();
+
+	//Calcular velocidadades en px / cuadro
+	float vy_1 = 3 * (Estaca::stick_height - moving_disc.y_pos) / (_AN_TIME * _FPS);
+	float vx_2 = 3 * (dest.x_base_pos - x_base_pos) / (_AN_TIME * _FPS);
+	float vy_3 = 3 * (Estaca::stick_height - dest.last().y_pos) / (_AN_TIME * _FPS);
+
+
+	int n_frames = 0;
+
+	ALLEGRO_EVENT event;
+
+	bool done = false;
+	bool redraw = false;
+
+	while (!done) {
+		al_wait_for_event(queue, &event);
+
+		switch (event.type) {
+			case ALLEGRO_EVENT_TIMER:
+				++n_frames;
+
+				//Mover en recta para salir de estaca actual.
+				if (moving_disc.y_pos < Estaca::stick_height &&
+					moving_disc.x_pos != x_base_pos) {
+					moving_disc.y_pos += vy_1;
+				} else if (moving_disc.y_pos >= Estaca::stick_height)
+		}
+	}
+
+	return true;
+}
+
  
+

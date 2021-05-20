@@ -38,6 +38,8 @@ public:
 
 	bool pop_back();
 
+	bool move_to_stake(Estaca& dest, ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display);
+
 	~Estaca();
 
 private:
