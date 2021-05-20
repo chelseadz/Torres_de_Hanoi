@@ -16,8 +16,70 @@
 void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
 
-    int InitialDisks = 3;
-    InitialDisks = DiskNumber(queue);
+    int Game_discs;
+    Game_discs = DiskNumber(queue);
+
+
+    Estaca::Initialize_stakes(400, 20, Game_discs);
+
+    Estaca Prueba(_WINDOW_WIDTH / 2 - 300, 8 * _WINDOW_HEIGTH / 9);
+
+    Estaca Prueba_2(_WINDOW_WIDTH / 2 + 300, 8 * _WINDOW_HEIGTH / 9);
+
+    Prueba.push_back(Disco{ 300, 50, 0, 0, al_map_rgb(255, 0, 0) });
+    Prueba.push_back(Disco{ 160, 40, 0, 0, al_map_rgb(0, 255, 0) });
+    Prueba.push_back(Disco{ 130, 30, 0, 0, al_map_rgb(0, 0, 255) });
+
+    bool done = false;
+    bool redraw = true;
+    ALLEGRO_EVENT event;
+
+    bool move = false;
+
+    while (1)
+    {
+        al_wait_for_event(queue, &event);
+
+        switch (event.type)
+        {
+        case ALLEGRO_EVENT_TIMER:
+            // nada por ahora.
+            if (move) Prueba.move_to_stake(Prueba_2, move);
+
+            redraw = true;
+            break;
+
+        case ALLEGRO_EVENT_KEY_DOWN:
+            if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
+                done = true;
+            else if (event.keyboard.keycode == ALLEGRO_KEY_RIGHT) {
+                move = true;
+                //Prueba.move_to_stake(Prueba_2, queue, display);
+            }
+                
+            break;
+
+        case ALLEGRO_EVENT_DISPLAY_CLOSE:
+            done = true;
+            break;
+        }
+
+        if (done)
+            break;
+
+        if (redraw && al_is_event_queue_empty(queue))
+        {
+            al_clear_to_color(al_map_rgb(0, 0, 0));
+
+            Prueba.PrintRod();
+            Prueba_2.PrintRod();
+
+            al_flip_display();
+
+            redraw = false;
+        }
+
+    }
 
 
 }
@@ -130,62 +192,6 @@ void ChangeDiskNumberDisplay(int Button) {
     case _SUBSTRACT:
         al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 3 * _WINDOW_HEIGTH / 5, 2.35 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGTH / 5, 2.65 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGTH / 5, al_map_rgba_f(0.5, 0.5, 0.5, 0.5));
         break;
-    }
-
-	//Solo para probar
-    int num = 3;
-
-    Estaca::Initialize_stakes(500, 20, 8);
-
-    Estaca Prueba(_WINDOW_WIDTH / 2 - 300, 8 * _WINDOW_HEIGTH / 9);
-
-    Estaca Prueba_2(_WINDOW_WIDTH / 2 + 300, 8 * _WINDOW_HEIGTH / 9);
-
-    Prueba.push_back(Disco{ 300, 50, 0, 0, al_map_rgb(255, 0, 0) });
-    Prueba.push_back(Disco{ 160, 40, 0, 0, al_map_rgb(0, 255, 0) });
-    Prueba.push_back(Disco{ 130, 30, 0, 0, al_map_rgb(0, 0, 255) });
-
-    bool done = false;
-    bool redraw = true;
-    ALLEGRO_EVENT event;
-
-    while (1)
-    {
-        al_wait_for_event(queue, &event);
-
-        switch (event.type)
-        {
-        case ALLEGRO_EVENT_TIMER:
-            // nada por ahora.
-            redraw = true;
-            break;
-
-        case ALLEGRO_EVENT_KEY_DOWN:
-            if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
-                done = true;
-            else if (event.keyboard.keycode == ALLEGRO_KEY_RIGHT)
-                ;
-
-
-        case ALLEGRO_EVENT_DISPLAY_CLOSE:
-            done = true;
-            break;
-        }
-
-        if (done)
-            break;
-
-        if (redraw && al_is_event_queue_empty(queue))
-        {
-            al_clear_to_color(al_map_rgb(0, 0, 0));
-
-            Prueba.PrintRod();
-
-            al_flip_display();
-
-            redraw = false;
-        }
-  
     }
 }
 

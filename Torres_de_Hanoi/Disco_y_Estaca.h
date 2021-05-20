@@ -23,6 +23,7 @@ struct Disco {
 	int x_pos, y_pos; //Coordenadas del centro del disco.
 	ALLEGRO_COLOR color; //Color del disco.
 
+
 	void draw();
 };
 
@@ -38,10 +39,12 @@ public:
 
 	bool pop_back();
 
+	bool full();
+
 
 	void PrintRod();
 
-	bool move_to_stake(Estaca& dest, ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display);
+	bool move_to_stake(Estaca& dest, bool& moving);
 
 
 	~Estaca();

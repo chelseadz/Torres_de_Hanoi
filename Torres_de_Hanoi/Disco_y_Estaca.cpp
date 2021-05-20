@@ -12,7 +12,7 @@
 
 #include <cstdlib>
 
-#define _ARC_HEIGHT 60
+#define _ARC_HEIGHT 100
 
 #define _AN_TIME 2.0f
 
@@ -24,7 +24,7 @@ bool Estaca::Initialize_stakes(int height, int width, int _max_discs) {
 	if (_max_discs < 0 || _max_discs > _MAX_DISC_CAPACTITY)
 		return false;
 
-	max_discs = _max_discs;
+	Estaca::max_discs = _max_discs;
 	Estaca::stick_height = height;
 	Estaca::stick_width = width;
 
@@ -86,102 +86,87 @@ bool Estaca::pop_back() {
 
 void Disco::draw() {
 	//Elipse de abajo
-	al_draw_filled_ellipse(x_pos, y_pos+height/3,  width / 2,
-		- height / 3, color);
+	al_draw_filled_ellipse(x_pos, y_pos + height / 3, width / 2,
+		-height / 3, color);
 	//rectángulo del centro
-	al_draw_filled_rectangle(x_pos - width / 2, y_pos, x_pos + width /2,
-		y_pos + height/3, color);
+	al_draw_filled_rectangle(x_pos - width / 2, y_pos, x_pos + width / 2,
+		y_pos + height / 3, color);
 	//elipse de arriba
-	al_draw_filled_ellipse(x_pos, y_pos, width / 2, height / 3, 
+	al_draw_filled_ellipse(x_pos, y_pos, width / 2, height / 3,
 		al_map_rgb(100, 60, 0));
 }
 
 
 void Estaca::PrintRod() {
 	//Palo Estaca
-	
-	//Estaca
-	al_draw_filled_rectangle((-stick_width) / 2 + x_base_pos, y_base_pos, (stick_width) / 2 + x_base_pos, stick_height, al_map_rgba_f(0, 0, 0.5, 0.3));
 
-	////Discos
-	////Tamanios Temporales(?)
-	//for (int i = 0; i < curr_n_discs; i++) {
-	//	discs[i].width = 200;
-	//	discs[i].height = 30;
-	//	discs[i].x_pos = x_base_pos;
-	//	discs[i].y_pos = y_base_pos - i * discs[0].height;
-	//	discs[i].color = al_map_rgba_f(0.1 * i, 0.05 * i, 0.5, 0.3);
-	//}
-	////Colores Temporales ... d
+	//Estaca
+	al_draw_filled_rectangle((-stick_width) / 2 + x_base_pos, y_base_pos,
+		(stick_width) / 2 + x_base_pos, y_base_pos - stick_height, al_map_rgba_f(0, 0, 0.5, 0.3));
+
 	for (int i = 0; i < curr_n_discs; i++) {
 		discs[i].draw();
 	}
 
-	/*double ShrinkFactor = (discs[i].width / 2) * (0.1);
-		al_draw_filled_rectangle(((-discs[i].width) / 2) - (1 - i) * ShrinkFactor + x_base_pos, -(i - 1) * discs[i].height + y_base_pos, ((discs[i].width) / 2) + (1 - i) * ShrinkFactor + x_base_pos, -i * discs[i].height + y_base_pos, al_map_rgba_f(0.1 * i, 0.05 * i, 0.5, 0.3));
-	
-	
-	*/
-
 }
 
-=======
-
-bool Estaca::move_to_stake(Estaca& dest, ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
-	//Guardar buffer que ya tiene lo dibujado en pantalla.
-	ALLEGRO_BITMAP* backbuffer = al_get_backbuffer(display);
-
-	Disco moving_disc = discs[curr_n_discs - 1];
-	if ( curr_n_discs == 0 || !dest.push_back(last())) return false;
-	pop_back();
-
-	//Calcular velocidadades en px / cuadro
-	float vy_1 = 3.0f * (Estaca::stick_height - moving_disc.y_pos) / (_AN_TIME * _FPS);
-	float vx_2 = 3.0f * (dest.x_base_pos - x_base_pos) / (_AN_TIME * _FPS);
-	float vy_3 = 3.0f * (Estaca::stick_height - dest.last().y_pos) / (_AN_TIME * _FPS);
+bool Estaca::full() {
+	if (curr_n_discs == max_discs) return true;
+	return false;
+}
 
 
-	ALLEGRO_EVENT event;
+bool Estaca::move_to_stake(Estaca& dest, bool& moving) {
+	
+	//Estas variables estáticas solo se inicializan la primera vez que se llama a la función.
+	static bool first = 1;
 
-	bool done = false;
-	bool redraw = false;
+	static Disco* moving_disc;
+	static float vy_1, vx_2, vy_3;
 
-	while (!done) {
-		al_wait_for_event(queue, &event);
 
-		switch (event.type) {
-			case ALLEGRO_EVENT_TIMER:
+	if (first) {
+		if (curr_n_discs == 0) return false;
+		moving_disc = &discs[curr_n_discs - 1];
+		if (dest.full()) return false;
 
-				if (moving_disc.y_pos < Estaca::stick_height &&
-					moving_disc.x_pos != x_base_pos) {
+		//Calcular velocidadades en px / cuadro
+		vy_1 = 3.0f * (moving_disc->y_pos - (y_base_pos - Estaca::stick_height)) / (_AN_TIME * _FPS);
+		vx_2 = 3.0f * (dest.x_base_pos - x_base_pos) / (_AN_TIME * _FPS);
+		vy_3 = 3.0f * (Estaca::stick_height - dest.curr_disc_column_height - moving_disc->height / 2.0f) / 
+			(_AN_TIME * _FPS);
 
-					moving_disc.y_pos += vy_1;
+		first = 0;
+	}
+	
 
-				} else if (moving_disc.y_pos >= Estaca::stick_height && moving_disc.x_pos < dest.x_base_pos) {
 
-					moving_disc.x_pos += vx_2;
-					moving_disc.y_pos = Elipse((dest.x_base_pos - x_base_pos) / 2.0f,
-						_ARC_HEIGHT, (x_base_pos + dest.x_base_pos) / 2.0f, y_base_pos + Estaca::stick_height,
-						moving_disc.x_pos);
+	if (moving_disc->y_pos > y_base_pos - Estaca::stick_height &&
+		moving_disc->x_pos == x_base_pos) {
 
-				} else if (moving_disc.x_pos >= dest.x_base_pos) {
-					moving_disc.x_pos = dest.x_base_pos;
-					moving_disc.y_pos -= vy_3;
+		moving_disc->y_pos -= vy_1;
 
-					if (moving_disc.y_pos <= dest.last().y_pos)
-						done = true;
-				}
+	}
+	else if (moving_disc->y_pos <= y_base_pos - Estaca::stick_height && moving_disc->x_pos < dest.x_base_pos) {
+		moving_disc->x_pos += vx_2;
+		moving_disc->y_pos = Elipse((dest.x_base_pos - x_base_pos) / 2.0f,
+			_ARC_HEIGHT, (x_base_pos + dest.x_base_pos) / 2.0f, y_base_pos - Estaca::stick_height,
+			moving_disc->x_pos);
 
-				redraw = true;
-					
+	}
+	else if (moving_disc->x_pos >= dest.x_base_pos) {
+		moving_disc->x_pos = dest.x_base_pos;
+		moving_disc->y_pos += vy_3;
+
+		if (moving_disc->y_pos >= dest.y_base_pos - dest.curr_disc_column_height - moving_disc->height / 2.0f) {
+			moving = 0;
+			first = 1;
+
+			dest.push_back(*moving_disc);
+			pop_back();
+			moving_disc = NULL;
 		}
-
-		if (done) break;
-
-		if (redraw) {
-			al_draw_bitmap(backbuffer, 0, 0, 0);
-			moving_disc.draw();
-		}
+	
 	}
 
 	return true;
