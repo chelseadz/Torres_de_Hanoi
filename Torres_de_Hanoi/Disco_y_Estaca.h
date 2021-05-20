@@ -20,7 +20,7 @@
 
 
 struct Disco {
-	double width, height; //Altura y ancho del disco.
+	float width, height; //Altura y ancho del disco.
 	int x_pos, y_pos; //Coordenadas del centro del disco.
 	ALLEGRO_COLOR color; //Color del disco.
 

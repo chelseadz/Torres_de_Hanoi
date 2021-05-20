@@ -112,12 +112,12 @@ void Estaca::PrintRod() {
 
 void Estaca::InitDiscsAndRods() {
 
-	const int _INIT_D_WIDTH = 300;
-	const int _INIT_D_HEIGHT = 50;
+	const float _INIT_D_WIDTH = 300;
+	const float _INIT_D_HEIGHT = 50;
 
-	for (double i = 0; i < max_discs; i++) {
+	for (int i = 0; i < max_discs; i++) {
 		//colores temporales
-		push_back(Disco{ _INIT_D_WIDTH - (0.1)*i* _INIT_D_WIDTH, _INIT_D_HEIGHT, 0, 0, al_map_rgb(255 -20*i, 30* i, 25*i) });
+		push_back(Disco{ _INIT_D_WIDTH - (0.1f)*i* _INIT_D_WIDTH, _INIT_D_HEIGHT, 0, 0, al_map_rgb(255 -20*i, 35* i, 25*i) });
 	}
 }
 
