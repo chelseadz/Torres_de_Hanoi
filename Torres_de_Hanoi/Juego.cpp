@@ -11,7 +11,8 @@
 
 
 void Juego(ALLEGRO_EVENT_QUEUE* queue) {
-    int InitialDisks = 0;
+
+    int InitialDisks = 3;
     InitialDisks = DiskNumber(queue);
 
 
@@ -47,8 +48,6 @@ int DiskNumber(ALLEGRO_EVENT_QUEUE* queue) {
 
             if (event.keyboard.keycode == ALLEGRO_KEY_UP) {
                 button_place = _ADD;
-                if (button_place > MAX_DISKS)
-                    button_place = 0;
                 
                 if (Disks < MAX_DISKS)
                     Disks++;
@@ -57,9 +56,6 @@ int DiskNumber(ALLEGRO_EVENT_QUEUE* queue) {
             if (event.keyboard.keycode == ALLEGRO_KEY_DOWN) {
 
                 button_place = _SUBSTRACT;
-
-                if (button_place < 3)
-                    button_place = 0;
 
                 if (Disks > 3)
                     Disks--;
@@ -80,8 +76,8 @@ int DiskNumber(ALLEGRO_EVENT_QUEUE* queue) {
 
         if (redraw && al_is_event_queue_empty(queue))
         {
+            
             NumberOfDisksDisplay(font_title, font, Disks);
-
             ChangeDiskNumberDisplay(button_place);
 
             al_flip_display();
@@ -95,4 +91,38 @@ int DiskNumber(ALLEGRO_EVENT_QUEUE* queue) {
     al_destroy_font(font_title);
 
     return Disks;
+}
+
+void NumberOfDisksDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, int Disks) {
+
+    //Screen
+    al_clear_to_color(al_map_rgb(0, 0, 0));
+    //Title
+    al_draw_text(title, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 2, _WINDOW_HEIGTH / 5, ALLEGRO_ALIGN_CENTER, "Numero de Discos: ");
+
+    //Disk Numbers
+    std::string tmp = std::to_string(Disks);
+    char const* num_char = tmp.c_str();
+
+    al_draw_text(title, al_map_rgb(255, 255, 255), 2.5 * _WINDOW_WIDTH / 5, 2.25* _WINDOW_HEIGTH / 5, ALLEGRO_ALIGN_CENTER, num_char);
+
+    //Add Button
+    al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 2 * _WINDOW_HEIGTH / 5, 2.35 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGTH / 5, 2.65 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGTH / 5, al_map_rgba_f(239, 255, 0, 0.3));
+    //Substract Button
+    al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 3 * _WINDOW_HEIGTH / 5, 2.35 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGTH / 5, 2.65 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGTH / 5, al_map_rgba_f(239, 255, 0, 0.3));
+
+}
+
+void ChangeDiskNumberDisplay(int Button) {
+
+    switch (Button)
+    {
+    case _ADD:
+        al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 2 * _WINDOW_HEIGTH / 5, 2.35 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGTH / 5, 2.65 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGTH / 5, al_map_rgba_f(0.5, 0.5, 0.5, 0.5));
+        break;
+    case _SUBSTRACT:
+        al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 3 * _WINDOW_HEIGTH / 5, 2.35 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGTH / 5, 2.65 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGTH / 5, al_map_rgba_f(0.5, 0.5, 0.5, 0.5));
+        break;
+    }
+
 }

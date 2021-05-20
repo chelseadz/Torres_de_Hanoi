@@ -17,8 +17,11 @@
 
 #include "Utileria.h"
 
-#define MAX_DISKS 7		// Maximo numero de discos en el juego.
+constexpr auto MAX_DISKS = 7;		// Maximo numero de discos en el juego.;
 
+/**
+ * Opciones de seleccion
+ */
 enum {
     _ADD = 1,
     _SUBSTRACT
@@ -32,42 +35,29 @@ enum {
  */
 void Juego(ALLEGRO_EVENT_QUEUE* queue);
 
+/**
+ * \brief Captura el numero de discos iniciales
+ *
+ * \param queue cola de evento que recibe entrada de usuario.
+ * \return numero de discos
+ */
 int DiskNumber(ALLEGRO_EVENT_QUEUE* queue);
 
-void NumberOfDisksDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, int Disks) {
+/**
+ * \brief Muestra en pantalla el numero de discos que es estan capturando
+ *
+ * \param queue cola de evento que recibe entrada de usuario.
+ * \return nada
+ */
+void NumberOfDisksDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, int Disks);
 
-    //Screen
-    al_clear_to_color(al_map_rgb(3, 3, 100));
-    //Title
-    al_draw_text(title, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 2, _WINDOW_HEIGTH / 2, ALLEGRO_ALIGN_CENTER, "Numero de Discos: ");
+/**
+ * \brief Cambia el numero de discos en pantalla
+ *
+ * \param queue cola de evento que recibe entrada de usuario.
+ * \return nada
+ */
 
-    //Disk Numbers
-    std::string tmp = std::to_string(Disks);
-    char const* num_char = tmp.c_str();
-
-    al_draw_filled_rectangle(_WINDOW_WIDTH / 5,  _WINDOW_HEIGTH / 9,  2 * _WINDOW_WIDTH / 5, 8 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0, 0, 0.5, 0.3));
-    al_draw_text(text, al_map_rgb(255, 255, 255), 1.5 * _WINDOW_WIDTH / 5, 7 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, num_char);
-
-    //Add Button
-    al_draw_filled_rectangle(_WINDOW_WIDTH / 5, 7 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 5, 8 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0, 0, 0.5, 0.3));
-    //Substract Button
-    al_draw_filled_rectangle(3 * _WINDOW_WIDTH / 5, 7 * _WINDOW_HEIGTH / 9, 4 * _WINDOW_WIDTH / 5, 8 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0, 0, 0.5, 0.5));
-
-}
-
-void ChangeDiskNumberDisplay(int Button) {
-
-    switch (Button)
-    {
-    case _ADD:
-        al_draw_filled_rectangle(_WINDOW_WIDTH / 5, 7 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 5, 8 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0.5, 0.5, 0.5, 0.5));
-        break;
-    case _SUBSTRACT:
-        al_draw_filled_rectangle(3 * _WINDOW_WIDTH / 5, 7 * _WINDOW_HEIGTH / 9, 4 * _WINDOW_WIDTH / 5, 8 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0.5, 0.5, 0.5, 0.5));
-        break;
-    }
-
-}
-
+void ChangeDiskNumberDisplay(int Button);
 
 #endif 
