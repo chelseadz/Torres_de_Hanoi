@@ -208,6 +208,9 @@
     <Font Include="StarJediHollow.ttf" />
     <Font Include="StarJediOutline.ttf" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="base_con_estacas.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\AllegroDeps.1.12.0\build\native\AllegroDeps.targets" Condition="Exists('..\packages\AllegroDeps.1.12.0\build\native\AllegroDeps.targets')" />
