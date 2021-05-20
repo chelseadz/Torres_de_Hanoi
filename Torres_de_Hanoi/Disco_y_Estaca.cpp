@@ -75,7 +75,14 @@ bool Estaca::pop_back() {
 }
 
 void Disco::draw() {
-	//Ahorita se dibuja solo un rectangulo del color del disco. Puede cambiar el dibujo en el futuro. :)
-	al_draw_filled_rectangle(x_pos + width / 2, y_pos + height / 2,
-		x_pos - width / 2, y_pos - height / 2, color);
+	//Elipse de abajo
+	al_draw_filled_ellipse(x_pos, y_pos+height/3,  width / 2,
+		- height / 3, color);
+	//rectángulo del centro
+	al_draw_filled_rectangle(x_pos - width / 2, y_pos, x_pos + width /2,
+		y_pos + height/3, color);
+	//elipse de arriba
+	al_draw_filled_ellipse(x_pos, y_pos, width / 2, height / 3, 
+		al_map_rgb(100, 60, 0));
 }
+ 
