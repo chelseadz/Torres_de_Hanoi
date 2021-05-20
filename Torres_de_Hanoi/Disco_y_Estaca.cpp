@@ -63,7 +63,7 @@ bool Estaca::push_back(const Disco& disc) {
 	discs[curr_n_discs].x_pos = x_base_pos;
 	discs[curr_n_discs].y_pos = y_base_pos - curr_disc_column_height - discs[curr_n_discs].height / 2;
 
-	curr_disc_column_height += disc.height;
+	curr_disc_column_height += disc.height / 2.0f;
 
 	++curr_n_discs;
 
