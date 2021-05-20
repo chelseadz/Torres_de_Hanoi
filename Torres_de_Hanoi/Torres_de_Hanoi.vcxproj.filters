@@ -64,5 +64,14 @@
     <Font Include="ROBOTECH_GP.ttf">
       <Filter>Resource Files</Filter>
     </Font>
+    <Font Include="Starjedi.ttf">
+      <Filter>Resource Files</Filter>
+    </Font>
+    <Font Include="StarJediHollow.ttf">
+      <Filter>Resource Files</Filter>
+    </Font>
+    <Font Include="StarJediOutline.ttf">
+      <Filter>Resource Files</Filter>
+    </Font>
   </ItemGroup>
 </Project>
