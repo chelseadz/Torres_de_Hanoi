@@ -43,9 +43,4 @@ void Origen(ALLEGRO_EVENT_QUEUE* queue);
 
 void OrigenDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph);
 
-
-void Acertijo(ALLEGRO_EVENT_QUEUE* queue);
-
-void AcertijoDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph);
-
 #endif
