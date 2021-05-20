@@ -33,4 +33,16 @@ void InstruccionesDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT*
 
 void MoverSeleccion_Instrucciones(int Button);
 
+/**
+ * \brief Función que se encarga de mostrar el origen del juego
+ *
+ * \param queue Cola de eventos principal.
+ * \return void
+ */
+void OriginOfTheGame(ALLEGRO_EVENT_QUEUE* queue);
+
+void OriginOfTheGameDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph);
+
+void MoveSelection_OriginOfTheGame(int Button);
+
 #endif
