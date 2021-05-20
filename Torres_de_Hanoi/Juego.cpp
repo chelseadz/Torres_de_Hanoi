@@ -44,6 +44,8 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
         {
         case ALLEGRO_EVENT_TIMER:
             // nada por ahora.
+            if (move) Prueba.move_to_stake(Prueba_2, move);
+
             redraw = true;
             break;
 
@@ -71,8 +73,6 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
             Prueba.PrintRod();
             Prueba_2.PrintRod();
-
-            if (move) Prueba.move_to_stake(Prueba_2, queue, display);
 
             al_flip_display();
 
