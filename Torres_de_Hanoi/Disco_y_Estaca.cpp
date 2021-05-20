@@ -95,7 +95,7 @@ void Estaca::PrintRod() {
 		discs[i].y_pos = y_base_pos - i * discs[0].height;
 		discs[i].color = al_map_rgba_f(0.1 * i, 0.05 * i, 0.5, 0.3);
 	}
-	//Colores Temporales ... 
+	//Colores Temporales ... d
 	for (int i = 1; i <= curr_n_discs; i++) {
 		discs[i].draw();
 		}
