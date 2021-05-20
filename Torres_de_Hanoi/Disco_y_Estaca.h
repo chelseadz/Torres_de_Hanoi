@@ -18,8 +18,9 @@
 #define _MIN_DISC_CAPACITY 1
 #define _MAX_DISC_CAPACTITY 10
 
+
 struct Disco {
-	int width, height; //Altura y ancho del disco.
+	double width, height; //Altura y ancho del disco.
 	int x_pos, y_pos; //Coordenadas del centro del disco.
 	ALLEGRO_COLOR color; //Color del disco.
 
@@ -43,6 +44,8 @@ public:
 
 
 	void PrintRod();
+
+	void InitDiscsAndRods();
 
 	bool move_to_stake(Estaca& dest, bool& moving);
 
