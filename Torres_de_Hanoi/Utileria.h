@@ -23,7 +23,7 @@ enum {
 	_WINDOW_POS_Y = 0 /*< Posición inicial de la pantalla en y en px, iniciando del margen superior. */
 };
 
-#define _FPS 30.0 /*< Cantidad de cuadros por segundo que se actualiza la pantalla */
+#define _FPS 30.0f /*< Cantidad de cuadros por segundo que se actualiza la pantalla */
 
  /**
   * \brief Si flag tiene un valor falso, tira un excepción de tipo std::runtime_error.
@@ -36,5 +36,7 @@ enum {
   * \return void
   */
 void initialize_al_component(bool flag, const char* comp_name);
+
+float Elipse(float a, float b, float p, float q, float x);
 
 #endif
