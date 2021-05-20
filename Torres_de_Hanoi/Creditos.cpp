@@ -20,7 +20,7 @@ void Creditos(ALLEGRO_EVENT_QUEUE* queue) {
 
     ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 48, 0);
     ALLEGRO_FONT* font = al_load_font("ROBOTECH_GP.ttf", 36, 0);
-    ALLEGRO_FONT* font_paragraph = al_load_font("ROBOTECH_GP.ttf", 24, 0);
+    ALLEGRO_FONT* font_paragraph = al_load_font("HelveticaLTStdLight.ttf", 24, 0);
 
     initialize_al_component(font, "font");
     initialize_al_component(font_title, "font titulo");
@@ -83,7 +83,7 @@ void CreditosDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* para
     al_draw_text(title, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 2, 0.7 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "CrEditos");
     //Cuerpo Créditos
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 1.4 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "Proyecto final para la materia de ProgramaciOn de Computadoras hecho por alumnos de la");
+        "Proyecto final para la materia de Programacion de Computadoras hecho por alumnos de la");
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 1.9 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
         "Universidad de Sonora.");
     al_draw_text(title, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 2.4 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
