@@ -9,6 +9,7 @@
 #include "Menu.h"
 #include "Instrucciones.h"
 #include "Juego.h"
+#include "Creditos.h"
 
 enum {
     _JUGAR = 0,
@@ -79,6 +80,7 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
                     }
                     case _CREDITOS:
                     {
+                        Creditos(queue);
                         break;
                     }
                     case _SALIR:
