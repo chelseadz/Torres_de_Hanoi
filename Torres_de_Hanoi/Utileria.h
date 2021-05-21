@@ -41,7 +41,7 @@ enum {
 	_WINDOW_POS_Y = 0 /*< Posición inicial de la pantalla en y en px, iniciando del margen superior. */
 };
 
-#define _FPS 30.0f /*< Cantidad de cuadros por segundo que se actualiza la pantalla */
+#define _FPS 60.0f /*< Cantidad de cuadros por segundo que se actualiza la pantalla */
 
  /**
   * \brief Si flag tiene un valor falso, tira un excepción de tipo std::runtime_error.
