@@ -49,21 +49,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     Estaca fin(EST_POS::FIN_X, EST_POS::Y_ESTS);
 
 
-    init.push_back(Disco{ 250, 70, 0, 0, al_map_rgb(255, 0, 0) });
-    init.push_back(Disco{ 160, 50, 0, 0, al_map_rgb(0, 255, 0) });
-    init.push_back(Disco{ 130, 40, 0, 0, al_map_rgb(0, 0, 255) });
-
-    aux.push_back(Disco{ 250, 50, 0, 0, al_map_rgb(255, 0, 0) });
-    aux.push_back(Disco{ 160, 40, 0, 0, al_map_rgb(0, 255, 0) });
-    aux.push_back(Disco{ 130, 30, 0, 0, al_map_rgb(0, 0, 255) });
-
-    fin.push_back(Disco{ 250, 50, 0, 0, al_map_rgb(255, 0, 0) });
-    fin.push_back(Disco{ 160, 40, 0, 0, al_map_rgb(0, 255, 0) });
-    fin.push_back(Disco{ 130, 30, 0, 0, al_map_rgb(0, 0, 255) });
-  
-  
-    //Prueba.InitDiscsAndRods();
-
+    init.InitDiscsAndRods();
 
 
     bool done = false;
