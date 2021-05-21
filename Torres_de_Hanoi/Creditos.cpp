@@ -20,7 +20,7 @@ void Creditos(ALLEGRO_EVENT_QUEUE* queue) {
 
     ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 48, 0);
     ALLEGRO_FONT* font = al_load_font("ROBOTECH_GP.ttf", 36, 0);
-    ALLEGRO_FONT* font_paragraph = al_load_font("HelveticaLTStdLight.ttf", 24, 0);
+    ALLEGRO_FONT* font_paragraph = al_load_font("HelveticaLTStdLight.ttf", 22, 0);
 
     initialize_al_component(font, "font");
     initialize_al_component(font_title, "font titulo");
@@ -37,7 +37,6 @@ void Creditos(ALLEGRO_EVENT_QUEUE* queue) {
         switch (event.type)
         {
             case ALLEGRO_EVENT_TIMER:
-                // nada por ahora.
                 redraw = true;
                 break;
 
@@ -61,7 +60,7 @@ void Creditos(ALLEGRO_EVENT_QUEUE* queue) {
 
         if (redraw && al_is_event_queue_empty(queue))
         {
-            CreditosDisplay(font_title, font, font_paragraph);
+            CreditsDisplay(font_title, font, font_paragraph);
 
             al_flip_display();
 
@@ -75,19 +74,19 @@ void Creditos(ALLEGRO_EVENT_QUEUE* queue) {
     al_destroy_font(font_paragraph);
 }
 
-void CreditosDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph) {
+void CreditsDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph) {
 
     //Pantalla
     al_clear_to_color(al_map_rgb(0, 0, 0));
     //Titulo Créditos
-    al_draw_text(title, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 2, 0.7 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "CrEditos");
+    al_draw_text(title, ColorMap(INDIGO), _WINDOW_WIDTH / 2, 0.7 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "Credits");
     //Cuerpo Créditos
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 1.4 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "Proyecto final para la materia de Programacion de Computadoras hecho por alumnos de la");
+        "Final project made by the Team Rocket for the subject computer programming taught ");
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 1.9 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "Universidad de Sonora.");
-    al_draw_text(title, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 2.4 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "Integrantes: ");
+        "by the teacher Irene Rodriguez from the Universidad de Sonora.");
+    al_draw_text(title, ColorMap(INDIGO), _WINDOW_WIDTH / 9, 2.4 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
+        "Members of the team: ");
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 3.1 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
         "Chelsea Durazo Duarte");
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 3.6 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
@@ -95,10 +94,9 @@ void CreditosDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* para
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 4.1 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
         "Diego Torres Gonzales");
 
-
     //BOTON REGRESAR
-    al_draw_filled_rectangle(_WINDOW_WIDTH / 5, 7.5 * _WINDOW_HEIGTH / 9, 4 * _WINDOW_WIDTH / 5, 8.5 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0, 0, 0.5, 0.3));
-    al_draw_text(text, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 2, 7.7 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER,
-        "Presiona ESC, Espacio o ENTER para regresar.");
+    DrawButton(_WINDOW_WIDTH / 5, 7.5 * _WINDOW_HEIGTH / 9, 4 * _WINDOW_WIDTH / 5,
+        8.5 * _WINDOW_HEIGTH / 9, ColorMap(METALIC_BRONZE),
+        text, "Press ESC, SPACE or ENTER to go back.", al_map_rgb(255, 255, 255));
 }
 

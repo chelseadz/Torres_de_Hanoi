@@ -72,4 +72,7 @@ void ChangeDiskNumberDisplay(int Button);
  * \return void
  */
 void PrintRod(double pos_x, double pos_y, int numDisks);
+
+void FirstRod(int numDiscs);
+
 #endif 
