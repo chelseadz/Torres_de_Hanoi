@@ -6,6 +6,8 @@
  * \date   19/05/2021
  *********************************************************************/
 #pragma once
+#ifndef _DISCO_Y_ESTACA_H
+#define _DISCO_Y_ESTACA_H
 
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>
@@ -65,3 +67,6 @@ private:
 	unsigned int curr_disc_column_height;
 	Disco* discs;
 };
+
+
+#endif
