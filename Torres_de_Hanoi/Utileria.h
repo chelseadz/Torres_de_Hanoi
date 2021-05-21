@@ -41,7 +41,7 @@ enum {
 	_WINDOW_POS_Y = 0 /*< Posición inicial de la pantalla en y en px, iniciando del margen superior. */
 };
 
-#define _FPS 30.0f /*< Cantidad de cuadros por segundo que se actualiza la pantalla */
+#define _FPS 60.0f /*< Cantidad de cuadros por segundo que se actualiza la pantalla */
 
  /**
   * \brief Si flag tiene un valor falso, tira un excepción de tipo std::runtime_error.
@@ -56,16 +56,18 @@ enum {
 void initialize_al_component(bool flag, const char* comp_name);
 
 /**
- * \brief 
- * \details 
- *
- * \param 
- * \param
- * \param
- * \param
- * \param
+ * \brief Coordenada en y correspondiente a parte inferior de una elipse con paramatros a, b, p y q.
+ * Correspondiente a la ecuación en forma  (x-p)^2/a^2 + (y-q)^2/b^2 = 1.
  * 
- * \return 
+ * \details Tira excepción si la x dada no está en el dominio de la función. 
+ *
+ * \param a semieje horizontal.
+ * \param b semieje vertical.
+ * \param p coordanada x de centro de la elipse.
+ * \param q coordenada y de centro de la elpise.
+ * \param x coordenada en x a evaluar en la ecuación.
+ * 
+ * \return coordenada y del punto correspondiente en el elipse inferior.
  */
 float Elipse(float a, float b, float p, float q, float x);
 

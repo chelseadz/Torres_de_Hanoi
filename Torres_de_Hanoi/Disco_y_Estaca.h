@@ -18,6 +18,9 @@
 #define _MIN_DISC_CAPACITY 1
 #define _MAX_DISC_CAPACTITY 10
 
+#define _LARGEST_DISC_WIDTH 300
+#define _LARGEST_DISC_HEIGTH 100
+
 
 struct Disco {
 	float width, height; //Altura y ancho del disco.
@@ -43,7 +46,7 @@ public:
 	bool full();
 
 
-	void PrintRod();
+	void PrintRodDiscs();
 
 	void InitDiscsAndRods();
 

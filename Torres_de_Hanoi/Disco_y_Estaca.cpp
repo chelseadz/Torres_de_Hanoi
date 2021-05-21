@@ -14,7 +14,8 @@
 
 #define _ARC_HEIGHT 100
 
-#define _AN_TIME 2.0f
+#define _AN_TIME 0.5f
+
 
 int Estaca::max_discs;
 int Estaca::stick_height;
@@ -79,7 +80,9 @@ const Disco& Estaca::last() {
 bool Estaca::pop_back() {
 	if (curr_n_discs < 1) return false;
 	
-	curr_disc_column_height -= discs[curr_n_discs - 1].height;
+	curr_disc_column_height -= discs[curr_n_discs - 1].height / 2.0f;
+	if (curr_n_discs == 1) curr_disc_column_height = 0;
+
 	--curr_n_discs;
 	return true;
 }
@@ -97,29 +100,24 @@ void Disco::draw() {
 }
 
 
-void Estaca::PrintRod() {
-	//Palo Estaca
-
-	//Estaca
-	//al_draw_filled_rectangle((-stick_width) / 2 + x_base_pos, y_base_pos,
-	//	(stick_width) / 2 + x_base_pos, y_base_pos - stick_height, al_map_rgba_f(0, 0, 0.5, 0.3));
+void Estaca::PrintRodDiscs() {
 
 	for (int i = 0; i < curr_n_discs; i++) {
 		discs[i].draw();
 	}
-
 }
 
 void Estaca::InitDiscsAndRods() {
 
-	const float _INIT_D_WIDTH = 300;
-	const float _INIT_D_HEIGHT = 50;
+	const float _INIT_D_WIDTH = _LARGEST_DISC_WIDTH;
+	const float _INIT_D_HEIGHT = _LARGEST_DISC_HEIGTH;
 
 	
 	for (int i = 0; i < max_discs; i++) {
-	
-		ALLEGRO_COLOR disc_color = MapaDeColor(max_discs - i);
-		push_back(Disco{ _INIT_D_WIDTH - (0.1f)*i* _INIT_D_WIDTH, _INIT_D_HEIGHT, 0, 0, disc_color });
+		ALLEGRO_COLOR disc_color = MapaDeColor(Color(max_discs - i));
+		push_back(Disco{ _INIT_D_WIDTH * (1.0f - (0.1f) * i), _INIT_D_HEIGHT * (1.0f - (0.075f) * i) ,
+			0, 0, disc_color });
+
 	}
 }
 
@@ -160,20 +158,27 @@ bool Estaca::move_to_stake(Estaca& dest, bool& moving) {
 		moving_disc->y_pos -= vy_1;
 
 	}
-	else if (moving_disc->y_pos <= y_base_pos - Estaca::stick_height && moving_disc->x_pos < dest.x_base_pos) {
+	else if (moving_disc->y_pos <= y_base_pos - Estaca::stick_height && moving_disc->x_pos != dest.x_base_pos) {
+		
 		moving_disc->x_pos += vx_2;
+
+		if (x_base_pos < dest.x_base_pos && moving_disc->x_pos > dest.x_base_pos)
+			moving_disc->x_pos = dest.x_base_pos;
+		else if (x_base_pos > dest.x_base_pos && moving_disc->x_pos < dest.x_base_pos) 
+			moving_disc->x_pos = dest.x_base_pos;
+
 		moving_disc->y_pos = Elipse((dest.x_base_pos - x_base_pos) / 2.0f,
 			_ARC_HEIGHT, (x_base_pos + dest.x_base_pos) / 2.0f, y_base_pos - Estaca::stick_height,
 			moving_disc->x_pos);
+		
 
 	}
 	else if (moving_disc->x_pos >= dest.x_base_pos) {
+		
+		if (moving_disc->x_pos > dest.x_base_pos) --moving_disc->x_pos;
 		//moving_disc->x_pos = dest.x_base_pos;
 		
-		if (vy_3 < 0) vy_3 = 5;
 		moving_disc->y_pos += vy_3;
-
-
 
 		if (moving_disc->y_pos >= dest.y_base_pos - dest.curr_disc_column_height - moving_disc->height / 2.0f) {
 			dest.push_back(*moving_disc);

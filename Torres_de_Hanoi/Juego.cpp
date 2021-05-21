@@ -37,9 +37,10 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
         std::cout << e.what();
         return;
     }
+
     int Game_discs;
     Game_discs = DiskNumber(queue);
-
+    if (Game_discs == 0) return;
 
     Estaca::Initialize_stakes(_STICK_SIZE, 20, Game_discs);
 
@@ -48,21 +49,8 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     Estaca fin(EST_POS::FIN_X, EST_POS::Y_ESTS);
 
 
-    init.push_back(Disco{ 250, 70, 0, 0, al_map_rgb(255, 0, 0) });
-    init.push_back(Disco{ 160, 50, 0, 0, al_map_rgb(0, 255, 0) });
-    init.push_back(Disco{ 130, 40, 0, 0, al_map_rgb(0, 0, 255) });
-
-    aux.push_back(Disco{ 250, 50, 0, 0, al_map_rgb(255, 0, 0) });
-    aux.push_back(Disco{ 160, 40, 0, 0, al_map_rgb(0, 255, 0) });
-    aux.push_back(Disco{ 130, 30, 0, 0, al_map_rgb(0, 0, 255) });
-
-    fin.push_back(Disco{ 250, 50, 0, 0, al_map_rgb(255, 0, 0) });
-    fin.push_back(Disco{ 160, 40, 0, 0, al_map_rgb(0, 255, 0) });
-    fin.push_back(Disco{ 130, 30, 0, 0, al_map_rgb(0, 0, 255) });
-  
-  
-    Prueba.InitDiscsAndRods();
-
+    aux.InitDiscsAndRods();
+    init.InitDiscsAndRods();
 
 
     bool done = false;
@@ -70,6 +58,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     ALLEGRO_EVENT event;
 
     bool move = false;
+    bool right = false;
     bool finish_movement = false;
 
     ALLEGRO_BITMAP* base_and_stakes = al_load_bitmap(_BASE_FILENAME);
@@ -87,10 +76,14 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
         {
             case ALLEGRO_EVENT_TIMER:
                 
-                if (move) {
-                    if (!init.move_to_stake(aux, move))
+                if (move && right) {
+                    if (!init.move_to_stake(fin, move))
                         return;
-                }
+                    if (!move) right = false;
+                } else if (move)
+                    if (!aux.move_to_stake(init, move))
+                        return;
+
                 redraw = true;
                 break;
 
@@ -100,6 +93,9 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
                     else done = true;
 
                 else if (event.keyboard.keycode == ALLEGRO_KEY_RIGHT) {
+                    move = true;
+                    right = true;
+                } else if (event.keyboard.keycode == ALLEGRO_KEY_LEFT) {
                     move = true;
                 }
                 
@@ -114,15 +110,15 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
         if (done)
             break;
 
-        if (redraw && al_is_event_queue_empty(queue))
+        if (redraw )
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
 
             al_draw_bitmap(base_and_stakes, 0, 0, 0);
 
-            init.PrintRod();
-            aux.PrintRod();
-            fin.PrintRod();
+            init.PrintRodDiscs();
+            aux.PrintRodDiscs();
+            fin.PrintRodDiscs();
 
             al_flip_display();
 
@@ -147,7 +143,7 @@ int DiskNumber(ALLEGRO_EVENT_QUEUE* queue) {
     ALLEGRO_EVENT event;
 
     int button_place = 0;
-    int Disks = 3;
+    int Disks = (_MIN_DISCS + _MAX_DISCS) / 2;
 
     while (1)
     {
@@ -164,23 +160,24 @@ int DiskNumber(ALLEGRO_EVENT_QUEUE* queue) {
 
             if (event.keyboard.keycode == ALLEGRO_KEY_UP) {
                 button_place = _ADD;
-                
-                if (Disks < MAX_DISKS)
+
+                if (Disks < _MAX_DISCS)
                     Disks++;
             }
-
-            if (event.keyboard.keycode == ALLEGRO_KEY_DOWN) {
+            else if (event.keyboard.keycode == ALLEGRO_KEY_DOWN) {
 
                 button_place = _SUBSTRACT;
 
-                if (Disks > 3)
+                if (Disks > _MIN_DISCS)
                     Disks--;
-            }
-          
-            if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER)
+            } else if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER)
                 done = true;
+            else if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
+                return 0;
 
             break;
+
+            
 
         case ALLEGRO_EVENT_DISPLAY_CLOSE:
             done = true;
