@@ -11,23 +11,58 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <allegro5/allegro_image.h>
 
 void FirstRod(int numDiscs);
 
+
+enum EST_POS {
+    INIT_X = 294,
+    Y_ESTS = 463 + 20,
+    AUX_X = 600,
+    FIN_X = 917
+};
+
+#define _STICK_SIZE 318
+
+#define _BASE_FILENAME "base_con_estacas.png"
+
+
 void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
-
+    try {
+        initialize_al_component(al_init_image_addon(), "Componente de imagenes.");
+    }
+    catch (const std::runtime_error& e) {
+        std::cout << e.what();
+        return;
+    }
     int Game_discs;
     Game_discs = DiskNumber(queue);
 
 
-    Estaca::Initialize_stakes(400, 20, Game_discs);
+    Estaca::Initialize_stakes(_STICK_SIZE, 20, Game_discs);
 
-    Estaca Prueba(_WINDOW_WIDTH / 2 - 300, 8 * _WINDOW_HEIGTH / 9);
+    Estaca init(EST_POS::INIT_X, EST_POS::Y_ESTS);
+    Estaca aux(EST_POS::AUX_X, EST_POS::Y_ESTS);
+    Estaca fin(EST_POS::FIN_X, EST_POS::Y_ESTS);
 
-    Estaca Prueba_2(_WINDOW_WIDTH / 2 + 300, 8 * _WINDOW_HEIGTH / 9);
 
+    init.push_back(Disco{ 250, 70, 0, 0, al_map_rgb(255, 0, 0) });
+    init.push_back(Disco{ 160, 50, 0, 0, al_map_rgb(0, 255, 0) });
+    init.push_back(Disco{ 130, 40, 0, 0, al_map_rgb(0, 0, 255) });
+
+    aux.push_back(Disco{ 250, 50, 0, 0, al_map_rgb(255, 0, 0) });
+    aux.push_back(Disco{ 160, 40, 0, 0, al_map_rgb(0, 255, 0) });
+    aux.push_back(Disco{ 130, 30, 0, 0, al_map_rgb(0, 0, 255) });
+
+    fin.push_back(Disco{ 250, 50, 0, 0, al_map_rgb(255, 0, 0) });
+    fin.push_back(Disco{ 160, 40, 0, 0, al_map_rgb(0, 255, 0) });
+    fin.push_back(Disco{ 130, 30, 0, 0, al_map_rgb(0, 0, 255) });
+  
+  
     Prueba.InitDiscsAndRods();
+
 
 
     bool done = false;
@@ -35,6 +70,14 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     ALLEGRO_EVENT event;
 
     bool move = false;
+    bool finish_movement = false;
+
+    ALLEGRO_BITMAP* base_and_stakes = al_load_bitmap(_BASE_FILENAME);
+    try {
+        initialize_al_component(al_load_bitmap, "Imagen de base.");
+    } catch (const std::runtime_error& e) {
+        std::cout << e.what() << '\n';
+    }
 
     while (1)
     {
@@ -42,27 +85,30 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
         switch (event.type)
         {
-        case ALLEGRO_EVENT_TIMER:
-            // nada por ahora.
-            if (move) Prueba.move_to_stake(Prueba_2, move);
-
-            redraw = true;
-            break;
-
-        case ALLEGRO_EVENT_KEY_DOWN:
-            if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
-                done = true;
-            else if (event.keyboard.keycode == ALLEGRO_KEY_RIGHT) {
-                move = true;
-                //Prueba.move_to_stake(Prueba_2, queue, display);
-            }
+            case ALLEGRO_EVENT_TIMER:
                 
-            break;
+                if (move) {
+                    if (!init.move_to_stake(aux, move))
+                        return;
+                }
+                redraw = true;
+                break;
 
-        case ALLEGRO_EVENT_DISPLAY_CLOSE:
-            done = true;
-            exit(0);
-            break;
+            case ALLEGRO_EVENT_KEY_DOWN:
+                if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
+                    if (move) move = 0;
+                    else done = true;
+
+                else if (event.keyboard.keycode == ALLEGRO_KEY_RIGHT) {
+                    move = true;
+                }
+                
+                break;
+
+            case ALLEGRO_EVENT_DISPLAY_CLOSE:
+                done = true;
+                exit(0);
+                break;
         }
 
         if (done)
@@ -72,8 +118,11 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
 
-            Prueba.PrintRod();
-            Prueba_2.PrintRod();
+            al_draw_bitmap(base_and_stakes, 0, 0, 0);
+
+            init.PrintRod();
+            aux.PrintRod();
+            fin.PrintRod();
 
             al_flip_display();
 
@@ -196,6 +245,7 @@ void ChangeDiskNumberDisplay(int Button) {
         break;
     }
 }
+
 
 void PrintRod(double pos_x, double pos_y, int numDisks) {
 	//Palo Estaca
