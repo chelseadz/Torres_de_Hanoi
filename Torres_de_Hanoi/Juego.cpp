@@ -82,123 +82,32 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
         {
 
         case ALLEGRO_EVENT_TIMER:
-            
-            
-            
-            if (selecting) {
-
-                Rod_Origin = What_to_Move(queue, init, aux, fin);
-                Rod_Dest = Where_to_Move(queue, Rod_Origin, init, aux, fin);
-                selecting = false;
-                move = true;
-            }
-
-            if (Rod_Origin == Rod_Dest)
-                selecting = true;
-
-            if (Rod_Origin == _INIT && Rod_Dest == _AUX) {
-                if (move) {
-                    if (!init.move_to_stake(aux, move))
-                        return;
-                    if (!move) {
-                        selecting = true;
-                    }
-                } 
-            }
-               
-            if (Rod_Origin == _INIT && Rod_Dest == _FIN) {
-                if (move) {
-                    if (!init.move_to_stake(fin, move))
-                        return;
-                    if (!move) {
-                        selecting = true;
-                    }
-                }
-            }
-
-            if (Rod_Origin == _AUX && Rod_Dest == _INIT) {
-                if (move) {
-                    if (!aux.move_to_stake(init, move))
 
 
-                        return;
-                    if (!move) {
-                        selecting = true;
-                    }
-                }
-            }
-
-
-            if (Rod_Origin == _AUX && Rod_Dest == _FIN) {
-                if (move) {
-                    if (!aux.move_to_stake(fin, move))
-                        return;
-                    if (!move) {
-                        selecting = true;
-                    }
-                }
-            }
-
-            if (Rod_Origin == _FIN && Rod_Dest == _INIT) {
-                if (move) {
-                    if (!fin.move_to_stake(init, move))
-                        return;
-                    if (!move) {
-                        selecting = true;
-                    }
-                }
-            }
-
-            if (Rod_Origin == _FIN && Rod_Dest == _AUX) {
-                if (move) {
-                    if (!fin.move_to_stake(aux, move))
-                        return;
-                    if (!move) {
-                        selecting = true;
-                    }
-
-                if (finish_movement) finish_movement = false;
-
-                redraw = true;
-                break;
-
-            case ALLEGRO_EVENT_KEY_DOWN:
-                if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
-                    if (move) finish_movement = true;
-                    else done = true;
-                } else if (event.keyboard.keycode == ALLEGRO_KEY_RIGHT) {
-                    move = true;
-                    right = true;
-                } else if (event.keyboard.keycode == ALLEGRO_KEY_LEFT) {
-                    move = true;
-                }
-            }
- 
-            redraw = true;
-            break;
 
         case ALLEGRO_EVENT_KEY_DOWN:
-            
-            if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
-                if (move) move = 0;
+            if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+                if (move) finish_movement = true;
                 else done = true;
-            
-            else if (event.keyboard.keycode == ALLEGRO_KEY_SPACE) {
+            } else if (event.keyboard.keycode == ALLEGRO_KEY_RIGHT) {
+                move = true;
+                right = true;
+            } else if (event.keyboard.keycode == ALLEGRO_KEY_LEFT) {
                 move = true;
             }
-        
+            redraw = true;
             break;
 
         case ALLEGRO_EVENT_DISPLAY_CLOSE:
             done = true;
             exit(0);
-            break;
+            break;      
         }
 
         if (done)
             break;
 
-        if (redraw )
+        if (redraw)
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
 
@@ -217,7 +126,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
     }
 
-
+   
 }
 
 int DiskNumber(ALLEGRO_EVENT_QUEUE* queue) {
