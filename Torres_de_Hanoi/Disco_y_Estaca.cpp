@@ -162,10 +162,11 @@ bool Estaca::move_to_stake(Estaca& dest, bool& moving) {
 	}
 	else if (moving_disc->y_pos <= y_base_pos - Estaca::stick_height && moving_disc->x_pos < dest.x_base_pos) {
 		moving_disc->x_pos += vx_2;
-		if (moving_disc->x_pos < dest.x_base_pos)
-			moving_disc->y_pos = Elipse((dest.x_base_pos - x_base_pos) / 2.0f,
-				_ARC_HEIGHT, (x_base_pos + dest.x_base_pos) / 2.0f, y_base_pos - Estaca::stick_height, 
-				moving_disc->x_pos);
+		if (moving_disc->x_pos > dest.x_base_pos) moving_disc->x_pos = dest.x_base_pos;
+
+		moving_disc->y_pos = Elipse((dest.x_base_pos - x_base_pos) / 2.0f,
+			_ARC_HEIGHT, (x_base_pos + dest.x_base_pos) / 2.0f, y_base_pos - Estaca::stick_height, 
+			moving_disc->x_pos);
 
 	}
 	else if (moving_disc->x_pos >= dest.x_base_pos) {
