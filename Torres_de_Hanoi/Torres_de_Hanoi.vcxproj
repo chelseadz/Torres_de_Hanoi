@@ -203,10 +203,9 @@
     <ClInclude Include="Menu.h" />
   </ItemGroup>
   <ItemGroup>
+    <Font Include="HelveticaLTStdLight.ttf" />
+    <Font Include="HelveticaLTStdObl.ttf" />
     <Font Include="ROBOTECH_GP.ttf" />
-    <Font Include="Starjedi.ttf" />
-    <Font Include="StarJediHollow.ttf" />
-    <Font Include="StarJediOutline.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="base_con_estacas.png" />
