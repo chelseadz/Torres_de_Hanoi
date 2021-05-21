@@ -31,7 +31,7 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display);
  */
 void MenuDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text);
 
-void MoverSeleccion(int Button);
+void MoveSelection(int Button);
 
 
 

@@ -66,13 +66,6 @@ void NumberOfDisksDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, int Disks);
 
 void ChangeDiskNumberDisplay(int Button);
 
-/**
- * \brief Imprime una estaca en una posicion y numero de discos dados
- *
- * \param queue cola de evento que recibe entrada de usuario.
- * \return void
- */
-void PrintRod(double pos_x, double pos_y, int numDisks);
 
 /**
  * \brief Captura de que estaca se movera el disco
@@ -107,4 +100,19 @@ int Where_to_Move(ALLEGRO_EVENT_QUEUE* queue, int Origin, Estaca& init, Estaca& 
  * \return void
  */
 void Where_to_Move_Display(int Origin, int Dest);
+
+
+/**
+ * \brief Mínimo número de movimientos para resolver el juego con n_discs discos.
+ * 
+ * \details Si n_discs es negativo, tira excepción de tipo std::invalid_argument.
+ * 
+ * \param n_discs cantidad de discos en el juego.
+ * \return Número mínimo de movimientos.
+ */
+int Min_n_moves(int n_discs);
+
+
+
+
 #endif 

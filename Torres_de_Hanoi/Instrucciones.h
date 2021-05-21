@@ -21,7 +21,7 @@
   * \param queue Cola de eventos principal.
   * \return void
   */
-void Instrucciones(ALLEGRO_EVENT_QUEUE* queue);
+void Instructions(ALLEGRO_EVENT_QUEUE* queue);
 
 /**
  * \brief Muesta el titulo y los botones en pantalla
@@ -29,9 +29,9 @@ void Instrucciones(ALLEGRO_EVENT_QUEUE* queue);
  * \param
  * \return void
  */
-void InstruccionesDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph);
+void InstructionsDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph);
 
-void MoverSeleccion_Instrucciones(int Button);
+void MoveSelection_Instructions(int Button);
 
 /**
  * \brief Función que se encarga de mostrar el origen del juego
@@ -39,8 +39,8 @@ void MoverSeleccion_Instrucciones(int Button);
  * \param queue Cola de eventos principal.
  * \return void
  */
-void Origen(ALLEGRO_EVENT_QUEUE* queue);
+void Origin(ALLEGRO_EVENT_QUEUE* queue);
 
-void OrigenDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph);
+void OriginDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph);
 
 #endif

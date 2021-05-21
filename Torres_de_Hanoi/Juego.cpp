@@ -11,9 +11,8 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <cmath>
 #include <allegro5/allegro_image.h>
-
-void FirstRod(int numDiscs);
 
 
 enum EST_POS {
@@ -81,6 +80,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
         switch (event.type)
         {
+
         case ALLEGRO_EVENT_TIMER:
             
             
@@ -119,12 +119,15 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
             if (Rod_Origin == _AUX && Rod_Dest == _INIT) {
                 if (move) {
                     if (!aux.move_to_stake(init, move))
+
+
                         return;
                     if (!move) {
                         selecting = true;
                     }
                 }
             }
+
 
             if (Rod_Origin == _AUX && Rod_Dest == _FIN) {
                 if (move) {
@@ -153,6 +156,21 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
                     if (!move) {
                         selecting = true;
                     }
+
+                if (finish_movement) finish_movement = false;
+
+                redraw = true;
+                break;
+
+            case ALLEGRO_EVENT_KEY_DOWN:
+                if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+                    if (move) finish_movement = true;
+                    else done = true;
+                } else if (event.keyboard.keycode == ALLEGRO_KEY_RIGHT) {
+                    move = true;
+                    right = true;
+                } else if (event.keyboard.keycode == ALLEGRO_KEY_LEFT) {
+                    move = true;
                 }
             }
  
@@ -315,29 +333,13 @@ void ChangeDiskNumberDisplay(int Button) {
     }
 }
 
+int Min_n_moves(int n_discs) {
+    if (n_discs < 0) throw std::invalid_argument("Discos negativos.");
 
-void PrintRod(double pos_x, double pos_y, int numDisks) {
-	//Palo Estaca
-    //Pruebas
-    double stick_width = 20;
-    double stick_height;
-
-    double disk_width = 200;
-    double disk_height = 30;
-
-    stick_height = 11 * disk_height;
-
-    //Estaca
-	al_draw_filled_rectangle((-stick_width)/2 + pos_x, pos_y, (stick_width)/2 + pos_x, stick_height, al_map_rgba_f(0, 0, 0.5, 0.3));
-
-    //Discos
-    //int color_pruebas = 10;
-   // double ShrinkFactor = (disk_width / 2) * (0.1);
- /*   for (int i = 0; i < numDisks; i++) {
-        al_draw_filled_rectangle(((-disk_width)/2) - (1.0-i)*ShrinkFactor + pos_x, -(i - 1.0) * disk_height + pos_y, ((disk_width) / 2) + (1.0 - i) * ShrinkFactor + pos_x, -i*disk_height + pos_y, al_map_rgba_f(0.1*i, 0.05*i, 0.5, 0.3));
-        
-    }*/
+    return std::pow(2, n_discs) - 1;
 }
+
+
 
 int What_to_Move(ALLEGRO_EVENT_QUEUE* queue, Estaca &init, Estaca &aux, Estaca &fin) {
 

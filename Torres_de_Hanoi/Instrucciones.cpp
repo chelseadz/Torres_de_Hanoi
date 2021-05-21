@@ -9,11 +9,11 @@
 #include "Instrucciones.h"
 
 enum {
-    _REGRESAR = 0,
-    _SIGUIENTE
+    _MENU = 0,
+    _NEXT
 };
 
-void Instrucciones(ALLEGRO_EVENT_QUEUE* queue) {
+void Instructions(ALLEGRO_EVENT_QUEUE* queue) {
 
 
     ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 36, 0);
@@ -28,7 +28,7 @@ void Instrucciones(ALLEGRO_EVENT_QUEUE* queue) {
     bool redraw = true;
     ALLEGRO_EVENT event;
 
-    int button_place = _REGRESAR;
+    int button_place = _MENU;
 
     while (1)
     {
@@ -37,7 +37,6 @@ void Instrucciones(ALLEGRO_EVENT_QUEUE* queue) {
         switch (event.type)
         {
         case ALLEGRO_EVENT_TIMER:
-            // nada por ahora.
             redraw = true;
             break;
 
@@ -46,7 +45,7 @@ void Instrucciones(ALLEGRO_EVENT_QUEUE* queue) {
             if (event.keyboard.keycode == ALLEGRO_KEY_UP || event.keyboard.keycode == ALLEGRO_KEY_LEFT) {
                 button_place = (button_place - 1) % 2;
                 if (button_place < 0)
-                    button_place = _SIGUIENTE;
+                    button_place = _MENU;
             }
 
             if (event.keyboard.keycode == ALLEGRO_KEY_DOWN || event.keyboard.keycode == ALLEGRO_KEY_RIGHT)
@@ -57,12 +56,12 @@ void Instrucciones(ALLEGRO_EVENT_QUEUE* queue) {
 
             if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
                 switch (button_place) {
-                    case _REGRESAR:
+                    case _MENU:
                         done = true;
                         break;
 
-                    case _SIGUIENTE:
-                        Origen(queue);
+                    case _NEXT:
+                        Origin(queue);
                         break;
                     }
             }
@@ -80,9 +79,9 @@ void Instrucciones(ALLEGRO_EVENT_QUEUE* queue) {
 
         if (redraw && al_is_event_queue_empty(queue))
         {
-            InstruccionesDisplay(font_title, font, font_paragraph);
+            InstructionsDisplay(font_title, font, font_paragraph);
 
-            MoverSeleccion_Instrucciones(button_place);
+            MoveSelection_Instructions(button_place);
 
             al_flip_display();
 
@@ -96,58 +95,57 @@ void Instrucciones(ALLEGRO_EVENT_QUEUE* queue) {
     al_destroy_font(font_paragraph);
 }
 
-void InstruccionesDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph) {
+void InstructionsDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph) {
 
     //Pantalla
     al_clear_to_color(al_map_rgb(0, 0, 0));
     //Titulo Instrucciones
-    al_draw_text(title, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 2, 0.5 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "instrucciones");
+    al_draw_text(title, ColorMap(INDIGO), _WINDOW_WIDTH / 2, 0.5 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "Description");
     //Cuerpo instrucciones
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 1.2 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "Las Torres de Hanoi es un rompecabezas o juego matemAtico inventado en 1883 por el matemAtico");
+        "The Towers of Hanoi is a puzzle or mathematical game invented in 1883 by the french mathematician");
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 1.7 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "francEs Edouard Lucas. Este juego consiste en un numero de discos perforados de radio");
+        "Edouard Lucas. This game consists of a number of perforated discs of increasing radius that");
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 2.2 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "creciente que se apilan insertAndose en uno de los tres postes fijados a un tablero. ");
+        "are stacked by inserting themselves into one of the three posts fixed to a board");
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 2.7 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "El objetivo del juego es trasladar la pila de discos a otro de los postes. ");
+        "The objective of the game is to move the stack of discs to another of the posts. ");
 
     //Titulo Reglas
-    al_draw_text(title, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 2, 3.2 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "REGLAS");
+    al_draw_text(title, ColorMap(INDIGO), _WINDOW_WIDTH / 2, 3.2 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "Rules");
     //Cuerpo reglas
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 3.9 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "1. No se puede colocar un disco mAs grande encima de un disco mAs pequeño.");
+        "1. You cannot place a larger disk on top of a smaller disk.");
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 4.4 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "2. El juego se gana cuando logras insertar todos los discos apilados de mayor a menor en el poste del");
+        "2. You win the game when you get to insert all the disks stacked from highest to lowest");
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 4.9 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "extremo derecho. ");
+        "in the far right post. ");
 
     //Titulo Controles
-    al_draw_text(title, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 2, 5.4 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "Controles");
+    al_draw_text(title, ColorMap(INDIGO), _WINDOW_WIDTH / 2, 5.4 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "Controls");
     //Cuerpo controles
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 6.1 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "Usa ESPACIO o ENTER para seleccionar el disco.");
+        "Use SPACE or ENTER to select the disc.");
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 6.6 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "Usa las flechas para mover el disco o navegar en el juego.");
+        "Use the arrow keys for moving the disc or navigate in the game.");
 
-    //Boton Regresar
-    al_draw_filled_rectangle(_WINDOW_WIDTH / 5, 7.5 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 5, 8.5 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0, 0, 0.5, 0.3));
-    al_draw_text(text, al_map_rgb(255, 255, 255), 1.5 * _WINDOW_WIDTH / 5, 7.7 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "REGRESAR");
+       //Boton Regresar
+    DrawButton(_WINDOW_WIDTH / 5, 7.5 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 5,
+        8.5 * _WINDOW_HEIGTH / 9, ColorMap(METALIC_BRONZE), text, "REGRESAR", al_map_rgb(255, 255, 255));
     //Boton Origen
-    al_draw_filled_rectangle(3 * _WINDOW_WIDTH / 5, 7.5 * _WINDOW_HEIGTH / 9, 4 * _WINDOW_WIDTH / 5, 8.5 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0, 0, 0.5, 0.5));
-    al_draw_text(text, al_map_rgb(255, 255, 255), 3.5 * _WINDOW_WIDTH / 5, 7.7 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "ORIGEN");
-
+    DrawButton(3 * _WINDOW_WIDTH / 5, 7.5 * _WINDOW_HEIGTH / 9, 4 * _WINDOW_WIDTH / 5,
+        8.5 * _WINDOW_HEIGTH / 9, ColorMap(METALIC_BRONZE), text, "ORIGEN", al_map_rgb(255, 255, 255));
 }
 
-void MoverSeleccion_Instrucciones(int Button) {
+void MoveSelection_Instructions(int Button) {
 
     switch (Button)
     {
-        case _REGRESAR:
-            al_draw_filled_rectangle(_WINDOW_WIDTH / 5, 7.5 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 5, 8.5 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0.5, 0.5, 0.5, 0.5));
+        case _MENU:
+            al_draw_filled_rectangle(_WINDOW_WIDTH / 5, 7.5 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 5, 8.5 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0.3, 0.3, 0.3, 0.3));
             break;
-        case _SIGUIENTE:
-            al_draw_filled_rectangle(3 * _WINDOW_WIDTH / 5, 7.5 * _WINDOW_HEIGTH / 9, 4 * _WINDOW_WIDTH / 5, 8.5 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0.5, 0.5, 0.5, 0.5));
+        case _NEXT:
+            al_draw_filled_rectangle(3 * _WINDOW_WIDTH / 5, 7.5 * _WINDOW_HEIGTH / 9, 4 * _WINDOW_WIDTH / 5, 8.5 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0.3, 0.3, 0.3, 0.3));
             break;
     }
 }
@@ -155,7 +153,7 @@ void MoverSeleccion_Instrucciones(int Button) {
 
 // Inicia la pantalla que muestra el origen del juego, muestra el botón para volver a 
 // instrucciones o para ir a la solución del acertijo
-void Origen(ALLEGRO_EVENT_QUEUE* queue) {
+void Origin(ALLEGRO_EVENT_QUEUE* queue) {
 
     ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 36, 0);
     ALLEGRO_FONT* font = al_load_font("ROBOTECH_GP.ttf", 36, 0);
@@ -177,7 +175,6 @@ void Origen(ALLEGRO_EVENT_QUEUE* queue) {
         switch (event.type)
         {
         case ALLEGRO_EVENT_TIMER:
-            // nada por ahora.
             redraw = true;
             break; 
 
@@ -198,7 +195,7 @@ void Origen(ALLEGRO_EVENT_QUEUE* queue) {
 
         if (redraw && al_is_event_queue_empty(queue))
         {
-            OrigenDisplay(font_title, font, font_paragraph);
+            OriginDisplay(font_title, font, font_paragraph);
 
             al_flip_display();
 
@@ -212,42 +209,43 @@ void Origen(ALLEGRO_EVENT_QUEUE* queue) {
 
 }
 
-void OrigenDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph) {
+void OriginDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph) {
 
     //Pantalla
     al_clear_to_color(al_map_rgb(0, 0, 0));
-    //Titulo Instrucciones
-    al_draw_text(title, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 2, 0.5 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "Origen");
-    //Cuerpo instrucciones
+    //Titulo Origen
+    al_draw_text(title, ColorMap(INDIGO), _WINDOW_WIDTH / 2, 0.5 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "Origin of the Tower of Hanoi");
+    //Cuerpo Origen
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 1.2 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "SegUn cuenta la leyenda, estos tres postes hacen referencia a tres agujas de diamante de");
+        "According to legend, the three posts refer to three diamond spiers of a cubit in height");
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 1.7 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "un codo de altura y del grueso del cuerpo de una abeja, que yacen una base de bronce en");
+        "and the thickness of the body of a bee, lying on a bronze base under the dome of the great");
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 2.2 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "la que se encuentran fijadas. EstAn debajo de la cUpula del gran templo de BenarEs. ");
+        "temple of Benares. ");
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 2.7 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "En una de estas agujas, Dios, en el comienzo de los siglos, colocO sesenta y cuatro discos ");
+        "On one of these stakes, God, at the beginning of the centuries, placed sixty-four discs");
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 3.2 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "de oro puro. DIa y noche los sacerdotes se turnan para mover los discos, sin desviarse");
+        "of pure gold. Day and night the priests take turns moving the discs, without deviating");
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 3.7 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "de las reglas fijas e inmutables impuestas por Brahma.");
+        "from the fixed and immutable rules imposed by Brahma.");
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 4.2 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "El sacerdote no debe mover mas de un disco a la vez, y no debe colocar un disco mas que");
+        "Each priest should not move more than one disc at a time, and only should place a disc on");
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 4.7 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "en una aguja libre, o sobre un disco mayor.");
+        "a free stake, or on a larger disc.");
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 5.2 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "Cuando los sacerdotes trasladen toda la columna de discos a la tercera torre, la torre");
+        "When the priests move the entire column of discs to the third tower, the tower and the ");
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 5.7 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "y los brahmanes se convertirAn en polvo y serA el fin del mundo.");
+        "Brahmans will turn to dust and it will be the end of the world.");
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 6.4 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "Si los sacerdotes fuesen capaces de realizar un movimiento cada segundo, cuAl serIa el");
+        "If the priests were able to perform one movement every second, what would be the time ");
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 6.9 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "tiempo necesario para trasladar la columna y, por tanto, ¿cuAndo acabaria el mundo?");
+        "needed to move the column and, therefore, when would the world end??");
 
     //BOTON REGRESAR
-    al_draw_filled_rectangle(_WINDOW_WIDTH / 5, 7.5 * _WINDOW_HEIGTH / 9, 4 * _WINDOW_WIDTH / 5, 8.5 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0, 0, 0.5, 0.3));
-    al_draw_text(text, al_map_rgb(255, 255, 255),  _WINDOW_WIDTH / 2, 7.7 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER,
-        "Presiona ESC, Espacio o ENTER para regresar.");
+    DrawButton(_WINDOW_WIDTH / 5, 7.5 * _WINDOW_HEIGTH / 9, 4 * _WINDOW_WIDTH / 5,
+        8.5 * _WINDOW_HEIGTH / 9, ColorMap(METALIC_BRONZE),
+        text, "Press ESC, SPACE or ENTER to go back.", al_map_rgb(255, 255, 255));
+
  }
 
 

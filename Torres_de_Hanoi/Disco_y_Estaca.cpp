@@ -11,18 +11,17 @@
 #include "Utileria.h"
 
 #include <cstdlib>
-
-#define _ARC_HEIGHT 100
-
-#define _AN_TIME 0.5f
+#include <climits>
 
 
-int Estaca::max_discs;
+#define _NULL_DISCS INT_MAX
+
+int Estaca::max_discs = _NULL_DISCS;
 int Estaca::stick_height;
 int Estaca::stick_width;
 
 bool Estaca::Initialize_stakes(int height, int width, int _max_discs) {
-	if (_max_discs < 0 || _max_discs > _MAX_DISC_CAPACTITY)
+	if ((_max_discs < 0 || _max_discs > _MAX_DISC_CAPACTITY) && _max_discs != _NULL_DISCS)
 		return false;
 
 	Estaca::max_discs = _max_discs;
@@ -41,6 +40,8 @@ Estaca::Estaca(unsigned short base_x_pos, unsigned short base_y_pos) {
 	} else
 		throw std::invalid_argument("Posici\243n  de base inv\240lida.");
 
+	if (max_discs == _NULL_DISCS)
+		throw std::logic_error("Clase Estaca no est\240 inicializada.");
 
 	try {
 		discs = new Disco[max_discs];
@@ -73,7 +74,7 @@ bool Estaca::push_back(const Disco& disc) {
 }
 
 const Disco& Estaca::last() {
-	if (curr_n_discs == 0) throw std::invalid_argument("No hay discos.");
+	if (curr_n_discs == 0) throw std::logic_error("No hay discos.");
 	return discs[curr_n_discs - 1];
 }
 
@@ -109,15 +110,15 @@ void Estaca::PrintRodDiscs() {
 
 void Estaca::InitDiscsAndRods() {
 
+	if (curr_n_discs != 0) throw std::logic_error("La estaca no se puede inicializar.");
+
 	const float _INIT_D_WIDTH = _LARGEST_DISC_WIDTH;
 	const float _INIT_D_HEIGHT = _LARGEST_DISC_HEIGTH;
-
 	
 	for (int i = 0; i < max_discs; i++) {
 	
-		ALLEGRO_COLOR disc_color = MapaDeColor(Color(max_discs - i));
-		push_back(Disco{ _INIT_D_WIDTH * (1.0f - (0.1f) * i), _INIT_D_HEIGHT * (1.0f - (0.075f) * i) ,
-			0, 0, disc_color });
+		ALLEGRO_COLOR disc_color = ColorMap(max_discs - i);
+		push_back(Disco{ _INIT_D_WIDTH - (0.1f)*i* _INIT_D_WIDTH, _INIT_D_HEIGHT, 0, 0, disc_color });
 	}
 }
 
@@ -127,15 +128,13 @@ bool Estaca::full() {
 }
 
 
-bool Estaca::move_to_stake(Estaca& dest, bool& moving) {
+bool Estaca::move_to_stake(Estaca& dest, bool& moving, bool finalize) {
 	
 	//Estas variables estáticas solo se inicializan la primera vez que se llama a la función.
 	static bool first = 1;
 
 	static Disco* moving_disc;
 	static float vy_1, vx_2, vy_3;
-
-	static bool movement_done = 0;
 
 
 	if (first) {
@@ -152,6 +151,15 @@ bool Estaca::move_to_stake(Estaca& dest, bool& moving) {
 		first = 0;
 	}
 	
+	if (finalize && moving_disc != NULL) {
+		dest.push_back(*moving_disc);
+		pop_back();
+		moving_disc = NULL;
+
+		moving = 0;
+		first = 1;
+		return true;
+	}
 
 
 	if (moving_disc->y_pos > y_base_pos - Estaca::stick_height &&
