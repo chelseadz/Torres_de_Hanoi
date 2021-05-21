@@ -115,9 +115,11 @@ void Estaca::InitDiscsAndRods() {
 	const float _INIT_D_WIDTH = 300;
 	const float _INIT_D_HEIGHT = 50;
 
+	
 	for (int i = 0; i < max_discs; i++) {
-		//colores temporales
-		push_back(Disco{ _INIT_D_WIDTH - (0.1f)*i* _INIT_D_WIDTH, _INIT_D_HEIGHT, 0, 0, al_map_rgb(255 -20*i, 35* i, 25*i) });
+	
+		ALLEGRO_COLOR disc_color = MapaDeColor(Color(UNITED_NATIONS_BLUE-1.5*i));
+		push_back(Disco{ _INIT_D_WIDTH - (0.1f)*i* _INIT_D_WIDTH, _INIT_D_HEIGHT, 0, 0, disc_color });
 	}
 }
 
