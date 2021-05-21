@@ -65,11 +65,7 @@ void NumberOfDisksDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, int Disks);
 
 void ChangeDiskNumberDisplay(int Button);
 
-/**
- * \brief Imprime una estaca en una posicion y numero de discos dados
- *
- * \param queue cola de evento que recibe entrada de usuario.
- * \return void
- */
-void PrintRod(double pos_x, double pos_y, int numDisks);
+
+
+int Min_n_moves(int n_discs);
 #endif 
