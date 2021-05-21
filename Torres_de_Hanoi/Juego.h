@@ -65,7 +65,15 @@ void NumberOfDisksDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, int Disks);
 
 void ChangeDiskNumberDisplay(int Button);
 
-
-
+/**
+ * \brief Mínimo número de movimientos para resolver el juego con n_discs discos.
+ * 
+ * \details Si n_discs es negativo, tira excepción de tipo std::invalid_argument.
+ * 
+ * \param n_discs cantidad de discos en el juego.
+ * \return Número mínimo de movimientos.
+ */
 int Min_n_moves(int n_discs);
+
+
 #endif 

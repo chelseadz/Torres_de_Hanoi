@@ -11,9 +11,8 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <cmath>
 #include <allegro5/allegro_image.h>
-
-void FirstRod(int numDiscs);
 
 
 enum EST_POS {
@@ -243,7 +242,11 @@ void ChangeDiskNumberDisplay(int Button) {
     }
 }
 
+int Min_n_moves(int n_discs) {
+    if (n_discs < 0) throw std::invalid_argument("Discos negativos.");
 
+    return std::pow(2, n_discs) - 1;
+}
 
 
 
