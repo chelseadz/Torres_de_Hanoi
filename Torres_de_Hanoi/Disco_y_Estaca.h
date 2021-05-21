@@ -19,7 +19,7 @@
 #define _MAX_DISC_CAPACTITY 10
 
 #define _LARGEST_DISC_WIDTH 300
-#define _LARGEST_DISC_HEIGTH 50
+#define _LARGEST_DISC_HEIGTH 100
 
 
 struct Disco {
@@ -46,7 +46,7 @@ public:
 	bool full();
 
 
-	void PrintRod();
+	void PrintRodDiscs();
 
 	void InitDiscsAndRods();
 
