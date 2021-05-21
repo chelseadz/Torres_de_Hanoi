@@ -11,9 +11,8 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <cmath>
 #include <allegro5/allegro_image.h>
-
-void FirstRod(int numDiscs);
 
 
 enum EST_POS {
@@ -243,27 +242,11 @@ void ChangeDiskNumberDisplay(int Button) {
     }
 }
 
+int Min_n_moves(int n_discs) {
+    if (n_discs < 0) throw std::invalid_argument("Discos negativos.");
 
-void PrintRod(double pos_x, double pos_y, int numDisks) {
-	//Palo Estaca
-    //Pruebas
-    double stick_width = 20;
-    double stick_height;
-
-    double disk_width = 200;
-    double disk_height = 30;
-
-    stick_height = 11 * disk_height;
-
-    //Estaca
-	al_draw_filled_rectangle((-stick_width)/2 + pos_x, pos_y, (stick_width)/2 + pos_x, stick_height, al_map_rgba_f(0, 0, 0.5, 0.3));
-
-    //Discos
-    //int color_pruebas = 10;
-   // double ShrinkFactor = (disk_width / 2) * (0.1);
- /*   for (int i = 0; i < numDisks; i++) {
-        al_draw_filled_rectangle(((-disk_width)/2) - (1.0-i)*ShrinkFactor + pos_x, -(i - 1.0) * disk_height + pos_y, ((disk_width) / 2) + (1.0 - i) * ShrinkFactor + pos_x, -i*disk_height + pos_y, al_map_rgba_f(0.1*i, 0.05*i, 0.5, 0.3));
-        
-    }*/
+    return std::pow(2, n_discs) - 1;
 }
+
+
 

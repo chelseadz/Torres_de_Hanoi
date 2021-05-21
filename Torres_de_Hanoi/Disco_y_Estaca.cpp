@@ -11,18 +11,17 @@
 #include "Utileria.h"
 
 #include <cstdlib>
-
-#define _ARC_HEIGHT 100
-
-#define _AN_TIME 0.5f
+#include <climits>
 
 
-int Estaca::max_discs;
+#define _NULL_DISCS INT_MAX
+
+int Estaca::max_discs = _NULL_DISCS;
 int Estaca::stick_height;
 int Estaca::stick_width;
 
 bool Estaca::Initialize_stakes(int height, int width, int _max_discs) {
-	if (_max_discs < 0 || _max_discs > _MAX_DISC_CAPACTITY)
+	if ((_max_discs < 0 || _max_discs > _MAX_DISC_CAPACTITY) && _max_discs != _NULL_DISCS)
 		return false;
 
 	Estaca::max_discs = _max_discs;
@@ -41,6 +40,8 @@ Estaca::Estaca(unsigned short base_x_pos, unsigned short base_y_pos) {
 	} else
 		throw std::invalid_argument("Posici\243n  de base inv\240lida.");
 
+	if (max_discs == _NULL_DISCS)
+		throw std::logic_error("Clase Estaca no est\240 inicializada.");
 
 	try {
 		discs = new Disco[max_discs];
@@ -73,7 +74,7 @@ bool Estaca::push_back(const Disco& disc) {
 }
 
 const Disco& Estaca::last() {
-	if (curr_n_discs == 0) throw std::invalid_argument("No hay discos.");
+	if (curr_n_discs == 0) throw std::logic_error("No hay discos.");
 	return discs[curr_n_discs - 1];
 }
 
@@ -109,9 +110,10 @@ void Estaca::PrintRodDiscs() {
 
 void Estaca::InitDiscsAndRods() {
 
+	if (curr_n_discs != 0) throw std::logic_error("La estaca no se puede inicializar.");
+
 	const float _INIT_D_WIDTH = _LARGEST_DISC_WIDTH;
 	const float _INIT_D_HEIGHT = _LARGEST_DISC_HEIGTH;
-
 	
 	for (int i = 0; i < max_discs; i++) {
 	
