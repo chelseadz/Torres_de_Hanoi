@@ -13,7 +13,7 @@ enum {
     _NEXT
 };
 
-void Instrucciones(ALLEGRO_EVENT_QUEUE* queue) {
+void Instructions(ALLEGRO_EVENT_QUEUE* queue) {
 
 
     ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 36, 0);
@@ -95,7 +95,7 @@ void Instrucciones(ALLEGRO_EVENT_QUEUE* queue) {
     al_destroy_font(font_paragraph);
 }
 
-void InstruccionesDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph) {
+void InstructionsDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph) {
 
     //Pantalla
     al_clear_to_color(al_map_rgb(0, 0, 0));
@@ -153,7 +153,7 @@ void MoveSelection_Instructions(int Button) {
 
 // Inicia la pantalla que muestra el origen del juego, muestra el botón para volver a 
 // instrucciones o para ir a la solución del acertijo
-void Origen(ALLEGRO_EVENT_QUEUE* queue) {
+void Origin(ALLEGRO_EVENT_QUEUE* queue) {
 
     ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 36, 0);
     ALLEGRO_FONT* font = al_load_font("ROBOTECH_GP.ttf", 36, 0);

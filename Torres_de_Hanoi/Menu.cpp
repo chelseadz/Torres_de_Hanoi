@@ -144,7 +144,7 @@ void MenuDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text) {
     al_flip_display();
 }
 
-void MoveSelecion(int Button) {
+void MoveSelection(int Button) {
 
     switch (Button)
     {

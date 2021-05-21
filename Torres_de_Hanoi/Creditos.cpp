@@ -15,7 +15,7 @@
 #include "Utileria.h"
 
 
-void Creditos(ALLEGRO_EVENT_QUEUE* queue) {
+void Credits(ALLEGRO_EVENT_QUEUE* queue) {
 
 
     ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 48, 0);
