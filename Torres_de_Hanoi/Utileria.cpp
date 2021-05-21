@@ -24,6 +24,9 @@ float Elipse(float a, float b, float p, float q, float x) {
 	float temp;
 
 	temp = pow((x - p) / a, 2.0f);
+
+	if (temp > 1) throw std::invalid_argument("x no est\240 dentro del rango de la elipse.");
+
 	temp = pow(b, 2.0f) * (1.0f - temp);
 	temp = -sqrt(temp) + q;
 
