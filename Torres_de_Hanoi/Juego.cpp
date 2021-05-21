@@ -37,6 +37,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
         std::cout << e.what();
         return;
     }
+
     int Game_discs;
     Game_discs = DiskNumber(queue);
 
@@ -61,7 +62,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     fin.push_back(Disco{ 130, 30, 0, 0, al_map_rgb(0, 0, 255) });
   
   
-    Prueba.InitDiscsAndRods();
+    //Prueba.InitDiscsAndRods();
 
 
 
@@ -114,7 +115,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
         if (done)
             break;
 
-        if (redraw && al_is_event_queue_empty(queue))
+        if (redraw )
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
 
