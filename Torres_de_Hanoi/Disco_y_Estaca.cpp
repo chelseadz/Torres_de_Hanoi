@@ -16,6 +16,7 @@
 
 #define _AN_TIME 2.0f
 
+
 int Estaca::max_discs;
 int Estaca::stick_height;
 int Estaca::stick_width;
@@ -112,8 +113,8 @@ void Estaca::PrintRod() {
 
 void Estaca::InitDiscsAndRods() {
 
-	const float _INIT_D_WIDTH = 300;
-	const float _INIT_D_HEIGHT = 50;
+	const float _INIT_D_WIDTH = _LARGEST_DISC_WIDTH;
+	const float _INIT_D_HEIGHT = _LARGEST_DISC_HEIGTH;
 
 	
 	for (int i = 0; i < max_discs; i++) {
