@@ -14,7 +14,7 @@
 
 #define _ARC_HEIGHT 100
 
-#define _AN_TIME 2.0f
+#define _AN_TIME 1.0f
 
 
 int Estaca::max_discs;

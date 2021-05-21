@@ -49,6 +49,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     Estaca fin(EST_POS::FIN_X, EST_POS::Y_ESTS);
 
 
+    aux.InitDiscsAndRods();
     init.InitDiscsAndRods();
 
 
@@ -57,14 +58,15 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     ALLEGRO_EVENT event;
 
     bool move = false;
+    bool right = false;
     bool finish_movement = false;
 
-    ALLEGRO_BITMAP* base_and_stakes = al_load_bitmap(_BASE_FILENAME);
-    try {
-        initialize_al_component(al_load_bitmap, "Imagen de base.");
-    } catch (const std::runtime_error& e) {
-        std::cout << e.what() << '\n';
-    }
+    //ALLEGRO_BITMAP* base_and_stakes = al_load_bitmap(_BASE_FILENAME);
+    //try {
+    //    initialize_al_component(al_load_bitmap, "Imagen de base.");
+    //} catch (const std::runtime_error& e) {
+    //    std::cout << e.what() << '\n';
+    //}
 
     while (1)
     {
@@ -74,10 +76,14 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
         {
             case ALLEGRO_EVENT_TIMER:
                 
-                if (move) {
-                    if (!init.move_to_stake(aux, move))
+                if (move && right) {
+                    if (!init.move_to_stake(fin, move))
                         return;
-                }
+                    if (!move) right = false;
+                } else if (move)
+                    if (!aux.move_to_stake(init, move))
+                        return;
+
                 redraw = true;
                 break;
 
@@ -87,6 +93,9 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
                     else done = true;
 
                 else if (event.keyboard.keycode == ALLEGRO_KEY_RIGHT) {
+                    move = true;
+                    right = true;
+                } else if (event.keyboard.keycode == ALLEGRO_KEY_LEFT) {
                     move = true;
                 }
                 
@@ -105,11 +114,11 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
 
-            al_draw_bitmap(base_and_stakes, 0, 0, 0);
+            //al_draw_bitmap(base_and_stakes, 0, 0, 0);
 
-            init.PrintRod();
-            aux.PrintRod();
-            fin.PrintRod();
+            init.PrintRodDiscs();
+            aux.PrintRodDiscs();
+            fin.PrintRodDiscs();
 
             al_flip_display();
 
