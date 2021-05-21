@@ -131,7 +131,7 @@ void MenuDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text) {
    
     //Boton Instrucciones
     DrawButton(_WINDOW_WIDTH / 3, 4.5 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3,
-        5.5 * _WINDOW_HEIGTH / 9, ColorMap(METALIC_BRONZE), text, "INSTRUTCIONS", al_map_rgb(255, 255, 255));
+        5.5 * _WINDOW_HEIGTH / 9, ColorMap(METALIC_BRONZE), text, "INSTRUCTIONS", al_map_rgb(255, 255, 255));
 
     //Boton Creditos
     DrawButton(_WINDOW_WIDTH / 3, 6 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3,
