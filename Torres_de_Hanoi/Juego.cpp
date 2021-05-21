@@ -59,9 +59,6 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     fin.push_back(Disco{ 250, 50, 0, 0, al_map_rgb(255, 0, 0) });
     fin.push_back(Disco{ 160, 40, 0, 0, al_map_rgb(0, 255, 0) });
     fin.push_back(Disco{ 130, 30, 0, 0, al_map_rgb(0, 0, 255) });
-  
-  
-    Prueba.InitDiscsAndRods();
 
 
 

@@ -10,11 +10,14 @@
 #define _UTILERIA_H
 
 #include <allegro5/allegro5.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_primitives.h>
 #include <stdexcept>
 
 /** Colores usados para imprimir los discos y para los textos.
  */
-enum Color {
+enum {
 	VERY_PALE_YELLOW=0,
 	PALE_YELLOW,
 	PALE_YELLOW_RED,
@@ -75,6 +78,23 @@ float Elipse(float a, float b, float p, float q, float x);
  * \param nombre_color Nombre del color de que se requiere el mapa
  * \return al_map_rgb() El mapa de color correspondiente
  */
-ALLEGRO_COLOR MapaDeColor(Color nombre_color);
+ALLEGRO_COLOR MapaDeColor(int nombre_color);
+
+/**
+ * \brief Dibuja un botón en pantalla 
+ * 
+ * \param x1 Posición x donde comienza el rectángulo
+ * \param y1 Posición y donde comienza el rectángulo
+ * \param x2 Posición x donde termina el rectángulo
+ * \param y2 Posición y donde termina el rectángulo
+ * \param button_color Color del botón
+ * \param text Fuente del texto a escribir sobre el botón
+ * \param string Texto que se escribe sobre el botón
+ * \param text_color Color del texto que se escribe
+ *
+ * \return void
+ */
+void DrawButton(float x1, float y1, float x2, float y2, ALLEGRO_COLOR button_color, 
+	ALLEGRO_FONT* text, const char string[], ALLEGRO_COLOR text_color);
 
 #endif

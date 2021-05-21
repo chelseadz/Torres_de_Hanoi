@@ -20,7 +20,7 @@ void Creditos(ALLEGRO_EVENT_QUEUE* queue) {
 
     ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 48, 0);
     ALLEGRO_FONT* font = al_load_font("ROBOTECH_GP.ttf", 36, 0);
-    ALLEGRO_FONT* font_paragraph = al_load_font("HelveticaLTStdLight.ttf", 24, 0);
+    ALLEGRO_FONT* font_paragraph = al_load_font("HelveticaLTStdLight.ttf", 22, 0);
 
     initialize_al_component(font, "font");
     initialize_al_component(font_title, "font titulo");
@@ -80,13 +80,13 @@ void CreditosDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* para
     //Pantalla
     al_clear_to_color(al_map_rgb(0, 0, 0));
     //Titulo Créditos
-    al_draw_text(title, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 2, 0.7 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "CrEditos");
+    al_draw_text(title, MapaDeColor(INDIGO), _WINDOW_WIDTH / 2, 0.7 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "CrEditos");
     //Cuerpo Créditos
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 1.4 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
         "Proyecto final para la materia de Programacion de Computadoras hecho por alumnos de la");
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 1.9 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
         "Universidad de Sonora.");
-    al_draw_text(title, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 2.4 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
+    al_draw_text(title, MapaDeColor(INDIGO), _WINDOW_WIDTH / 9, 2.4 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
         "Integrantes: ");
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 3.1 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
         "Chelsea Durazo Duarte");
@@ -97,7 +97,7 @@ void CreditosDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* para
 
 
     //BOTON REGRESAR
-    al_draw_filled_rectangle(_WINDOW_WIDTH / 5, 7.5 * _WINDOW_HEIGTH / 9, 4 * _WINDOW_WIDTH / 5, 8.5 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0, 0, 0.5, 0.3));
+    al_draw_filled_rectangle(_WINDOW_WIDTH / 5, 7.5 * _WINDOW_HEIGTH / 9, 4 * _WINDOW_WIDTH / 5, 8.5 * _WINDOW_HEIGTH / 9, MapaDeColor(INDIGO));
     al_draw_text(text, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 2, 7.7 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER,
         "Presiona ESC, Espacio o ENTER para regresar.");
 }

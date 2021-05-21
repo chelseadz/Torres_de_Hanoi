@@ -120,30 +120,26 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 void MenuDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text) {
 
     //Pantalla
-    al_clear_to_color(al_map_rgb(0, 0, 0));
+    al_clear_to_color(MapaDeColor(INDIGO));
     //Titulo
     al_draw_text(title, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 2, _WINDOW_HEIGTH / 9,
         ALLEGRO_ALIGN_CENTER, "TORRES DE HANOI");
+    
     //Boton Jugar
-    al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 3 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3,
-        4 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0, 0, 0.5, 0.3));
-    al_draw_text(text, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 2, 3 * _WINDOW_HEIGTH / 9,
-        ALLEGRO_ALIGN_CENTER, "JUGAR");
+    DrawButton(_WINDOW_WIDTH / 3, 3 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3,
+        4 * _WINDOW_HEIGTH / 9, MapaDeColor(METALIC_BRONZE), text, "JUGAR", al_map_rgb(255, 255, 255));
+   
     //Boton Instrucciones
-    al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 4.5 * _WINDOW_HEIGTH / 9,
-        2 * _WINDOW_WIDTH / 3, 5.5 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0, 0, 0.5, 0.5));
-    al_draw_text(text, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 2, 4.5 * _WINDOW_HEIGTH / 9,
-        ALLEGRO_ALIGN_CENTER, "INSTRUCCIONES");
+    DrawButton(_WINDOW_WIDTH / 3, 4.5 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3,
+        5.5 * _WINDOW_HEIGTH / 9, MapaDeColor(METALIC_BRONZE), text, "INSTRUCCIONES", al_map_rgb(255, 255, 255));
+
     //Boton Creditos
-    al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 6 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3,
-        7 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0, 0, 0.5, 0.5));
-    al_draw_text(text, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 2, 6 * _WINDOW_HEIGTH / 9,
-        ALLEGRO_ALIGN_CENTER, "CREDITOS");
+    DrawButton(_WINDOW_WIDTH / 3, 6 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3,
+        7 * _WINDOW_HEIGTH / 9, MapaDeColor(METALIC_BRONZE), text, "CREDITOS", al_map_rgb(255, 255, 255));
+
     //Boton Salir
-    al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 7.5 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3,
-        8.5 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0, 0, 0.5, 0.5));
-    al_draw_text(text, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 2, 7.5 * _WINDOW_HEIGTH / 9,
-        ALLEGRO_ALIGN_CENTER, "SALIR");
+    DrawButton(_WINDOW_WIDTH / 3, 7.5 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3,
+        8.5 * _WINDOW_HEIGTH / 9, MapaDeColor(METALIC_BRONZE), text, "SALIR", al_map_rgb(255, 255, 255));
     
     al_flip_display();
 }
