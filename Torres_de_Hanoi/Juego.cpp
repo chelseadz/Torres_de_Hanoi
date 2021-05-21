@@ -40,7 +40,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
     int Game_discs;
     Game_discs = DiskNumber(queue);
-
+    if (Game_discs == 0) return;
 
     Estaca::Initialize_stakes(_STICK_SIZE, 20, Game_discs);
 
@@ -134,7 +134,7 @@ int DiskNumber(ALLEGRO_EVENT_QUEUE* queue) {
     ALLEGRO_EVENT event;
 
     int button_place = 0;
-    int Disks = 3;
+    int Disks = (_MIN_DISCS + _MAX_DISCS) / 2;
 
     while (1)
     {
@@ -151,23 +151,24 @@ int DiskNumber(ALLEGRO_EVENT_QUEUE* queue) {
 
             if (event.keyboard.keycode == ALLEGRO_KEY_UP) {
                 button_place = _ADD;
-                
-                if (Disks < MAX_DISKS)
+
+                if (Disks < _MAX_DISCS)
                     Disks++;
             }
-
-            if (event.keyboard.keycode == ALLEGRO_KEY_DOWN) {
+            else if (event.keyboard.keycode == ALLEGRO_KEY_DOWN) {
 
                 button_place = _SUBSTRACT;
 
-                if (Disks > 3)
+                if (Disks > _MIN_DISCS)
                     Disks--;
-            }
-          
-            if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER)
+            } else if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER)
                 done = true;
+            else if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
+                return 0;
 
             break;
+
+            
 
         case ALLEGRO_EVENT_DISPLAY_CLOSE:
             done = true;
