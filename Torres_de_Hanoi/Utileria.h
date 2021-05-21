@@ -78,7 +78,7 @@ float Elipse(float a, float b, float p, float q, float x);
  * \param nombre_color Nombre del color de que se requiere el mapa
  * \return al_map_rgb() El mapa de color correspondiente
  */
-ALLEGRO_COLOR MapaDeColor(int nombre_color);
+ALLEGRO_COLOR ColorMap(int nombre_color);
 
 /**
  * \brief Dibuja un botón en pantalla 

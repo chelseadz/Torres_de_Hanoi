@@ -30,7 +30,7 @@ float Elipse(float a, float b, float p, float q, float x) {
 	return temp;
 }
 
-ALLEGRO_COLOR MapaDeColor (int nombre_color){
+ALLEGRO_COLOR ColorMap (int nombre_color){
 	
 	switch (nombre_color)
 	{
@@ -76,6 +76,9 @@ ALLEGRO_COLOR MapaDeColor (int nombre_color){
 }
 
 void DrawButton(float x1, float y1, float x2, float y2, ALLEGRO_COLOR button_color, ALLEGRO_FONT* text, const char string[], ALLEGRO_COLOR text_color){
+	al_draw_filled_rectangle(x1 + 10, y1 - 10, x2 + 10, y2 - 10, text_color);
+	al_draw_filled_triangle(x1 + 10, y1 - 10, x1, y1, x1 + 10, y1, text_color);
+	al_draw_filled_triangle(x2 + 10, y2 - 10, x2, y2, x2, y2 - 10, text_color);
 	al_draw_filled_rectangle(x1, y1, x2, y2, button_color);
-	al_draw_text(text, text_color, (x2 + x1)/2, (y2 + y1)/2, ALLEGRO_ALIGN_CENTER, string);
+	al_draw_text(text, text_color, (x2 + x1)/2, 0.8*y1 + 0.2*y2, ALLEGRO_ALIGN_CENTER, string);
 }

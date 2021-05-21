@@ -21,7 +21,7 @@
   * \param queue Cola de eventos principal.
   * \return void
   */
-void Creditos(ALLEGRO_EVENT_QUEUE* queue);
+void Credits(ALLEGRO_EVENT_QUEUE* queue);
 
 /**
  * \brief Muesta el texto de créditos en pantalla
@@ -32,6 +32,6 @@ void Creditos(ALLEGRO_EVENT_QUEUE* queue);
  * 
  * \return void
  */
-void CreditosDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph);
+void CreditsDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph);
 
 #endif 
