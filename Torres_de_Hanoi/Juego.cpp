@@ -55,7 +55,6 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     Estaca fin(EST_POS::FIN_X, EST_POS::Y_ESTS);
 
 
-    aux.InitDiscsAndRods();
     init.InitDiscsAndRods();
 
 
@@ -67,6 +66,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     bool right = false;
     bool finish_movement = false;
     bool selecting = true;
+    int Rod_Origin, Rod_Dest;
 
     ALLEGRO_BITMAP* base_and_stakes = al_load_bitmap(_BASE_FILENAME);
     try {
@@ -81,46 +81,100 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
         switch (event.type)
         {
-            case ALLEGRO_EVENT_TIMER:
+        case ALLEGRO_EVENT_TIMER:
+            
+            
+            
+            if (selecting) {
 
-                if (selecting) {
-                    
-                    int Rod_Origin = What_to_Move(queue, init, aux, fin);
-                    int Rod_Dest = Where_to_Move(queue, Rod_Origin, init, aux, fin);
+                Rod_Origin = What_to_Move(queue, init, aux, fin);
+                Rod_Dest = Where_to_Move(queue, Rod_Origin, init, aux, fin);
+                selecting = false;
+                move = true;
+            }
 
-                    selecting = false;
-                }
+            if (Rod_Origin == Rod_Dest)
+                selecting = true;
 
-                
-                if (move && right) {
+            if (Rod_Origin == _INIT && Rod_Dest == _AUX) {
+                if (move) {
+                    if (!init.move_to_stake(aux, move))
+                        return;
+                    if (!move) {
+                        selecting = true;
+                    }
+                } 
+            }
+               
+            if (Rod_Origin == _INIT && Rod_Dest == _FIN) {
+                if (move) {
                     if (!init.move_to_stake(fin, move))
                         return;
-                    if (!move) right = false;
-                } else if (move)
+                    if (!move) {
+                        selecting = true;
+                    }
+                }
+            }
+
+            if (Rod_Origin == _AUX && Rod_Dest == _INIT) {
+                if (move) {
                     if (!aux.move_to_stake(init, move))
                         return;
-
-                redraw = true;
-                break;
-
-            case ALLEGRO_EVENT_KEY_DOWN:
-                if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
-                    if (move) move = 0;
-                    else done = true;
-
-                else if (event.keyboard.keycode == ALLEGRO_KEY_RIGHT) {
-                    move = true;
-                    right = true;
-                } else if (event.keyboard.keycode == ALLEGRO_KEY_LEFT) {
-                    move = true;
+                    if (!move) {
+                        selecting = true;
+                    }
                 }
-                
-                break;
+            }
 
-            case ALLEGRO_EVENT_DISPLAY_CLOSE:
-                done = true;
-                exit(0);
-                break;
+            if (Rod_Origin == _AUX && Rod_Dest == _FIN) {
+                if (move) {
+                    if (!aux.move_to_stake(fin, move))
+                        return;
+                    if (!move) {
+                        selecting = true;
+                    }
+                }
+            }
+
+            if (Rod_Origin == _FIN && Rod_Dest == _INIT) {
+                if (move) {
+                    if (!fin.move_to_stake(init, move))
+                        return;
+                    if (!move) {
+                        selecting = true;
+                    }
+                }
+            }
+
+            if (Rod_Origin == _FIN && Rod_Dest == _AUX) {
+                if (move) {
+                    if (!fin.move_to_stake(aux, move))
+                        return;
+                    if (!move) {
+                        selecting = true;
+                    }
+                }
+            }
+ 
+            redraw = true;
+            break;
+
+        case ALLEGRO_EVENT_KEY_DOWN:
+            
+            if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
+                if (move) move = 0;
+                else done = true;
+            
+            else if (event.keyboard.keycode == ALLEGRO_KEY_SPACE) {
+                move = true;
+            }
+        
+            break;
+
+        case ALLEGRO_EVENT_DISPLAY_CLOSE:
+            done = true;
+            exit(0);
+            break;
         }
 
         if (done)
@@ -140,6 +194,8 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
             redraw = false;
         }
+
+
 
     }
 
@@ -371,7 +427,7 @@ int Where_to_Move(ALLEGRO_EVENT_QUEUE* queue, int Origin, Estaca& init, Estaca& 
     bool redraw = true;
     ALLEGRO_EVENT event;
 
-    int button_place = 0;
+    int button_place = Origin;
 
     while (1)
     {
