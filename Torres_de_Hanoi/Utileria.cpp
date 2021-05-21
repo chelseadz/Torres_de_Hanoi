@@ -30,7 +30,7 @@ float Elipse(float a, float b, float p, float q, float x) {
 	return temp;
 }
 
-ALLEGRO_COLOR MapaDeColor (Color nombre_color){
+ALLEGRO_COLOR MapaDeColor (int nombre_color){
 	
 	switch (nombre_color)
 	{
