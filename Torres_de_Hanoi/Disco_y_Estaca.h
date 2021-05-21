@@ -120,9 +120,11 @@ public:
 	 * \param dest Estaca destino para el disco superior de la estaca que llama a la función.
 	 * \param moving Si durante la función se hace false, hace saber a la función que llama que el movimiento
 	 * ya se ha completado.
+	 * \param Si finalize es true, se termine el movimiento abrubtamente y la función queda en un estado
+	 * válido para recibir la siguiente instrucción de traslado.
 	 * \return True si el movimiento sí se puede hacer. False si el movimiento es inválido.
 	 */
-	bool move_to_stake(Estaca& dest, bool& moving);
+	bool move_to_stake(Estaca& dest, bool& moving, bool finalize);
 
 	/**
 	 * \brief Destruye la estaca junto con su arreglo de discos.

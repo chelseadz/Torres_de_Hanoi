@@ -129,7 +129,7 @@ bool Estaca::full() {
 }
 
 
-bool Estaca::move_to_stake(Estaca& dest, bool& moving) {
+bool Estaca::move_to_stake(Estaca& dest, bool& moving, bool finalize) {
 	
 	//Estas variables estáticas solo se inicializan la primera vez que se llama a la función.
 	static bool first = 1;
@@ -152,6 +152,15 @@ bool Estaca::move_to_stake(Estaca& dest, bool& moving) {
 		first = 0;
 	}
 	
+	if (finalize && moving_disc != NULL) {
+		dest.push_back(*moving_disc);
+		pop_back();
+		moving_disc = NULL;
+
+		moving = 0;
+		first = 1;
+		return true;
+	}
 
 
 	if (moving_disc->y_pos > y_base_pos - Estaca::stick_height &&

@@ -76,22 +76,23 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
             case ALLEGRO_EVENT_TIMER:
                 
                 if (move && right) {
-                    if (!init.move_to_stake(fin, move))
+                    if (!init.move_to_stake(fin, move, finish_movement))
                         return;
                     if (!move) right = false;
                 } else if (move)
-                    if (!aux.move_to_stake(init, move))
+                    if (!aux.move_to_stake(init, move, finish_movement))
                         return;
+
+                if (finish_movement) finish_movement = false;
 
                 redraw = true;
                 break;
 
             case ALLEGRO_EVENT_KEY_DOWN:
-                if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
-                    if (move) move = 0;
+                if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+                    if (move) finish_movement = true;
                     else done = true;
-
-                else if (event.keyboard.keycode == ALLEGRO_KEY_RIGHT) {
+                } else if (event.keyboard.keycode == ALLEGRO_KEY_RIGHT) {
                     move = true;
                     right = true;
                 } else if (event.keyboard.keycode == ALLEGRO_KEY_LEFT) {
