@@ -25,6 +25,8 @@
 
 #define _AN_TIME 0.5f /*< Tiempo en segundos que dura la animación de movimiento de una estaca a otra. */
 
+#define _ARC_HEIGHT 100  /*< Longitud de semieje vertical de trayectoria eliptica que sigue el disco al moverse. */
+
 struct Disco {
 	float width, height; /*< Altura y ancho del disco. */ 
 	int x_pos, y_pos; /*< Coordenadas del centro del disco. */

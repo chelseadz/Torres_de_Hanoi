@@ -13,9 +13,7 @@
 #include <cstdlib>
 #include <climits>
 
-#define _ARC_HEIGHT 100  /*< Longitud de semieje vertical de trayectoria eliptica que sigue el disco al moverse. */
 
- 
 #define _NULL_DISCS INT_MAX
 
 int Estaca::max_discs = _NULL_DISCS;
