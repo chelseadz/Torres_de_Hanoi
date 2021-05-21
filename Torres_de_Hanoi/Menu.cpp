@@ -123,11 +123,11 @@ void MenuDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text) {
     al_clear_to_color(ColorMap(INDIGO));
     //Titulo
     al_draw_text(title, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 2, _WINDOW_HEIGTH / 9,
-        ALLEGRO_ALIGN_CENTER, "TOWERS OF HANOI");
+        ALLEGRO_ALIGN_CENTER, "TOWER OF HANOI");
     
     //Boton Jugar
     DrawButton(_WINDOW_WIDTH / 3, 3 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3,
-        4 * _WINDOW_HEIGTH / 9, ColorMap(METALIC_BRONZE), text, "", al_map_rgb(255, 255, 255));
+        4 * _WINDOW_HEIGTH / 9, ColorMap(METALIC_BRONZE), text, "SALIR", al_map_rgb(255, 255, 255));
    
     //Boton Instrucciones
     DrawButton(_WINDOW_WIDTH / 3, 4.5 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3,

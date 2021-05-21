@@ -214,7 +214,7 @@ void OriginDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragr
     //Pantalla
     al_clear_to_color(al_map_rgb(0, 0, 0));
     //Titulo Origen
-    al_draw_text(title, ColorMap(INDIGO), _WINDOW_WIDTH / 2, 0.5 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "Origin of the Towers of Hanoi");
+    al_draw_text(title, ColorMap(INDIGO), _WINDOW_WIDTH / 2, 0.5 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "Origin of the Tower of Hanoi");
     //Cuerpo Origen
     al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 1.2 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
         "According to legend, the three posts refer to three diamond spiers of a cubit in height");
