@@ -61,12 +61,12 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     bool right = false;
     bool finish_movement = false;
 
-    //ALLEGRO_BITMAP* base_and_stakes = al_load_bitmap(_BASE_FILENAME);
-    //try {
-    //    initialize_al_component(al_load_bitmap, "Imagen de base.");
-    //} catch (const std::runtime_error& e) {
-    //    std::cout << e.what() << '\n';
-    //}
+    ALLEGRO_BITMAP* base_and_stakes = al_load_bitmap(_BASE_FILENAME);
+    try {
+        initialize_al_component(al_load_bitmap, "Imagen de base.");
+    } catch (const std::runtime_error& e) {
+        std::cout << e.what() << '\n';
+    }
 
     while (1)
     {
@@ -114,7 +114,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
 
-            //al_draw_bitmap(base_and_stakes, 0, 0, 0);
+            al_draw_bitmap(base_and_stakes, 0, 0, 0);
 
             init.PrintRodDiscs();
             aux.PrintRodDiscs();
