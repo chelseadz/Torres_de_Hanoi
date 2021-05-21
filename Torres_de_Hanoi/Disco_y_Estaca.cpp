@@ -101,8 +101,8 @@ void Estaca::PrintRod() {
 	//Palo Estaca
 
 	//Estaca
-	al_draw_filled_rectangle((-stick_width) / 2 + x_base_pos, y_base_pos,
-		(stick_width) / 2 + x_base_pos, y_base_pos - stick_height, al_map_rgba_f(0, 0, 0.5, 0.3));
+	//al_draw_filled_rectangle((-stick_width) / 2 + x_base_pos, y_base_pos,
+	//	(stick_width) / 2 + x_base_pos, y_base_pos - stick_height, al_map_rgba_f(0, 0, 0.5, 0.3));
 
 	for (int i = 0; i < curr_n_discs; i++) {
 		discs[i].draw();
@@ -155,16 +155,20 @@ bool Estaca::move_to_stake(Estaca& dest, bool& moving) {
 
 	}
 	else if (moving_disc->x_pos >= dest.x_base_pos) {
-		moving_disc->x_pos = dest.x_base_pos;
+		//moving_disc->x_pos = dest.x_base_pos;
+		
+		if (vy_3 < 0) vy_3 = 5;
 		moving_disc->y_pos += vy_3;
 
-		if (moving_disc->y_pos >= dest.y_base_pos - dest.curr_disc_column_height - moving_disc->height / 2.0f) {
-			moving = 0;
-			first = 1;
 
+
+		if (moving_disc->y_pos >= dest.y_base_pos - dest.curr_disc_column_height - moving_disc->height / 2.0f) {
 			dest.push_back(*moving_disc);
 			pop_back();
 			moving_disc = NULL;
+			
+			moving = 0;
+			first = 1;
 		}
 	
 	}
