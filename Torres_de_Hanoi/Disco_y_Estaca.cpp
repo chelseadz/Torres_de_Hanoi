@@ -14,7 +14,7 @@
 
 #define _ARC_HEIGHT 100
 
-#define _AN_TIME 1.0f
+#define _AN_TIME 0.5f
 
 
 int Estaca::max_discs;
@@ -80,7 +80,9 @@ const Disco& Estaca::last() {
 bool Estaca::pop_back() {
 	if (curr_n_discs < 1) return false;
 	
-	curr_disc_column_height -= discs[curr_n_discs - 1].height;
+	curr_disc_column_height -= discs[curr_n_discs - 1].height / 2.0f;
+	if (curr_n_discs == 1) curr_disc_column_height = 0;
+
 	--curr_n_discs;
 	return true;
 }
@@ -132,6 +134,8 @@ bool Estaca::move_to_stake(Estaca& dest, bool& moving) {
 
 	static Disco* moving_disc;
 	static float vy_1, vx_2, vy_3;
+
+	static bool movement_done = 0;
 
 
 	if (first) {
