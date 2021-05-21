@@ -73,7 +73,8 @@ void ChangeDiskNumberDisplay(int Button);
  * \param n_discs cantidad de discos en el juego.
  * \return Número mínimo de movimientos.
  */
-int Min_n_moves(int n_discs);
+void PrintRod(double pos_x, double pos_y, int numDisks);
 
+void FirstRod(int numDiscs);
 
 #endif 

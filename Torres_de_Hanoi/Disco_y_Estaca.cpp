@@ -116,10 +116,9 @@ void Estaca::InitDiscsAndRods() {
 	const float _INIT_D_HEIGHT = _LARGEST_DISC_HEIGTH;
 	
 	for (int i = 0; i < max_discs; i++) {
-		ALLEGRO_COLOR disc_color = MapaDeColor(max_discs - i);
-		push_back(Disco{ _INIT_D_WIDTH * (1.0f - (0.1f) * i), _INIT_D_HEIGHT * (1.0f - (0.075f) * i) ,
-			0, 0, disc_color });
-
+	
+		ALLEGRO_COLOR disc_color = ColorMap(max_discs - i);
+		push_back(Disco{ _INIT_D_WIDTH - (0.1f)*i* _INIT_D_WIDTH, _INIT_D_HEIGHT, 0, 0, disc_color });
 	}
 }
 
