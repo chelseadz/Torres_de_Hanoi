@@ -140,7 +140,6 @@ void MenuDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text) {
     DrawButton(_WINDOW_WIDTH / 3, 7.5 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3,
         8.5 * _WINDOW_HEIGTH / 9, text, "LEAVE");
     
-    al_flip_display();
 }
 
 void MoveSelection(int Button) {
