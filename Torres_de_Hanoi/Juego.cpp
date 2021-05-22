@@ -21,7 +21,7 @@
 
 enum EST_POS {
     INIT_X = 294,
-    Y_ESTS = 493,
+    Y_ESTS = 510,
     AUX_X = 600,
     FIN_X = 914
 };
@@ -36,14 +36,11 @@ enum {
 
 #define _ARROW_SPACE 75
 
-#define _BASE_FILENAME "base_con_estacas.png"
+#define _BASE_FILENAME "base_con_estacas_delgada.png"
 #define _ERROR_SOUND_FILENAME "gnome_error.wav"
 
 
 void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
-
-   
-
 
     try {
         initialize_al_component(al_init_image_addon(), "image component.");
