@@ -41,3 +41,21 @@ void Quicksort(T arr[], int start, int end) {
 
 	}
 }
+
+template < class T >
+T Median_of_three(T i, T j, T k) {
+	if (!(i < j)) {
+		if (j < k) return j;
+		else {
+			if (k < i) return i;
+			return k;
+		}
+	}
+	else {
+		if (k < i) {
+			if (k < j) return j;
+			return k;
+		}
+		return i;
+	}
+}

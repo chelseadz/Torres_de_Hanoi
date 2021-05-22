@@ -115,6 +115,18 @@ void DrawLogo(const ALLEGRO_FONT* font, int font_size, float x, float y);
 template < class T>
 void Quicksort(T arr[], int start, int end);
 
+/**
+ * \brief Devuelve la mediana de tres valores.
+ * \details Se usa como auxiliar para escoger el pivote en el algoritmo quicksort.
+ *
+ * \param T i primer elemento de tipo génerico.
+ * \param T j segundo elemento a considerar. De tipo genérico.
+ * \param T k tercer elemento de tipo genérico a considerar.
+ * \return int mediana de i, j y k.
+ */
+template < class T >
+T Median_of_three(T i, T j, T k);
+
 #include "Utileria.tpp"
 
 #endif
