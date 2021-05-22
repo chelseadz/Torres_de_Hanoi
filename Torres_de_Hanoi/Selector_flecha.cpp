@@ -50,7 +50,7 @@ void Arrow_selector::draw() {
 
 		int x_pos = available_stakes[selected_stake]->base_pos_x();
 
-		ALLEGRO_COLOR color = ColorMap(((selected) ? (int)_SELECTED_COLOR : (int)_NORMAL_COLOR));
+		ALLEGRO_COLOR color = ((selected) ? _SELECTED_COLOR : _NORMAL_COLOR);
 
 		al_draw_filled_triangle(x_pos - _ARROW_WIDTH / 2.0f, y_pos - _ARROW_HEIGTH / 2.0f,
 			x_pos + _ARROW_WIDTH / 2.0f, y_pos - _ARROW_HEIGTH / 2.0,

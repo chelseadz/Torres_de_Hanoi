@@ -18,7 +18,7 @@
 /** Colores usados para imprimir los discos y para los textos.
  */
 const ALLEGRO_COLOR WHITE = al_map_rgb(255, 255, 255),
-	VERY_PALE_YELLOW = al_map_rgb(251, 216, 136),
+	VERY_PALE_YELLOW = al_map_rgb(253, 250, 195),
 	PALE_YELLOW = al_map_rgb(248, 181, 76),
 	PALE_YELLOW_RED = al_map_rgb(255, 212, 87),
 	YELLOW_RED = al_map_rgb(255, 200, 48),
@@ -28,7 +28,7 @@ const ALLEGRO_COLOR WHITE = al_map_rgb(255, 255, 255),
 	METALIC_BRONZE = al_map_rgb(139, 81, 33),
 	ORANGE = al_map_rgb(255, 108, 0),
 	YELLOW = al_map_rgb(255, 225, 0),
-	RED = al_map_rgb(195, 86, 0),
+	RED = al_map_rgb(255, 0, 0),
 	UNITED_NATIONS_BLUE = al_map_rgb(82, 158, 233),
 	INDIGO = al_map_rgb(56, 109, 197),
 	HANBLUE = al_map_rgb(19, 40, 107),
