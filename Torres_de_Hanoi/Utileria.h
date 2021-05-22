@@ -40,7 +40,7 @@ enum {
 
 /*< Posicion inicial de la pantalla (px desde la esquina superior izquierda) en x y en y. */
 enum {
-	_WINDOW_POS_X = 0, /*< Posición inicial de la pantalla en x en px, iniciando del margen izuqierdo. */
+	_WINDOW_POS_X = 130, /*< Posición inicial de la pantalla en x en px, iniciando del margen izuqierdo. */
 	_WINDOW_POS_Y = 0 /*< Posición inicial de la pantalla en y en px, iniciando del margen superior. */
 };
 
