@@ -87,6 +87,17 @@
     <Image Include="estaca_media_mas_larga.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="base_con_estacas_delgada.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="cambiar_botones.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="seleccionar_boton.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
   </ItemGroup>
   <ItemGroup>
     <Media Include="gnome_error.wav">

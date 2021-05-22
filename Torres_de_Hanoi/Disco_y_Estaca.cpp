@@ -16,17 +16,17 @@
 
 #define _NULL_DISCS INT_MAX
 
+ALLEGRO_COLOR SelectColor(int number);
+
 int Estaca::max_discs = _NULL_DISCS;
 int Estaca::stick_height;
-int Estaca::stick_width;
 
-bool Estaca::Initialize_stakes(int height, int width, int _max_discs) {
+bool Estaca::Initialize_stakes(int height, int _max_discs) {
 	if ((_max_discs < 0 || _max_discs > _MAX_DISC_CAPACTITY) && _max_discs != _NULL_DISCS)
 		return false;
 
 	Estaca::max_discs = _max_discs;
 	Estaca::stick_height = height;
-	Estaca::stick_width = width;
 
 	return true;
 }
@@ -108,7 +108,21 @@ void Estaca::PrintRodDiscs() {
 	}
 }
 
+ALLEGRO_COLOR SelectColor(int number) {
 
+	switch (number)
+	{
+		case 0: return VERY_PALE_YELLOW;
+		case 1:	return PALE_YELLOW;
+		case 2: return PALE_YELLOW_RED;
+		case 3: return YELLOW_RED;
+		case 4: return MAXIMUM_YELLOW_RED;
+		case 5: return BRORANGE;
+		case 6: return BRONZE;
+		case 7: return METALIC_BRONZE;
+		default: return BLACK;
+	}
+}
 void Estaca::InitDiscsAndRods() {
 
 	if (curr_n_discs != 0) throw std::logic_error("La estaca no se puede inicializar.");
@@ -117,36 +131,9 @@ void Estaca::InitDiscsAndRods() {
 	const float _INIT_D_HEIGHT = _LARGEST_DISC_HEIGTH;
 	
 	for (int i = 0; i < max_discs; i++) {
-		ALLEGRO_COLOR disc_color;
-		switch (i)
-		{
-			case 0: 
-				disc_color = VERY_PALE_YELLOW;
-				break;
-			case 1: 
-				disc_color = PALE_YELLOW;
-				break;
-			case 2: 
-				disc_color = PALE_YELLOW_RED;
-				break;
-			case 3: 
-				disc_color = YELLOW_RED;
-				break;
-			case 4: 
-				disc_color = MAXIMUM_YELLOW_RED;
-				break;
-			case 5: 
-				disc_color = BRORANGE;
-				break;
-			case 6: 
-				disc_color = BRONZE;
-				break;
-			case 7: 
-				disc_color = METALIC_BRONZE;
-				break;
-		}
-		push_back(Disco{ _INIT_D_WIDTH - (0.1f) * i* _INIT_D_WIDTH,
-			_INIT_D_HEIGHT - (0.07f) * i * _INIT_D_HEIGHT, 0, 0, disc_color });
+		ALLEGRO_COLOR disc_color = SelectColor(i);
+		
+		push_back(Disco{ _INIT_D_WIDTH - (0.1f) * i* _INIT_D_WIDTH, _INIT_D_HEIGHT, 0, 0, disc_color });
 	}
 }
 

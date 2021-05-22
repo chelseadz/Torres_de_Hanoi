@@ -46,11 +46,10 @@ public:
 	 * un objeto Estaca.
 	 * 
 	 * \param height Altura de los palos de cada estaca.
-	 * \param width Ancho de los palos de cada estaca.
 	 * \param max_discs Máxima cantidad de discos que una estaca puede recibir.
 	 * \return True si la inicialización fue exitosa. False si algún parametro fue invalido.
 	 */
-	bool static Initialize_stakes(int height, int width, int max_discs);
+	bool static Initialize_stakes(int height, int max_discs);
 
 	/**
 	 * \brief Inicializa estaca con la posición desde donde se empiezan a colocar discos. 
@@ -148,7 +147,6 @@ public:
 
 private:
 	static int stick_height; 
-	static int stick_width;
 	static int max_discs;
 
 	unsigned short x_base_pos, y_base_pos;
