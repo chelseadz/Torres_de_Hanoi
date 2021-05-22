@@ -18,7 +18,7 @@
 void Credits(ALLEGRO_EVENT_QUEUE* queue) {
 
 
-    ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 48, 0);
+    ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 36, 0);
     ALLEGRO_FONT* font = al_load_font("ROBOTECH_GP.ttf", 36, 0);
     ALLEGRO_FONT* font_paragraph = al_load_font("HelveticaLTStdLight.ttf", 22, 0);
 
@@ -77,26 +77,29 @@ void Credits(ALLEGRO_EVENT_QUEUE* queue) {
 void CreditsDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph) {
 
     //Pantalla
-    al_clear_to_color(al_map_rgb(0, 0, 0));
+    al_clear_to_color(HANBLUE);
+    
+    //Logo
+    DrawLogo(text, 36, _WINDOW_WIDTH / 9, 0.1 * _WINDOW_HEIGTH / 9);
+
     //Titulo Créditos
-    al_draw_text(title, ColorMap(INDIGO), _WINDOW_WIDTH / 2, 0.7 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "Credits");
+    al_draw_text(title, UNITED_NATIONS_BLUE, _WINDOW_WIDTH / 2, 0.7 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "Credits");
     //Cuerpo Créditos
-    al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 1.4 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
+    al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 1.4 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
         "Final project made by the Team Rocket for the subject computer programming taught ");
-    al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 1.9 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
+    al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 1.9 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
         "by the teacher Irene Rodriguez from the Universidad de Sonora.");
-    al_draw_text(title, ColorMap(INDIGO), _WINDOW_WIDTH / 9, 2.4 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "Members of the team: ");
-    al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 3.1 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
+    al_draw_text(title, UNITED_NATIONS_BLUE, _WINDOW_WIDTH / 9, 2.4 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
+        "Team members: ");
+    al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 3.1 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
         "Chelsea Durazo Duarte");
-    al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 3.6 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
+    al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 3.6 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
         "Enrique Alejandro Giottonini Herrera");
-    al_draw_text(paragraph, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 9, 4.1 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
+    al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 4.1 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
         "Diego Torres Gonzales");
 
     //BOTON REGRESAR
     DrawButton(_WINDOW_WIDTH / 5, 7.5 * _WINDOW_HEIGTH / 9, 4 * _WINDOW_WIDTH / 5,
-        8.5 * _WINDOW_HEIGTH / 9, ColorMap(METALIC_BRONZE),
-        text, "Press ESC, SPACE or ENTER to go back.", al_map_rgb(255, 255, 255));
+        8.5 * _WINDOW_HEIGTH / 9, text, "Press ESC, SPACE or ENTER to go back.");
 }
 

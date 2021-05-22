@@ -37,6 +37,9 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
         return;
     }
 
+    ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 72, 0);
+    initialize_al_component(font_title, "font titulo");
+
     int Game_discs;
     Game_discs = DiskNumber(queue);
     if (Game_discs == 0) return;
@@ -114,6 +117,8 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
 
+            DrawLogo(font_title, 72, _WINDOW_WIDTH / 2, 0.2 * _WINDOW_HEIGTH / 12);
+
             al_draw_bitmap(base_and_stakes, 0, 0, 0);
 
             init.PrintRodDiscs();
@@ -190,7 +195,6 @@ int DiskNumber(ALLEGRO_EVENT_QUEUE* queue) {
 
         if (redraw && al_is_event_queue_empty(queue))
         {
-            
             NumberOfDisksDisplay(font_title, font, Disks);
             ChangeDiskNumberDisplay(button_place);
 
@@ -210,23 +214,27 @@ int DiskNumber(ALLEGRO_EVENT_QUEUE* queue) {
 void NumberOfDisksDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, int Disks) {
 
     //Screen
-    al_clear_to_color(al_map_rgb(0, 0, 0));
+    al_clear_to_color(HANBLUE);
+
+    //logo del juego
+    DrawLogo(text, 36, _WINDOW_WIDTH / 9, 0.1 * _WINDOW_HEIGTH / 9);
+
     //Title
-    al_draw_text(title, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 2, _WINDOW_HEIGTH / 5, ALLEGRO_ALIGN_CENTER, "Numero de Discos: ");
+    al_draw_text(title, WHITE, _WINDOW_WIDTH / 2, _WINDOW_HEIGTH / 5, ALLEGRO_ALIGN_CENTER, "Number of discs: ");
 
     //Disk Numbers
     std::string tmp = std::to_string(Disks);
     char const* num_char = tmp.c_str();
 
-    al_draw_text(title, al_map_rgb(255, 255, 255), 2.5 * _WINDOW_WIDTH / 5, 2.25* _WINDOW_HEIGTH / 5, ALLEGRO_ALIGN_CENTER, num_char);
+    al_draw_text(title, WHITE, 2.5 * _WINDOW_WIDTH / 5, 2.25* _WINDOW_HEIGTH / 5, ALLEGRO_ALIGN_CENTER, num_char);
 
     //Add Button
-    al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 2 * _WINDOW_HEIGTH / 5, 2.35 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGTH / 5, 2.65 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGTH / 5, al_map_rgba_f(239, 255, 0, 0.3));
+    al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 2 * _WINDOW_HEIGTH / 5, 2.35 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGTH / 5, 2.65 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGTH / 5, YELLOW);
     //Substract Button
-    al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 3 * _WINDOW_HEIGTH / 5, 2.35 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGTH / 5, 2.65 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGTH / 5, al_map_rgba_f(239, 255, 0, 0.3));
+    al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 3 * _WINDOW_HEIGTH / 5, 2.35 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGTH / 5, 2.65 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGTH / 5, YELLOW);
 
     //Bottom Text
-    al_draw_text(text, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 2, 3.5 * _WINDOW_HEIGTH / 5, ALLEGRO_ALIGN_CENTER, "Click ESPACIO o ENTER para continuar. ");
+    al_draw_text(text, WHITE, _WINDOW_WIDTH / 2, 3.5 * _WINDOW_HEIGTH / 5, ALLEGRO_ALIGN_CENTER, "Press SPACE or ENTER to continue. ");
 
 }
 
@@ -234,12 +242,12 @@ void ChangeDiskNumberDisplay(int Button) {
 
     switch (Button)
     {
-    case _ADD:
-        al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 2 * _WINDOW_HEIGTH / 5, 2.35 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGTH / 5, 2.65 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGTH / 5, al_map_rgba_f(0.5, 0.5, 0.5, 0.5));
-        break;
-    case _SUBSTRACT:
-        al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 3 * _WINDOW_HEIGTH / 5, 2.35 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGTH / 5, 2.65 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGTH / 5, al_map_rgba_f(0.5, 0.5, 0.5, 0.5));
-        break;
+        case _ADD:
+            al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 2 * _WINDOW_HEIGTH / 5, 2.35 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGTH / 5, 2.65 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGTH / 5, VERY_PALE_YELLOW);
+            break;
+        case _SUBSTRACT:
+            al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 3 * _WINDOW_HEIGTH / 5, 2.35 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGTH / 5, 2.65 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGTH / 5, VERY_PALE_YELLOW);
+            break;
     }
 }
 

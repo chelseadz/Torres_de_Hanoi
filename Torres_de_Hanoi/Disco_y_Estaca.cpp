@@ -108,6 +108,7 @@ void Estaca::PrintRodDiscs() {
 	}
 }
 
+
 void Estaca::InitDiscsAndRods() {
 
 	if (curr_n_discs != 0) throw std::logic_error("La estaca no se puede inicializar.");
@@ -116,9 +117,35 @@ void Estaca::InitDiscsAndRods() {
 	const float _INIT_D_HEIGHT = _LARGEST_DISC_HEIGTH;
 	
 	for (int i = 0; i < max_discs; i++) {
-	
-		ALLEGRO_COLOR disc_color = ColorMap(max_discs - i);
-		push_back(Disco{ _INIT_D_WIDTH - (0.1f)*i* _INIT_D_WIDTH, _INIT_D_HEIGHT, 0, 0, disc_color });
+		ALLEGRO_COLOR disc_color;
+		switch (i)
+		{
+			case 0: 
+				disc_color = VERY_PALE_YELLOW;
+				break;
+			case 1: 
+				disc_color = PALE_YELLOW;
+				break;
+			case 2: 
+				disc_color = PALE_YELLOW_RED;
+				break;
+			case 3: 
+				disc_color = YELLOW_RED;
+				break;
+			case 4: 
+				disc_color = MAXIMUM_YELLOW_RED;
+				break;
+			case 5: 
+				disc_color = BRORANGE;
+				break;
+			case 6: 
+				disc_color = BRONZE;
+				break;
+			case 7: 
+				disc_color = METALIC_BRONZE;
+				break;
+		}
+		push_back(Disco{ _INIT_D_WIDTH - (0.1f) * i* _INIT_D_WIDTH, _INIT_D_HEIGHT, 0, 0, disc_color });
 	}
 }
 

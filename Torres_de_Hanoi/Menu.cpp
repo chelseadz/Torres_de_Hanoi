@@ -120,26 +120,25 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 void MenuDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text) {
 
     //Pantalla
-    al_clear_to_color(ColorMap(INDIGO));
+    al_clear_to_color(HANBLUE);
     //Titulo
-    al_draw_text(title, al_map_rgb(255, 255, 255), _WINDOW_WIDTH / 2, _WINDOW_HEIGTH / 9,
-        ALLEGRO_ALIGN_CENTER, "TOWER OF HANOI");
+    DrawLogo(title, 72, _WINDOW_WIDTH / 2, _WINDOW_HEIGTH / 9);
     
     //Boton Jugar
     DrawButton(_WINDOW_WIDTH / 3, 3 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3,
-        4 * _WINDOW_HEIGTH / 9, ColorMap(METALIC_BRONZE), text, "SALIR", al_map_rgb(255, 255, 255));
+        4 * _WINDOW_HEIGTH / 9, text, "PLAY");
    
     //Boton Instrucciones
     DrawButton(_WINDOW_WIDTH / 3, 4.5 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3,
-        5.5 * _WINDOW_HEIGTH / 9, ColorMap(METALIC_BRONZE), text, "INSTRUCTIONS", al_map_rgb(255, 255, 255));
+        5.5 * _WINDOW_HEIGTH / 9, text, "INSTRUCTIONS");
 
     //Boton Creditos
     DrawButton(_WINDOW_WIDTH / 3, 6 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3,
-        7 * _WINDOW_HEIGTH / 9, ColorMap(METALIC_BRONZE), text, "CREDITS", al_map_rgb(255, 255, 255));
+        7 * _WINDOW_HEIGTH / 9, text, "CREDITS");
 
     //Boton Salir
     DrawButton(_WINDOW_WIDTH / 3, 7.5 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3,
-        8.5 * _WINDOW_HEIGTH / 9, ColorMap(METALIC_BRONZE), text, "LEAVE", al_map_rgb(255, 255, 255));
+        8.5 * _WINDOW_HEIGTH / 9, text, "LEAVE");
     
     al_flip_display();
 }

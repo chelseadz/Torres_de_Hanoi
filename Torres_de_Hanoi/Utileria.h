@@ -17,20 +17,22 @@
 
 /** Colores usados para imprimir los discos y para los textos.
  */
-enum {
-	VERY_PALE_YELLOW=0,
-	PALE_YELLOW,
-	PALE_YELLOW_RED,
-	YELLOW_RED,
-	MAXIMUM_YELLOW_RED,
-	ORANGE,
-	BRORANGE,
-	BRONZE,
-	METALIC_BRONZE,
-	INDIGO,
-	HANBLUE,
-	UNITED_NATIONS_BLUE
-};
+const ALLEGRO_COLOR WHITE = al_map_rgb(255, 255, 255),
+	VERY_PALE_YELLOW = al_map_rgb(251, 216, 136),
+	PALE_YELLOW = al_map_rgb(248, 181, 76),
+	PALE_YELLOW_RED = al_map_rgb(255, 212, 87),
+	YELLOW_RED = al_map_rgb(255, 200, 48),
+	MAXIMUM_YELLOW_RED = al_map_rgb(193, 145, 0),
+	BRORANGE = al_map_rgb(171, 125, 65),
+	BRONZE = al_map_rgb(149, 104, 0),
+	METALIC_BRONZE = al_map_rgb(139, 81, 33),
+	ORANGE = al_map_rgb(255, 108, 0),
+	YELLOW = al_map_rgb(255, 225, 0),
+	RED = al_map_rgb(195, 86, 0),
+	UNITED_NATIONS_BLUE = al_map_rgb(82, 158, 233),
+	INDIGO = al_map_rgb(56, 109, 197),
+	HANBLUE = al_map_rgb(19, 40, 107),
+	BLACK = al_map_rgb(0, 0, 0);
 
  /*< Medidas en px de la pantalla. */
 enum {
@@ -40,7 +42,7 @@ enum {
 
 /*< Posicion inicial de la pantalla (px desde la esquina superior izquierda) en x y en y. */
 enum {
-	_WINDOW_POS_X = 0, /*< Posición inicial de la pantalla en x en px, iniciando del margen izuqierdo. */
+	_WINDOW_POS_X = 130, /*< Posición inicial de la pantalla en x en px, iniciando del margen izuqierdo. */
 	_WINDOW_POS_Y = 0 /*< Posición inicial de la pantalla en y en px, iniciando del margen superior. */
 };
 
@@ -75,14 +77,6 @@ void initialize_al_component(bool flag, const char* comp_name);
 float Elipse(float a, float b, float p, float q, float x);
 
 /**
- * \brief Asigna el mapa RGB al color recibido
- * 
- * \param nombre_color Nombre del color de que se requiere el mapa
- * \return al_map_rgb() El mapa de color correspondiente
- */
-ALLEGRO_COLOR ColorMap(int nombre_color);
-
-/**
  * \brief Dibuja un botón en pantalla 
  * 
  * \param x1 Posición x donde comienza el rectángulo
@@ -96,7 +90,18 @@ ALLEGRO_COLOR ColorMap(int nombre_color);
  *
  * \return void
  */
-void DrawButton(float x1, float y1, float x2, float y2, ALLEGRO_COLOR button_color, 
-	ALLEGRO_FONT* text, const char string[], ALLEGRO_COLOR text_color);
+void DrawButton(float x1, float y1, float x2, float y2, ALLEGRO_FONT* text, const char string[],
+	ALLEGRO_COLOR button_color = YELLOW_RED, ALLEGRO_COLOR text_color = MAXIMUM_YELLOW_RED);
+
+/**
+ * \brief Dibuja el logo del juego en pantalla
+ *
+ * \param text Fuente del texto a escribir sobre el botón
+ * \param x Posición x del centro del logo
+ * \param y Posición y del centro logo
+ *
+ * \return void
+ */
+void DrawLogo(const ALLEGRO_FONT* font, int font_size, float x, float y);
 
 #endif
