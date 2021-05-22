@@ -56,3 +56,4 @@
 *.idb
 *.log
 *.sqlite-journal
+/Debug/Scores.txt

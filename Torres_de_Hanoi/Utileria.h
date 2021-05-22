@@ -104,4 +104,17 @@ void DrawButton(float x1, float y1, float x2, float y2, ALLEGRO_FONT* text, cons
  */
 void DrawLogo(const ALLEGRO_FONT* font, int font_size, float x, float y);
 
+/**
+ * \brief Ordena un arreglo con algoritmo quicksort.
+ *
+ * \param T arr[] puntero a arreglo
+ * \param int start primer índice del rango a ordenar.
+ * \param int end último índice del rango a ordenar.
+ * \return void
+ */
+template < class T>
+void Quicksort(T arr[], int start, int end);
+
+#include "Utileria.tpp"
+
 #endif
