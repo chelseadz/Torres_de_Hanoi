@@ -36,7 +36,7 @@ const ALLEGRO_COLOR WHITE = al_map_rgb(255, 255, 255),
 
  /*< Medidas en px de la pantalla. */
 enum {
-	_WINDOW_HEIGTH = 684, /*< Altura de la pantalla del programa en pixeles. */
+	_WINDOW_HEIGHT = 684, /*< Altura de la pantalla del programa en pixeles. */
 	_WINDOW_WIDTH = 1216 /*< Ancho de la pantalla del programa en pixeles. */
 };
 

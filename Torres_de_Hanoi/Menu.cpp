@@ -122,23 +122,23 @@ void MenuDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text) {
     //Pantalla
     al_clear_to_color(HANBLUE);
     //Titulo
-    DrawLogo(title, 72, _WINDOW_WIDTH / 2, _WINDOW_HEIGTH / 9);
+    DrawLogo(title, 72, _WINDOW_WIDTH / 2, _WINDOW_HEIGHT / 9);
     
     //Boton Jugar
-    DrawButton(_WINDOW_WIDTH / 3, 3 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3,
-        4 * _WINDOW_HEIGTH / 9, text, "PLAY");
+    DrawButton(_WINDOW_WIDTH / 3, 3 * _WINDOW_HEIGHT / 9, 2 * _WINDOW_WIDTH / 3,
+        4 * _WINDOW_HEIGHT / 9, text, "PLAY");
    
     //Boton Instrucciones
-    DrawButton(_WINDOW_WIDTH / 3, 4.5 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3,
-        5.5 * _WINDOW_HEIGTH / 9, text, "INSTRUCTIONS");
+    DrawButton(_WINDOW_WIDTH / 3, 4.5 * _WINDOW_HEIGHT / 9, 2 * _WINDOW_WIDTH / 3,
+        5.5 * _WINDOW_HEIGHT / 9, text, "INSTRUCTIONS");
 
     //Boton Creditos
-    DrawButton(_WINDOW_WIDTH / 3, 6 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3,
-        7 * _WINDOW_HEIGTH / 9, text, "CREDITS");
+    DrawButton(_WINDOW_WIDTH / 3, 6 * _WINDOW_HEIGHT / 9, 2 * _WINDOW_WIDTH / 3,
+        7 * _WINDOW_HEIGHT / 9, text, "CREDITS");
 
     //Boton Salir
-    DrawButton(_WINDOW_WIDTH / 3, 7.5 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3,
-        8.5 * _WINDOW_HEIGTH / 9, text, "LEAVE");
+    DrawButton(_WINDOW_WIDTH / 3, 7.5 * _WINDOW_HEIGHT / 9, 2 * _WINDOW_WIDTH / 3,
+        8.5 * _WINDOW_HEIGHT / 9, text, "LEAVE");
     
 }
 
@@ -147,16 +147,16 @@ void MoveSelection(int Button) {
     switch (Button)
     {
     case _PLAY:
-        al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 3 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3, 4 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0.3, 0.3, 0.3, 0.3));
+        al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 3 * _WINDOW_HEIGHT / 9, 2 * _WINDOW_WIDTH / 3, 4 * _WINDOW_HEIGHT / 9, al_map_rgba_f(0.3, 0.3, 0.3, 0.3));
         break;
     case _INSTRUCTIONS:
-        al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 4.5 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3, 5.5 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0.3, 0.3, 0.3, 0.3));
+        al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 4.5 * _WINDOW_HEIGHT / 9, 2 * _WINDOW_WIDTH / 3, 5.5 * _WINDOW_HEIGHT / 9, al_map_rgba_f(0.3, 0.3, 0.3, 0.3));
         break;
     case _CREDITS:
-        al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 6 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3, 7 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0.3, 0.3, 0.3, 0.3));
+        al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 6 * _WINDOW_HEIGHT / 9, 2 * _WINDOW_WIDTH / 3, 7 * _WINDOW_HEIGHT / 9, al_map_rgba_f(0.3, 0.3, 0.3, 0.3));
         break;
     case _LEAVE:
-        al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 7.5 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 3, 8.5 * _WINDOW_HEIGTH / 9, al_map_rgba_f(0.3, 0.3, 0.3, 0.3));
+        al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 7.5 * _WINDOW_HEIGHT / 9, 2 * _WINDOW_WIDTH / 3, 8.5 * _WINDOW_HEIGHT / 9, al_map_rgba_f(0.3, 0.3, 0.3, 0.3));
         break;
     }
 
