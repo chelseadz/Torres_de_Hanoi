@@ -29,7 +29,7 @@
 enum {
 	_LEFT_S, /*< Estaca izquierda. */
 	_MIDDLE_S, /*< Estaca central. */
-	_RIGTH_S /*< Estaca derecha. */
+	_RIGHT_S /*< Estaca derecha. */
 };
 
 struct Arrow_selector {

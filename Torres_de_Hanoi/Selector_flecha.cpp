@@ -42,7 +42,7 @@ void Arrow_selector::move_right() {
 
 void Arrow_selector::move_left() {
 	--selected_stake;
-	if (selected_stake < _LEFT_S) selected_stake = _RIGTH_S;
+	if (selected_stake < _LEFT_S) selected_stake = _RIGHT_S;
 }
 
 void Arrow_selector::draw() {
