@@ -8,7 +8,6 @@
 
 #include "Disco_y_Estaca.h"
 
-#include "Utileria.h"
 
 #include <cstdlib>
 #include <climits>
