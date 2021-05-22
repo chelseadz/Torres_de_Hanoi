@@ -51,6 +51,37 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
             redraw = true;
             break;
 
+        case ALLEGRO_EVENT_KEY_DOWN:
+            if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
+                done = true;
+
+            if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
+                switch (button_place)
+                {
+                case _PLAY:
+                {
+                    Juego(queue, display);
+                    break;
+                }
+                case _INSTRUCTIONS:
+                {
+                    Instructions(queue);
+                    break;
+                }
+                case _CREDITS:
+                {
+                    Credits(queue);
+                    break;
+                }
+                case _LEAVE:
+                {
+                    done = true;
+                    break;
+                }
+                }
+            }
+            break;
+
         case ALLEGRO_EVENT_KEY_CHAR:
 
             if (event.keyboard.keycode == ALLEGRO_KEY_UP) {
@@ -62,35 +93,8 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
             if (event.keyboard.keycode == ALLEGRO_KEY_DOWN)
                 button_place = (button_place + 1) % 4;
 
-            if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
-                done = true;
-
-            if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
-                switch (button_place)
-                {
-                    case _PLAY:
-                    {
-                        Juego(queue, display);
-                        break;
-                    }
-                    case _INSTRUCTIONS:
-                    {
-                        Instructions(queue);
-                        break;
-                    }
-                    case _CREDITS:
-                    {
-                        Credits(queue);
-                        break;
-                    }
-                    case _LEAVE:
-                    {
-                        done = true;
-                        break;
-                    }
-                }
-            }
             break;
+ 
            
         case ALLEGRO_EVENT_DISPLAY_CLOSE:
             done = true;
