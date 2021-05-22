@@ -86,9 +86,9 @@ void CreditsDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* parag
     al_draw_text(title, UNITED_NATIONS_BLUE, _WINDOW_WIDTH / 2, 0.7 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "Credits");
     //Cuerpo Créditos
     al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 1.4 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "Final project made by the Team Rocket for the subject computer programming taught ");
+        "Final project made by Team Rocket for the computer programming course taught ");
     al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 1.9 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "by the teacher Irene Rodriguez from the Universidad de Sonora.");
+        "by teacher Irene Rodriguez from Universidad de Sonora.");
     al_draw_text(title, UNITED_NATIONS_BLUE, _WINDOW_WIDTH / 9, 2.4 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
         "Team members: ");
     al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 3.1 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
@@ -96,7 +96,7 @@ void CreditsDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* parag
     al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 3.6 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
         "Enrique Alejandro Giottonini Herrera");
     al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 4.1 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "Diego Torres Gonzales");
+        "Diego Torres Gonzalez");
 
     //BOTON REGRESAR
     DrawButton(_WINDOW_WIDTH / 5, 7.5 * _WINDOW_HEIGTH / 9, 4 * _WINDOW_WIDTH / 5,

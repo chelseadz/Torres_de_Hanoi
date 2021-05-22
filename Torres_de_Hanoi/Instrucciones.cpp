@@ -113,7 +113,7 @@ void InstructionsDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* 
     al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 2.2 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
         "are stacked by inserting themselves into one of the three posts fixed to a board");
     al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 2.7 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "The objective of the game is to move the stack of discs to another of the posts. ");
+        "The objective of the game is to move the stack of discs to another one of the posts. ");
 
     //Titulo Reglas
     al_draw_text(title, UNITED_NATIONS_BLUE, _WINDOW_WIDTH / 2, 3.2 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "Rules");
@@ -121,19 +121,19 @@ void InstructionsDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* 
     al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 3.9 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
         "1. You cannot place a larger disk on top of a smaller disk.");
     al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 4.4 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "2. You win the game when you get to insert all the disks stacked from highest to lowest");
+        "2. You win the game when you get to insert all of the disks stacked from highest to lowest");
     al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 4.9 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "in the far right post. ");
+        "in the rightmost post. ");
 
     //Titulo Controles
     al_draw_text(title, UNITED_NATIONS_BLUE, _WINDOW_WIDTH / 2, 5.4 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "Controls");
     //Cuerpo controles
     al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 6.1 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "Use the arrow keys for moving the disc or navigate in the game.");
+        "Use the arrow keys for moving the discs or navigate in the game.");
     al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 6.6 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "Use SPACE or ENTER to select the disc, and to choose the target stake.");
+        "Use SPACE or ENTER to select a disc, and to choose the target stake.");
     al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 7.1 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "Press ESC to cancel a move.");
+        "Press ESC to cancel a move o go back to a previous page.");
 
        //Boton Regresar
     DrawButton(_WINDOW_WIDTH / 5, 7.8 * _WINDOW_HEIGTH / 9, 2 * _WINDOW_WIDTH / 5,
@@ -223,10 +223,11 @@ void OriginDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragr
     DrawLogo(text, 36, _WINDOW_WIDTH / 9, 0.1 * _WINDOW_HEIGTH / 9);
 
     //Titulo Origen
-    al_draw_text(title, UNITED_NATIONS_BLUE, _WINDOW_WIDTH / 2, 0.5 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER, "Origin of the Tower of Hanoi");
+    al_draw_text(title, UNITED_NATIONS_BLUE, _WINDOW_WIDTH / 2, 0.5 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_CENTER,
+        "Origin of Tower of Hanoi");
     //Cuerpo Origen
     al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 1.2 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
-        "According to legend, the three posts refer to three diamond spiers of a cubit in height");
+        "According to legend, the three posts refer to three diamond needles of a cubit in height");
     al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 1.7 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
         "and the thickness of the body of a bee, lying on a bronze base under the dome of the great");
     al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 2.2 * _WINDOW_HEIGTH / 9, ALLEGRO_ALIGN_LEFT,
