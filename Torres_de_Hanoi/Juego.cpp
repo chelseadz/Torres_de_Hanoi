@@ -9,7 +9,7 @@
 #include "Juego.h"
 #include "Disco_y_Estaca.h"
 #include "Selector_flecha.h"
-#include "Utileria.h"
+
 
 #include <iostream>
 #include <stdexcept>
