@@ -220,6 +220,8 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
             DisplayNMoves(moves_done, move_count_font);
 
+            DisplayMinMoves(Game_discs, move_count_font);
+
             al_flip_display();
 
             redraw = false;
@@ -371,6 +373,22 @@ void DisplayNMoves (unsigned n_moves, ALLEGRO_FONT* font) {
         al_draw_text(font, UNITED_NATIONS_BLUE, 30, _WINDOW_HEIGHT - 50, 0, s.c_str());
 
     } catch (const std::runtime_error& e) {
+        std::cerr << e.what() << '\n';
+    }
+}
+
+void DisplayMinMoves(unsigned numDiscs, ALLEGRO_FONT* font) {
+    try {
+        initialize_al_component(font, "min move font.");
+
+        std::string s("Min Moves: ");
+        unsigned min_moves = pow(2, numDiscs) - 1;
+        s.append(std::to_string(min_moves));
+
+        al_draw_text(font, UNITED_NATIONS_BLUE, 350, _WINDOW_HEIGHT - 50 , 0, s.c_str());
+
+    }
+    catch (const std::runtime_error& e) {
         std::cerr << e.what() << '\n';
     }
 }

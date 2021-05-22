@@ -86,6 +86,18 @@ int MinNMoves(int n_discs);
  */
 void DisplayNMoves(unsigned n_moves, ALLEGRO_FONT* font);
 
+/**
+ * \brief Dibuja el número de movimientos minimos para ganar.
+ *
+ * \details Si la fuente que se le pasa a la función no está inicializada correctamente,
+ * la función solo imprime un mensaje de error en el flujo de errores std::cerr de la consola.
+ *
+ * \param n_moves Número de discos.
+ * \param font fuente con la que se imprime el texto del mensaje.
+ * \return void
+ */
+void DisplayMinMoves(unsigned numDiscs, ALLEGRO_FONT* font);
+
 
 
 #endif 
