@@ -128,11 +128,12 @@ void Estaca::PrintRodDiscs() {
 				al_draw_bitmap_region(column_portion, 0, _COLUMN_HEIGHT - dif, _COLUMN_WIDTH, dif,
 					discs[curr_n_discs -1].x_pos - _COLUMN_WIDTH / 2.0f,
 					discs[curr_n_discs - 1].y_pos - discs[curr_n_discs - 1].height/ 4.0f,	0);
+
 			} catch (const std::runtime_error& e) {
 				std::cerr << e.what() << '\n';
 			}
 
-
+			al_destroy_bitmap(column_portion);
 		}
 	}
 }
