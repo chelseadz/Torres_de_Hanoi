@@ -145,7 +145,8 @@ void Estaca::InitDiscsAndRods() {
 				disc_color = METALIC_BRONZE;
 				break;
 		}
-		push_back(Disco{ _INIT_D_WIDTH - (0.1f) * i* _INIT_D_WIDTH, _INIT_D_HEIGHT, 0, 0, disc_color });
+		push_back(Disco{ _INIT_D_WIDTH - (0.1f) * i* _INIT_D_WIDTH,
+			_INIT_D_HEIGHT - (0.07f) * i * _INIT_D_HEIGHT, 0, 0, disc_color });
 	}
 }
 
@@ -190,6 +191,10 @@ bool Estaca::move_to_stake(Estaca* dest, bool& moving, bool finalize) {
 		return true;
 	}
 
+	if (moving_disc == NULL) {
+		first = true;
+		return false;
+	}
 
 	if (moving_disc->y_pos > y_base_pos - Estaca::stick_height &&
 		moving_disc->x_pos == x_base_pos) {
@@ -213,9 +218,6 @@ bool Estaca::move_to_stake(Estaca* dest, bool& moving, bool finalize) {
 
 	}
 	else if (moving_disc->x_pos >= dest->x_base_pos) {
-		
-		if (moving_disc->x_pos > dest->x_base_pos) --moving_disc->x_pos;
-		//moving_disc->x_pos = dest->x_base_pos;
 		
 		moving_disc->y_pos += vy_3;
 
