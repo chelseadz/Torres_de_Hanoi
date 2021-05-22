@@ -29,7 +29,7 @@ int main() {
 	initialize_al_component(timer, "temporizador");
 
 	//Crear pantalla.
-	ALLEGRO_DISPLAY* disp = al_create_display(_WINDOW_WIDTH, _WINDOW_HEIGTH);
+	ALLEGRO_DISPLAY* disp = al_create_display(_WINDOW_WIDTH, _WINDOW_HEIGHT);
 	initialize_al_component(disp, "pantalla");
 
 	//Mover pantalla a posición inicial.

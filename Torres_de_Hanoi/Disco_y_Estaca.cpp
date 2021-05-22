@@ -38,7 +38,7 @@ bool Estaca::Initialize_stakes(int height, int width, int _max_discs) {
 Estaca::Estaca(unsigned short base_x_pos, unsigned short base_y_pos) {
 
 
-	if (base_x_pos < _WINDOW_WIDTH && base_y_pos < _WINDOW_HEIGTH) {
+	if (base_x_pos < _WINDOW_WIDTH && base_y_pos < _WINDOW_HEIGHT) {
 		x_base_pos = base_x_pos;
 		y_base_pos = base_y_pos;
 	} else
@@ -115,8 +115,8 @@ void Estaca::PrintRodDiscs() {
 	if (curr_n_discs != 0) {
 		int dif = discs[curr_n_discs - 1].y_pos - (y_base_pos - stick_height);
 		if (dif > 0) {
-			if (dif > discs[curr_n_discs - 1].height / 4.0f)
-				dif = discs[curr_n_discs - 1].height / 4.0f;
+			if (dif > discs[curr_n_discs - 1].height / 2.0f)
+				dif = discs[curr_n_discs - 1].height / 2.0f;
 
 			if (dif > _COLUMN_HEIGHT) 
 				dif = _COLUMN_HEIGHT;
@@ -127,7 +127,7 @@ void Estaca::PrintRodDiscs() {
 
 				al_draw_bitmap_region(column_portion, 0, _COLUMN_HEIGHT - dif, _COLUMN_WIDTH, dif,
 					discs[curr_n_discs -1].x_pos - _COLUMN_WIDTH / 2.0f,
-					discs[curr_n_discs - 1].y_pos - discs[curr_n_discs - 1].height/ 4.0f,	0);
+					discs[curr_n_discs - 1].y_pos - 3 * discs[curr_n_discs - 1].height/ 8.0f,	0);
 
 			} catch (const std::runtime_error& e) {
 				std::cerr << e.what() << '\n';
@@ -176,7 +176,7 @@ void Estaca::InitDiscsAndRods() {
 				break;
 		}
 		push_back(Disco{ _INIT_D_WIDTH - (0.1f) * i * _INIT_D_WIDTH,
-			_INIT_D_HEIGHT - (0.08f) * i * _INIT_D_HEIGHT, 0, 0, disc_color });
+			_INIT_D_HEIGHT - (0.085f) * i * _INIT_D_HEIGHT, 0, 0, disc_color });
 	}
 }
 

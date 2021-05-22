@@ -14,6 +14,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <cmath>
+#include <string>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
@@ -39,6 +40,8 @@ enum {
 #define _BASE_FILENAME "base_con_estacas_delgada.png"
 #define _ERROR_SOUND_FILENAME "gnome_error.wav"
 
+#define _TITLE_FONT_FILENAME "ROBOTECH_GP.ttf"
+
 
 void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
@@ -57,19 +60,18 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
     ALLEGRO_BITMAP* base_and_stakes = al_load_bitmap(_BASE_FILENAME);
     ALLEGRO_SAMPLE* error_sound = al_load_sample(_ERROR_SOUND_FILENAME);
-    ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 72, 0);
+    ALLEGRO_FONT* font_title = al_load_font(_TITLE_FONT_FILENAME, 72, 0);
+    ALLEGRO_FONT* move_count_font = al_load_font(_TITLE_FONT_FILENAME, 38, 0);
 
     try {
         initialize_al_component(base_and_stakes, "base image.");
         initialize_al_component(error_sound, "error sound.");
+        initialize_al_component(font_title, "font titulo");
 
     } catch (const std::runtime_error& e) {
         std::cout << e.what() << '\n';
         return;
     }
-
-
-    initialize_al_component(font_title, "font titulo");
 
     int Game_discs;
     Game_discs = DiskNumber(queue);
@@ -100,6 +102,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     Arrow_selector origin(_LEFT_S);
     Arrow_selector dest(_MIDDLE_S, 0);
 
+    unsigned moves_done = 0;
 
     while (1)
     {
@@ -121,6 +124,8 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
                             dest.selected = false;
                             origin.selected_stake = _LEFT_S;
 
+                            ++moves_done;
+
                         }
                     } else {
                         //Movimiento inv\240lido.
@@ -130,8 +135,6 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
                         origin.selected = false;
                         al_play_sample(error_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
                     }
-                    
-
                 }
 
 
@@ -203,7 +206,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
 
-            DrawLogo(font_title, 72, _WINDOW_WIDTH / 2, 0.2 * _WINDOW_HEIGTH / 12);
+            DrawLogo(font_title, 72, _WINDOW_WIDTH / 2, 0.2 * _WINDOW_HEIGHT / 12);
 
             al_draw_bitmap(base_and_stakes, 0, 0, 0);
 
@@ -215,6 +218,8 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
             if(origin.selected_stake != _MIDDLE_S) aux.PrintRodDiscs();
             if(origin.selected_stake != _RIGHT_S) fin.PrintRodDiscs();
 
+            DisplayNMoves(moves_done, move_count_font);
+
             al_flip_display();
 
             redraw = false;
@@ -225,6 +230,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     al_destroy_bitmap(base_and_stakes);
     al_destroy_sample(error_sound);
     al_destroy_font(font_title);
+    al_destroy_font(move_count_font);
 }
 
 int DiskNumber(ALLEGRO_EVENT_QUEUE* queue) {
@@ -232,9 +238,14 @@ int DiskNumber(ALLEGRO_EVENT_QUEUE* queue) {
     ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 48, 0);
     ALLEGRO_FONT* font = al_load_font("ROBOTECH_GP.ttf", 36, 0);
 
-    initialize_al_component(font, "font");
-    initialize_al_component(font_title, "font titulo");
-
+    try {
+        initialize_al_component(font, "font");
+        initialize_al_component(font_title, "font titulo");
+    } catch (const std::runtime_error& e) {
+        std::cerr << e.what() << '\n';
+        return 0;
+    }
+    
     bool done = false;
     bool redraw = true;
     ALLEGRO_EVENT event;
@@ -309,24 +320,24 @@ void NumberOfDisksDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, int Disks) {
     al_clear_to_color(HANBLUE);
 
     //logo del juego
-    DrawLogo(text, 36, _WINDOW_WIDTH / 9, 0.1 * _WINDOW_HEIGTH / 9);
+    DrawLogo(text, 36, _WINDOW_WIDTH / 9, 0.1 * _WINDOW_HEIGHT / 9);
 
     //Title
-    al_draw_text(title, WHITE, _WINDOW_WIDTH / 2, _WINDOW_HEIGTH / 5, ALLEGRO_ALIGN_CENTER, "Number of discs: ");
+    al_draw_text(title, WHITE, _WINDOW_WIDTH / 2, _WINDOW_HEIGHT / 5, ALLEGRO_ALIGN_CENTER, "Number of discs: ");
 
     //Disk Numbers
     std::string tmp = std::to_string(Disks);
     char const* num_char = tmp.c_str();
 
-    al_draw_text(title, WHITE, 2.5 * _WINDOW_WIDTH / 5, 2.25* _WINDOW_HEIGTH / 5, ALLEGRO_ALIGN_CENTER, num_char);
+    al_draw_text(title, WHITE, 2.5 * _WINDOW_WIDTH / 5, 2.25* _WINDOW_HEIGHT / 5, ALLEGRO_ALIGN_CENTER, num_char);
 
     //Add Button
-    al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 2 * _WINDOW_HEIGTH / 5, 2.35 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGTH / 5, 2.65 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGTH / 5, YELLOW);
+    al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 2 * _WINDOW_HEIGHT / 5, 2.35 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGHT / 5, 2.65 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGHT / 5, YELLOW);
     //Substract Button
-    al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 3 * _WINDOW_HEIGTH / 5, 2.35 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGTH / 5, 2.65 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGTH / 5, YELLOW);
+    al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 3 * _WINDOW_HEIGHT / 5, 2.35 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGHT / 5, 2.65 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGHT / 5, YELLOW);
 
     //Bottom Text
-    al_draw_text(text, WHITE, _WINDOW_WIDTH / 2, 3.5 * _WINDOW_HEIGTH / 5, ALLEGRO_ALIGN_CENTER, "Press SPACE or ENTER to continue. ");
+    al_draw_text(text, WHITE, _WINDOW_WIDTH / 2, 3.5 * _WINDOW_HEIGHT / 5, ALLEGRO_ALIGN_CENTER, "Press SPACE or ENTER to continue. ");
 
 }
 
@@ -335,194 +346,31 @@ void ChangeDiskNumberDisplay(int Button) {
     switch (Button)
     {
         case _ADD:
-            al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 2 * _WINDOW_HEIGTH / 5, 2.35 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGTH / 5, 2.65 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGTH / 5, VERY_PALE_YELLOW);
+            al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 2 * _WINDOW_HEIGHT / 5, 2.35 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGHT / 5, 2.65 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGHT / 5, VERY_PALE_YELLOW);
             break;
         case _SUBSTRACT:
-            al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 3 * _WINDOW_HEIGTH / 5, 2.35 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGTH / 5, 2.65 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGTH / 5, VERY_PALE_YELLOW);
+            al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 3 * _WINDOW_HEIGHT / 5, 2.35 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGHT / 5, 2.65 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGHT / 5, VERY_PALE_YELLOW);
             break;
     }
 }
 
-int Min_n_moves(int n_discs) {
+int MinNMoves(int n_discs) {
     if (n_discs < 0) throw std::invalid_argument("Discos negativos.");
 
     return std::pow(2, n_discs) - 1;
 }
 
 
+void DisplayNMoves (unsigned n_moves, ALLEGRO_FONT* font) {
+    try {
+        initialize_al_component(font, "move count font.");
 
-//int What_to_Move(ALLEGRO_EVENT_QUEUE* queue, Estaca &init, Estaca &aux, Estaca &fin) {
-//
-//    bool done = false;
-//    bool redraw = true;
-//    ALLEGRO_EVENT event;
-//
-//    int button_place = 0;
-//
-//    while (1)
-//    {
-//        al_wait_for_event(queue, &event);
-//
-//        switch (event.type)
-//        {
-//        case ALLEGRO_EVENT_TIMER:
-//            // nada por ahora.
-//            redraw = true;
-//            break;
-//
-//        case ALLEGRO_EVENT_KEY_DOWN:
-//
-//            if (event.keyboard.keycode == ALLEGRO_KEY_RIGHT) {
-//
-//                if (button_place < _FIN)
-//                    button_place++;
-//            }
-//            else if (event.keyboard.keycode == ALLEGRO_KEY_LEFT) {
-//
-//                if (button_place > _INIT)
-//                    button_place--;
-//            }
-//            else if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
-//                return button_place;
-//                done = true;
-//            }
-//                
-//            
-//
-//            break;
-//
-//
-//        case ALLEGRO_EVENT_DISPLAY_CLOSE:
-//            done = true;
-//            exit(0);
-//            break;
-//        }
-//
-//        if (done)
-//            break;
-//
-//        if (redraw && al_is_event_queue_empty(queue))
-//        {
-//            al_clear_to_color(al_map_rgb(0, 0, 0));
-//            init.PrintRodDiscs();
-//            aux.PrintRodDiscs();
-//            fin.PrintRodDiscs();
-//            What_to_Move_Display(button_place);
-//
-//            al_flip_display();
-//
-//            redraw = false;
-//        }
-//    }
-//}
-//
-//void What_to_Move_Display(int Button) {
-//
-//    switch (Button)
-//    {
-//    case _INIT:
-//        al_draw_filled_triangle(EST_POS::INIT_X, 100, EST_POS::INIT_X - 30, 50 , EST_POS::INIT_X + 30, 50, al_map_rgba_f(239, 255, 0, 0.3));
-//        break;
-//    case _AUX:
-//        al_draw_filled_triangle(EST_POS::AUX_X, 100, EST_POS::AUX_X - 30, 50, EST_POS::AUX_X + 30, 50, al_map_rgba_f(239, 255, 0, 0.3));
-//        break;
-//    case _FIN:
-//        al_draw_filled_triangle(EST_POS::FIN_X, 100, EST_POS::FIN_X - 30, 50, EST_POS::FIN_X + 30, 50, al_map_rgba_f(239, 255, 0, 0.3));
-//        break;
-//
-//    }
-//}
-//
-//int Where_to_Move(ALLEGRO_EVENT_QUEUE* queue, int Origin, Estaca& init, Estaca& aux, Estaca& fin) {
-//
-//    bool done = false;
-//    bool redraw = true;
-//    ALLEGRO_EVENT event;
-//
-//    int button_place = Origin;
-//
-//    while (1)
-//    {
-//        al_wait_for_event(queue, &event);
-//
-//        switch (event.type)
-//        {
-//        case ALLEGRO_EVENT_TIMER:
-//            // nada por ahora.
-//            redraw = true;
-//            break;
-//
-//        case ALLEGRO_EVENT_KEY_DOWN:
-//
-//            if (event.keyboard.keycode == ALLEGRO_KEY_RIGHT) {
-//
-//                if (button_place < _FIN)
-//                    button_place++;
-//            }
-//            else if (event.keyboard.keycode == ALLEGRO_KEY_LEFT) {
-//
-//                if (button_place > _INIT)
-//                    button_place--;
-//            }
-//            else if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
-//                return button_place;
-//                done = true;
-//            }
-//
-//            break;
-//
-//
-//        case ALLEGRO_EVENT_DISPLAY_CLOSE:
-//            done = true;
-//            exit(0);
-//            break;
-//        }
-//
-//        if (done)
-//            break;
-//
-//        if (redraw && al_is_event_queue_empty(queue))
-//        {
-//            al_clear_to_color(al_map_rgb(0, 0, 0));
-//            init.PrintRodDiscs();
-//            aux.PrintRodDiscs();
-//            fin.PrintRodDiscs();
-//            Where_to_Move_Display(Origin, button_place);
-//
-//            al_flip_display();
-//
-//            redraw = false;
-//        }
-//    }
-//}
-//
-//void Where_to_Move_Display(int Origin, int Dest) {
-//
-//    switch (Origin)
-//    {
-//    case _INIT:
-//        al_draw_filled_triangle(EST_POS::INIT_X, 100, EST_POS::INIT_X - 30, 50, EST_POS::INIT_X + 30, 50, al_map_rgba_f(239, 255, 0, 0.8));
-//        break;
-//    case _AUX:
-//        al_draw_filled_triangle(EST_POS::AUX_X, 100, EST_POS::AUX_X - 30, 50, EST_POS::AUX_X + 30, 50, al_map_rgba_f(239, 255, 0, 0.8));
-//        break;
-//    case _FIN:
-//        al_draw_filled_triangle(EST_POS::FIN_X, 100, EST_POS::FIN_X - 30, 50, EST_POS::FIN_X + 30, 50, al_map_rgba_f(239, 255, 0, 0.8));
-//        break;
-//
-//    }
-//
-//    switch (Dest)
-//    {
-//    case _INIT:
-//        al_draw_filled_triangle(EST_POS::INIT_X, 100, EST_POS::INIT_X - 30, 50, EST_POS::INIT_X + 30, 50, al_map_rgba_f(0.5, 0.5, 0.5, 0.5));
-//        break;
-//    case _AUX:
-//        al_draw_filled_triangle(EST_POS::AUX_X, 100, EST_POS::AUX_X - 30, 50, EST_POS::AUX_X + 30, 50, al_map_rgba_f(0.5, 0.5, 0.5, 0.5));
-//        break;
-//    case _FIN:
-//        al_draw_filled_triangle(EST_POS::FIN_X, 100, EST_POS::FIN_X - 30, 50, EST_POS::FIN_X + 30, 50, al_map_rgba_f(0.5, 0.5, 0.5, 0.5));
-//        break;
-//
-//    }
-//}
+        std::string s("Moves made: ");
+        s.append(std::to_string(n_moves));
+
+        al_draw_text(font, UNITED_NATIONS_BLUE, 30, _WINDOW_HEIGHT - 50, 0, s.c_str());
+
+    } catch (const std::runtime_error& e) {
+        std::cerr << e.what() << '\n';
+    }
+}
