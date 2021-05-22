@@ -14,6 +14,8 @@
 #include <stdexcept>
 #include <cmath>
 #include <allegro5/allegro_image.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 
 
 enum EST_POS {
@@ -34,15 +36,37 @@ enum {
 #define _ARROW_SPACE 75
 
 #define _BASE_FILENAME "base_con_estacas.png"
+#define _ERROR_SOUND_FILENAME "gnome_error.wav"
 
 
 void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
+   
+
+
     try {
-        initialize_al_component(al_init_image_addon(), "Componente de imagenes.");
+        initialize_al_component(al_init_image_addon(), "image component.");
+        initialize_al_component(al_install_audio(), "audio addon.");
+        initialize_al_component(al_init_acodec_addon(), "audio codecs.");
+        initialize_al_component(al_reserve_samples(8), "audio samples.");
+        
+      
     }
     catch (const std::runtime_error& e) {
-        std::cout << e.what();
+        std::cout << e.what() << '\n';
+        return;
+    }
+
+    ALLEGRO_BITMAP* base_and_stakes = al_load_bitmap(_BASE_FILENAME);
+    ALLEGRO_SAMPLE* error_sound = al_load_sample(_ERROR_SOUND_FILENAME);
+
+
+    try {
+        initialize_al_component(base_and_stakes, "base image.");
+        initialize_al_component(error_sound, "error sound.");
+
+    } catch (const std::runtime_error& e) {
+        std::cout << e.what() << '\n';
         return;
     }
 
@@ -67,12 +91,6 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     bool move = false;
     bool finish_movement = false;
 
-    ALLEGRO_BITMAP* base_and_stakes = al_load_bitmap(_BASE_FILENAME);
-    try {
-        initialize_al_component(al_load_bitmap, "Imagen de base.");
-    } catch (const std::runtime_error& e) {
-        std::cout << e.what() << '\n';
-    }
 
     Arrow_selector::Set_y_pos(EST_POS::Y_ESTS - _STICK_SIZE - _ARROW_SPACE);
 
@@ -91,17 +109,27 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
             case ALLEGRO_EVENT_TIMER:
 
                 if (move) {
-                    origin.pointee()->move_to_stake(dest.pointee(), move, finish_movement);
-                    if (move) {
-                        origin.show = false;
-                        dest.show = false;
-                    } else {
-                        origin.show = true;
-                        origin.selected = false;
-                        dest.selected = false;
-                        origin.selected_stake = _LEFT_S;
+                    if (origin.pointee()->move_to_stake(dest.pointee(), move, finish_movement)) {
+                        if (move) {
+                            origin.show = false;
+                            dest.show = false;
+                        }
+                        else {
+                            origin.show = true;
+                            origin.selected = false;
+                            dest.selected = false;
+                            origin.selected_stake = _LEFT_S;
 
+                        }
+                    } else {
+                        //Movimiento inv\240lido.
+                        move = 0;
+                        dest.selected = false;
+                        dest.show = false;
+                        origin.selected = false;
+                        al_play_sample(error_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
                     }
+                    
 
                 }
 
@@ -182,7 +210,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
             if(origin.selected_stake != _LEFT_S) init.PrintRodDiscs();
             if(origin.selected_stake != _MIDDLE_S) aux.PrintRodDiscs();
-            if(origin.selected_stake != _RIGTH_S) fin.PrintRodDiscs();
+            if(origin.selected_stake != _RIGHT_S) fin.PrintRodDiscs();
 
             al_flip_display();
 
@@ -191,7 +219,8 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
     }
 
-   
+    al_destroy_bitmap(base_and_stakes);
+    al_destroy_sample(error_sound);
 }
 
 int DiskNumber(ALLEGRO_EVENT_QUEUE* queue) {

@@ -136,7 +136,7 @@ bool Estaca::move_to_stake(Estaca* dest, bool& moving, bool finalize) {
 	static Disco* moving_disc;
 	static float vy_1, vx_2, vy_3;
 
-	if (dest->curr_n_discs != 0 && last().width > dest->last().width)
+	if (dest->curr_n_discs != 0 && curr_n_discs != 0 && last().width > dest->last().width)
 		return false;
 
 	if (first) {
