@@ -128,7 +128,7 @@ bool Estaca::full() {
 }
 
 
-bool Estaca::move_to_stake(Estaca& dest, bool& moving, bool finalize) {
+bool Estaca::move_to_stake(Estaca* dest, bool& moving, bool finalize) {
 	
 	//Estas variables estáticas solo se inicializan la primera vez que se llama a la función.
 	static bool first = 1;
@@ -136,23 +136,25 @@ bool Estaca::move_to_stake(Estaca& dest, bool& moving, bool finalize) {
 	static Disco* moving_disc;
 	static float vy_1, vx_2, vy_3;
 
+	if (dest->curr_n_discs != 0 && last().width > dest->last().width)
+		return false;
 
 	if (first) {
 		if (curr_n_discs == 0) return false;
 		moving_disc = &discs[curr_n_discs - 1];
-		if (dest.full()) return false;
+		if (dest->full()) return false;
 
 		//Calcular velocidadades en px / cuadro
 		vy_1 = 3.0f * (moving_disc->y_pos - (y_base_pos - Estaca::stick_height)) / (_AN_TIME * _FPS);
-		vx_2 = 3.0f * (dest.x_base_pos - x_base_pos) / (_AN_TIME * _FPS);
-		vy_3 = 3.0f * (Estaca::stick_height - dest.curr_disc_column_height - moving_disc->height / 2.0f) / 
+		vx_2 = 3.0f * (dest->x_base_pos - x_base_pos) / (_AN_TIME * _FPS);
+		vy_3 = 3.0f * (Estaca::stick_height - dest->curr_disc_column_height - moving_disc->height / 2.0f) / 
 			(_AN_TIME * _FPS);
 
 		first = 0;
 	}
 	
 	if (finalize && moving_disc != NULL) {
-		dest.push_back(*moving_disc);
+		dest->push_back(*moving_disc);
 		pop_back();
 		moving_disc = NULL;
 
@@ -168,30 +170,30 @@ bool Estaca::move_to_stake(Estaca& dest, bool& moving, bool finalize) {
 		moving_disc->y_pos -= vy_1;
 
 	}
-	else if (moving_disc->y_pos <= y_base_pos - Estaca::stick_height && moving_disc->x_pos != dest.x_base_pos) {
+	else if (moving_disc->y_pos <= y_base_pos - Estaca::stick_height && moving_disc->x_pos != dest->x_base_pos) {
 		
 		moving_disc->x_pos += vx_2;
 
-		if (x_base_pos < dest.x_base_pos && moving_disc->x_pos > dest.x_base_pos)
-			moving_disc->x_pos = dest.x_base_pos;
-		else if (x_base_pos > dest.x_base_pos && moving_disc->x_pos < dest.x_base_pos) 
-			moving_disc->x_pos = dest.x_base_pos;
+		if (x_base_pos < dest->x_base_pos && moving_disc->x_pos > dest->x_base_pos)
+			moving_disc->x_pos = dest->x_base_pos;
+		else if (x_base_pos > dest->x_base_pos && moving_disc->x_pos < dest->x_base_pos) 
+			moving_disc->x_pos = dest->x_base_pos;
 
-		moving_disc->y_pos = Elipse((dest.x_base_pos - x_base_pos) / 2.0f,
-			_ARC_HEIGHT, (x_base_pos + dest.x_base_pos) / 2.0f, y_base_pos - Estaca::stick_height,
+		moving_disc->y_pos = Elipse((dest->x_base_pos - x_base_pos) / 2.0f,
+			_ARC_HEIGHT, (x_base_pos + dest->x_base_pos) / 2.0f, y_base_pos - Estaca::stick_height,
 			moving_disc->x_pos);
 		
 
 	}
-	else if (moving_disc->x_pos >= dest.x_base_pos) {
+	else if (moving_disc->x_pos >= dest->x_base_pos) {
 		
-		if (moving_disc->x_pos > dest.x_base_pos) --moving_disc->x_pos;
-		//moving_disc->x_pos = dest.x_base_pos;
+		if (moving_disc->x_pos > dest->x_base_pos) --moving_disc->x_pos;
+		//moving_disc->x_pos = dest->x_base_pos;
 		
 		moving_disc->y_pos += vy_3;
 
-		if (moving_disc->y_pos >= dest.y_base_pos - dest.curr_disc_column_height - moving_disc->height / 2.0f) {
-			dest.push_back(*moving_disc);
+		if (moving_disc->y_pos >= dest->y_base_pos - dest->curr_disc_column_height - moving_disc->height / 2.0f) {
+			dest->push_back(*moving_disc);
 			pop_back();
 			moving_disc = NULL;
 			
@@ -202,6 +204,16 @@ bool Estaca::move_to_stake(Estaca& dest, bool& moving, bool finalize) {
 	}
 
 	return true;
+}
+
+unsigned short Estaca::base_pos_x()
+{
+	return x_base_pos;
+}
+
+unsigned short Estaca::base_pos_y()
+{
+	return y_base_pos;
 }
 
 

@@ -124,7 +124,21 @@ public:
 	 * válido para recibir la siguiente instrucción de traslado.
 	 * \return True si el movimiento sí se puede hacer. False si el movimiento es inválido.
 	 */
-	bool move_to_stake(Estaca& dest, bool& moving, bool finalize);
+	bool move_to_stake(Estaca* dest, bool& moving, bool finalize);
+
+	/**
+	 * \brief Adquiridor de la coordenada en x de base de la estaca.
+	 * 
+	 * \return Coordenada en x de base de la estaca.
+	 */
+	unsigned short base_pos_x();
+
+	/**
+	 * \brief Adquiridor de coordenada en y de base de la estaca.
+	 * 
+	 * \return Coordenada en y de base de la estaca.
+	 */
+	unsigned short base_pos_y();
 
 	/**
 	 * \brief Destruye la estaca junto con su arreglo de discos.

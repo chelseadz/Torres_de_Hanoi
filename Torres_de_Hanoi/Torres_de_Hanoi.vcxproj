@@ -189,6 +189,7 @@
     <ClCompile Include="Juego.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Selector_flecha.cpp" />
     <ClCompile Include="Utileria.cpp" />
     <ClCompile Include="Utileria.h" />
   </ItemGroup>
@@ -201,6 +202,7 @@
     <ClInclude Include="Instrucciones.h" />
     <ClInclude Include="Juego.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="Selector_flecha.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="HelveticaLTStdLight.ttf" />
