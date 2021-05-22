@@ -20,10 +20,10 @@
 
 
 enum EST_POS {
-    INIT_X = 294,
-    Y_ESTS = 510,
-    AUX_X = 600,
-    FIN_X = 914
+    INIT_X = 297,
+    Y_ESTS = 497,
+    AUX_X = 602,
+    FIN_X = 917
 };
 
 enum {
@@ -57,7 +57,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
     ALLEGRO_BITMAP* base_and_stakes = al_load_bitmap(_BASE_FILENAME);
     ALLEGRO_SAMPLE* error_sound = al_load_sample(_ERROR_SOUND_FILENAME);
-
+    ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 72, 0);
 
     try {
         initialize_al_component(base_and_stakes, "base image.");
@@ -68,7 +68,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
         return;
     }
 
-    ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 72, 0);
+
     initialize_al_component(font_title, "font titulo");
 
     int Game_discs;
@@ -224,6 +224,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
     al_destroy_bitmap(base_and_stakes);
     al_destroy_sample(error_sound);
+    al_destroy_font(font_title);
 }
 
 int DiskNumber(ALLEGRO_EVENT_QUEUE* queue) {
