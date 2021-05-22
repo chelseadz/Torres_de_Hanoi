@@ -19,7 +19,7 @@
 
 enum EST_POS {
     INIT_X = 294,
-    Y_ESTS = 493,
+    Y_ESTS = 510,
     AUX_X = 600,
     FIN_X = 914
 };
@@ -30,7 +30,7 @@ enum {
     _FIN
 };
 
-#define _STICK_SIZE 316
+#define _STICK_SIZE 298
 
 #define _ARROW_SPACE 75
 
@@ -54,7 +54,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     Game_discs = DiskNumber(queue);
     if (Game_discs == 0) return;
 
-    Estaca::Initialize_stakes(_STICK_SIZE, 20, Game_discs);
+    Estaca::Initialize_stakes(_STICK_SIZE, Game_discs);
 
     Estaca init(EST_POS::INIT_X, EST_POS::Y_ESTS);
     Estaca aux(EST_POS::AUX_X, EST_POS::Y_ESTS);
