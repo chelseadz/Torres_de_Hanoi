@@ -51,7 +51,7 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
             redraw = true;
             break;
 
-        case ALLEGRO_EVENT_KEY_DOWN:
+        case ALLEGRO_EVENT_KEY_CHAR:
 
             if (event.keyboard.keycode == ALLEGRO_KEY_UP) {
                 button_place = (button_place - 1) % 4;
