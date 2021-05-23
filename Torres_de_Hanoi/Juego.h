@@ -1,7 +1,7 @@
 /*****************************************************************//**
  * \file   Juego.h
  * \brief  Responsable del juego y toda sus dinámicas.
- * 
+ *
  * \author Equipo Rocket
  * \date   3/05/2021
  *********************************************************************/
@@ -24,9 +24,9 @@
 #define _MIN_DISCS 2 /*< Mínima cantidad de discos que el usuario puede elegir. */
 #define _MAX_DISCS 8 /*< Máxima cantidad de discos que el usuario puede elegir. */
 
-/**
- * Opciones de seleccion
- */
+ /**
+  * Opciones de seleccion
+  */
 enum {
     _ADD = 1,
     _SUBSTRACT
@@ -35,7 +35,7 @@ enum {
 
 /**
  * \brief Función principal del juego
- * 
+ *
  * \param queue cola de evento que recibe entrada de usuario.
  * \return void
  */
@@ -78,15 +78,31 @@ int MinNMoves(int n_discs);
 
 /**
  * \brief Dibuja el número de movimientos que el jugador ha hecho.
- * 
+ *
  * \details Si la fuente que se le pasa a la función no está inicializada correctamente,
  * la función solo imprime un mensaje de error en el flujo de errores std::cerr de la consola.
- * 
+ *
  * \param n_moves Número de movimientos que el jugador ha hecho.
  * \param font fuente con la que se imprime el texto del mensaje.
  * \return void
  */
 void DisplayNMoves(unsigned n_moves, ALLEGRO_FONT* font);
+
+/**
+ * \brief Dibuja el número de movimientos minimos para ganar.
+ *
+ * \details Si la fuente que se le pasa a la función no está inicializada correctamente,
+ * la función solo imprime un mensaje de error en el flujo de errores std::cerr de la consola.
+ *
+ * \param n_moves Número de discos.
+ * \param font fuente con la que se imprime el texto del mensaje.
+ * \return void
+ */
+void DisplayMinMoves(unsigned numDiscs, ALLEGRO_FONT* font);
+
+void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves);
+
+void EndingDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph, int moves, int min_moves);
 
 
 
