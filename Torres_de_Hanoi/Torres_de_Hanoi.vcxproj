@@ -220,6 +220,7 @@
     <Media Include="cambiar_botones.wav" />
     <Media Include="seleccionar_boton.wav" />
     <Media Include="gnome_error.wav" />
+    <Media Include="winner.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

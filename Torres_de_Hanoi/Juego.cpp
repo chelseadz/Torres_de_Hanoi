@@ -46,6 +46,7 @@ enum {
 #define _COLUMN_PORTION_FILENAME "estaca_larga.png"
 
 #define _ERROR_SOUND_FILENAME "gnome_error.wav"
+#define _WINNER_SOUND_FILENAME "winner.wav"
 
 #define _TITLE_FONT_FILENAME "ROBOTECH_GP.ttf"
 
@@ -64,6 +65,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     ALLEGRO_BITMAP* base_and_stakes = al_load_bitmap(_BASE_FILENAME);
     ALLEGRO_BITMAP* column_portion = al_load_bitmap(_COLUMN_PORTION_FILENAME);
     ALLEGRO_SAMPLE* error_sound = al_load_sample(_ERROR_SOUND_FILENAME);
+    ALLEGRO_SAMPLE* winner_sound = al_load_sample(_WINNER_SOUND_FILENAME);
     ALLEGRO_SAMPLE* select_sound = al_load_sample(_SELECT_SOUND_FILENAME);
     ALLEGRO_SAMPLE* move_sound = al_load_sample(_MOVE_SOUND_FILENAME);
     ALLEGRO_FONT* font_title = al_load_font(_TITLE_FONT_FILENAME, 72, 0);
@@ -73,6 +75,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
         initialize_al_component(base_and_stakes, "base image");
         initialize_al_component(column_portion, "column portion image");
         initialize_al_component(error_sound, "error sound");
+        initialize_al_component(winner_sound, "winner sound");
         initialize_al_component(font_title, "font titulo");
         initialize_al_component(select_sound, "Select sound");
         initialize_al_component(move_sound, "Move sound");
@@ -142,6 +145,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
                             ++moves_done;
 
                             if (fin.full()) {
+                                al_play_sample(winner_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
 
                                 al_clear_to_color(al_map_rgb(0, 0, 0));
 
