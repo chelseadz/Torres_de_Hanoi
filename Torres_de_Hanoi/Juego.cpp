@@ -133,6 +133,17 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
                             ++moves_done;
 
+                            if (fin.full()) {
+
+                                al_clear_to_color(al_map_rgb(0, 0, 0));
+
+                                DisplayNMoves(moves_done, move_count_font);
+                                DisplayMinMoves(Game_discs, move_count_font);
+
+                                Ending(queue, moves_done, min_moves);
+                                done = true;
+                            }
+
                         }
                     } else {
                         //Movimiento inv\240lido.
@@ -230,17 +241,6 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
             DisplayMinMoves(Game_discs, move_count_font);
 
             al_flip_display();
-
-            if (aux.full() || fin.full()) {
-
-                al_clear_to_color(al_map_rgb(0, 0, 0));
-
-                DisplayNMoves(moves_done, move_count_font);
-                DisplayMinMoves(Game_discs, move_count_font);
-
-                Ending(queue, moves_done, min_moves);
-                done = true;
-            }
 
             redraw = false;
         }
@@ -404,7 +404,7 @@ void DisplayMinMoves(unsigned numDiscs, ALLEGRO_FONT* font) {
     try {
         initialize_al_component(font, "min move font.");
         std::string s("Min Moves: ");
-        unsigned min_moves = pow(2, numDiscs) - 1;
+        unsigned min_moves = MinNMoves(numDiscs);
         s.append(std::to_string(min_moves));
         al_draw_text(font, UNITED_NATIONS_BLUE, 350, _WINDOW_HEIGHT - 50, 0, s.c_str());
     }
