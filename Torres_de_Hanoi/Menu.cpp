@@ -24,8 +24,8 @@ enum {
 };
 
 void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
-    //Esta función se tiene que encargar de mostrar un menú
-    //y de tomar acción cuando el usuario de una entrada.
+    //Esta funciÃ³n se tiene que encargar de mostrar un menÃº
+    //y de tomar acciÃ³n cuando el usuario de una entrada.
 
     try {
         initialize_al_component(al_init_font_addon(), "font component");
@@ -74,6 +74,39 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
             break;
 
         case ALLEGRO_EVENT_KEY_DOWN:
+            if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
+                done = true;
+
+            if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
+              
+              al_play_sample(select_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
+              switch (button_place)
+                {
+                case _PLAY:
+                {
+                    Juego(queue, display);
+                    break;
+                }
+                case _INSTRUCTIONS:
+                {
+                    Instructions(queue);
+                    break;
+                }
+                case _CREDITS:
+                {
+                    Credits(queue);
+                    break;
+                }
+                case _LEAVE:
+                {
+                    done = true;
+                    break;
+                }
+                }
+            }
+            break;
+
+        case ALLEGRO_EVENT_KEY_CHAR:
 
             al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
 
@@ -86,36 +119,8 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
             if (event.keyboard.keycode == ALLEGRO_KEY_DOWN)
                 button_place = (button_place + 1) % 4;
 
-            if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
-                done = true;
-
-            if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
-                al_play_sample(select_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
-                switch (button_place)
-                {
-                    case _PLAY:
-                    {
-                        Juego(queue, display);
-                        break;
-                    }
-                    case _INSTRUCTIONS:
-                    {
-                        Instructions(queue);
-                        break;
-                    }
-                    case _CREDITS:
-                    {
-                        Credits(queue);
-                        break;
-                    }
-                    case _LEAVE:
-                    {
-                        done = true;
-                        break;
-                    }
-                }
-            }
             break;
+ 
            
         case ALLEGRO_EVENT_DISPLAY_CLOSE:
             done = true;

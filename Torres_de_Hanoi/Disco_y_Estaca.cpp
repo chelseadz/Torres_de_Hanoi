@@ -8,7 +8,6 @@
 
 #include "Disco_y_Estaca.h"
 
-#include "Utileria.h"
 
 #include <cstdlib>
 #include <climits>
@@ -101,7 +100,7 @@ void Disco::draw() {
 		y_pos + height / 3, color);
 	//elipse de arriba
 	al_draw_filled_ellipse(x_pos, y_pos, width / 2, height / 3,
-		al_map_rgb(100, 60, 0));
+		al_map_rgb(100, 70, 0));
 
 }
 

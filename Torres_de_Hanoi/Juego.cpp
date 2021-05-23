@@ -9,7 +9,7 @@
 #include "Juego.h"
 #include "Disco_y_Estaca.h"
 #include "Selector_flecha.h"
-#include "Utileria.h"
+
 
 #include <iostream>
 #include <stdexcept>
@@ -33,7 +33,7 @@ enum {
 
 #define _STICK_SIZE 316
 
-#define _ARROW_SPACE 75
+#define _ARROW_SPACE 65
 
 #define _BASE_FILENAME "base_con_estacas_delgada.png"
 #define _COLUMN_PORTION_FILENAME "estaca_larga.png"
@@ -238,6 +238,8 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     al_destroy_sample(error_sound);
     al_destroy_font(font_title);
     al_destroy_font(move_count_font);
+
+    al_flush_event_queue(queue);
 }
 
 int DiskNumber(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_SAMPLE* move_sound, ALLEGRO_SAMPLE* select_sound) {

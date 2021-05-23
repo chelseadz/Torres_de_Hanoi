@@ -76,7 +76,16 @@ void ChangeDiskNumberDisplay(int Button);
  */
 int MinNMoves(int n_discs);
 
-
+/**
+ * \brief Dibuja el número de movimientos que el jugador ha hecho.
+ * 
+ * \details Si la fuente que se le pasa a la función no está inicializada correctamente,
+ * la función solo imprime un mensaje de error en el flujo de errores std::cerr de la consola.
+ * 
+ * \param n_moves Número de movimientos que el jugador ha hecho.
+ * \param font fuente con la que se imprime el texto del mensaje.
+ * \return void
+ */
 void DisplayNMoves(unsigned n_moves, ALLEGRO_FONT* font);
 
 
