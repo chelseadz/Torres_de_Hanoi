@@ -100,4 +100,8 @@ void DisplayNMoves(unsigned n_moves, ALLEGRO_FONT* font);
  */
 void DisplayMinMoves(unsigned numDiscs, ALLEGRO_FONT* font);
 
+void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves);
+
+void EndingDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph, int moves, int min_moves);
+
 #endif 

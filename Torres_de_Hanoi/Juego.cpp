@@ -230,6 +230,17 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
             al_flip_display();
 
+            if (aux.full() || fin.full()) {
+
+                al_clear_to_color(al_map_rgb(0, 0, 0));
+
+                DisplayNMoves(moves_done, move_count_font);
+                DisplayMinMoves(Game_discs, move_count_font);
+
+                Ending(queue, moves_done, min_moves);
+                done = true;
+            }
+
             redraw = false;
         }
 
@@ -399,4 +410,92 @@ void DisplayMinMoves(unsigned numDiscs, ALLEGRO_FONT* font) {
     catch (const std::runtime_error& e) {
         std::cerr << e.what() << '\n';
     }
+}
+
+void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves) {
+
+    ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 72, 0);
+    ALLEGRO_FONT* font = al_load_font("ROBOTECH_GP.ttf", 36, 0);
+    ALLEGRO_FONT* font_paragraph = al_load_font("HelveticaLTStdLight.ttf", 36, 0);
+
+    initialize_al_component(font, "font");
+    initialize_al_component(font_title, "font titulo");
+    initialize_al_component(font_paragraph, "font parrafo");
+
+    bool done = false;
+    bool redraw = true;
+    ALLEGRO_EVENT event;
+
+
+    while (1)
+    {
+        al_wait_for_event(queue, &event);
+
+        switch (event.type)
+        {
+        case ALLEGRO_EVENT_TIMER:
+            redraw = true;
+            break;
+
+        case ALLEGRO_EVENT_KEY_DOWN:
+            if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) done = true;
+
+            if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER) done = true;
+            break;
+
+        case ALLEGRO_EVENT_DISPLAY_CLOSE:
+            done = true;
+            exit(0);
+            break;
+        }
+
+        if (done)
+            break;
+
+        if (redraw && al_is_event_queue_empty(queue))
+        {
+            EndingDisplay(font_title, font, font_paragraph, moves, min_moves);
+
+            al_flip_display();
+
+            redraw = false;
+        }
+    }
+    //Destruir fuentes creadas
+    al_destroy_font(font);
+    al_destroy_font(font_title);
+    al_destroy_font(font_paragraph);
+
+}
+
+void EndingDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph, int moves, int min_moves) {
+
+    //Pantalla
+   // al_clear_to_color(HANBLUE);
+
+    DrawLogo(text, 36, _WINDOW_WIDTH / 9, 0.1 * _WINDOW_HEIGHT / 9);
+
+    if (moves == min_moves) {
+        //Titulo Origen
+        al_draw_text(title, YELLOW_RED, _WINDOW_WIDTH / 2, 0.5 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_CENTER,
+            "PERFECT!");
+        //Cuerpo Origen
+
+        al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 2, 2.7 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_CENTER,
+            "You won the game with the least possible number of moves!");
+    }
+    else {
+        //Titulo Origen
+        al_draw_text(title, YELLOW_RED, _WINDOW_WIDTH / 2, 0.5 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_CENTER,
+            "YOU WIN!");
+        //Cuerpo Origen
+
+        al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 2, 2.7 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_CENTER,
+            "However, you have made too many moves ...");
+    }
+
+    //BOTON REGRESAR
+    DrawButton(_WINDOW_WIDTH / 5, 6.5 * _WINDOW_HEIGHT / 9, 4 * _WINDOW_WIDTH / 5,
+        7.5 * _WINDOW_HEIGHT / 9, text, "Press ESC, SPACE or ENTER to go home.");
+
 }
