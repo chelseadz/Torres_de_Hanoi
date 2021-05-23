@@ -23,9 +23,8 @@
 enum EST_POS {
     INIT_X = 297,
     Y_ESTS = 512,
-    AUX_X = 602,
-
-    FIN_X = 917
+    AUX_X = 603,
+    FIN_X = 918
 };
 
 enum {
