@@ -81,6 +81,8 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     Game_discs = DiskNumber(queue, move_sound, select_sound);
     if (Game_discs == 0) return;
 
+    unsigned min_moves = pow(2, Game_discs) - 1;
+
     Estaca::Initialize_stakes(_STICK_SIZE, 20, Game_discs);
 
     Estaca init(EST_POS::INIT_X, EST_POS::Y_ESTS);
@@ -382,6 +384,19 @@ void DisplayNMoves (unsigned n_moves, ALLEGRO_FONT* font) {
         al_draw_text(font, UNITED_NATIONS_BLUE, 30, _WINDOW_HEIGHT - 50, 0, s.c_str());
 
     } catch (const std::runtime_error& e) {
+        std::cerr << e.what() << '\n';
+    }
+}
+
+void DisplayMinMoves(unsigned numDiscs, ALLEGRO_FONT* font) {
+    try {
+        initialize_al_component(font, "min move font.");
+        std::string s("Min Moves: ");
+        unsigned min_moves = pow(2, numDiscs) - 1;
+        s.append(std::to_string(min_moves));
+        al_draw_text(font, UNITED_NATIONS_BLUE, 350, _WINDOW_HEIGHT - 50, 0, s.c_str());
+    }
+    catch (const std::runtime_error& e) {
         std::cerr << e.what() << '\n';
     }
 }
