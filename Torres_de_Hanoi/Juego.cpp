@@ -1,7 +1,7 @@
 /*****************************************************************//**
  * \file   Juego.cpp
  * \brief  Implementaciones de Juego.h
- * 
+ *
  * \author Equipo Rocket
  * \date   3/05/2021
  *********************************************************************/
@@ -50,8 +50,8 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
         initialize_al_component(al_install_audio(), "audio addon.");
         initialize_al_component(al_init_acodec_addon(), "audio codecs.");
         initialize_al_component(al_reserve_samples(8), "audio samples.");
-        
-      
+
+
     }
     catch (const std::runtime_error& e) {
         std::cout << e.what() << '\n';
@@ -68,7 +68,8 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
         initialize_al_component(error_sound, "error sound.");
         initialize_al_component(font_title, "font titulo");
 
-    } catch (const std::runtime_error& e) {
+    }
+    catch (const std::runtime_error& e) {
         std::cout << e.what() << '\n';
         return;
     }
@@ -112,98 +113,102 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
         switch (event.type)
         {
-            case ALLEGRO_EVENT_TIMER:
+        case ALLEGRO_EVENT_TIMER:
 
-                if (move) {
-                    if (origin.pointee()->move_to_stake(dest.pointee(), move, finish_movement)) {
-                        if (move) {
-                            origin.show = false;
-                            dest.show = false;
-                        }
-                        else {
-                            origin.show = true;
-                            origin.selected = false;
-                            dest.selected = false;
-                            origin.selected_stake = _LEFT_S;
-
-                            ++moves_done;
-
-                        }
-                    } else {
-                        //Movimiento inv\240lido.
-                        move = 0;
-                        dest.selected = false;
+            if (move) {
+                if (origin.pointee()->move_to_stake(dest.pointee(), move, finish_movement)) {
+                    if (move) {
+                        origin.show = false;
                         dest.show = false;
-                        origin.selected = false;
-                        al_play_sample(error_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
                     }
-                }
-
-
-            case ALLEGRO_EVENT_KEY_DOWN: {
-                int key = event.keyboard.keycode;
-
-                if (key == ALLEGRO_KEY_ESCAPE) {
-                    if (move) finish_movement = true;
-                    else if (origin.selected) {
-                        origin.selected = false;
+                    else {
                         origin.show = true;
-                        dest.show = false;
-                    } else
-                        done = true;
+                        origin.selected = false;
+                        dest.selected = false;
+                        origin.selected_stake = _LEFT_S;
 
-                }
-                else if (key == ALLEGRO_KEY_RIGHT) {
-                    if (!move) {
-                        if (!origin.selected) {
-                            origin.move_right();
-                        }
-                        else {
-                            dest.move_right();
-                            if (dest.selected_stake == origin.selected_stake)
-                                dest.move_right();
-                        }
-                    }
-                  
+                        ++moves_done;
 
-                } else if (key == ALLEGRO_KEY_LEFT) {
-                    if (!move) {
-                        if (!origin.selected) {
-                            origin.move_left();
-                        }
-                        else {
-                            dest.move_left();
-                            if (dest.selected_stake == origin.selected_stake)
-                                dest.move_left();
-                        }
                     }
                 }
-                else if (key == ALLEGRO_KEY_SPACE || key == ALLEGRO_KEY_ENTER) {
-
-                    if (!origin.selected) {
-                        origin.selected = true;
-                        if (origin.selected_stake == dest.selected_stake)
-                            dest.move_right();
-                        dest.show = true;
-                    } else {
-                        dest.selected = true;
-                        move = true;
-                    }
+                else {
+                    //Movimiento inv\240lido.
+                    move = 0;
+                    dest.selected = false;
+                    dest.show = false;
+                    origin.selected = false;
+                    al_play_sample(error_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
                 }
-
-                redraw = true;
-                break;
             }
 
-            case ALLEGRO_EVENT_DISPLAY_CLOSE:
-                done = true;
-                exit(0);
-                break;      
+
+        case ALLEGRO_EVENT_KEY_DOWN: {
+            int key = event.keyboard.keycode;
+
+            if (key == ALLEGRO_KEY_ESCAPE) {
+                if (move) finish_movement = true;
+                else if (origin.selected) {
+                    origin.selected = false;
+                    origin.show = true;
+                    dest.show = false;
+                }
+                else
+                    done = true;
+
+            }
+            else if (key == ALLEGRO_KEY_RIGHT) {
+                if (!move) {
+                    if (!origin.selected) {
+                        origin.move_right();
+                    }
+                    else {
+                        dest.move_right();
+                        if (dest.selected_stake == origin.selected_stake)
+                            dest.move_right();
+                    }
+                }
+
+
+            }
+            else if (key == ALLEGRO_KEY_LEFT) {
+                if (!move) {
+                    if (!origin.selected) {
+                        origin.move_left();
+                    }
+                    else {
+                        dest.move_left();
+                        if (dest.selected_stake == origin.selected_stake)
+                            dest.move_left();
+                    }
+                }
+            }
+            else if (key == ALLEGRO_KEY_SPACE || key == ALLEGRO_KEY_ENTER) {
+
+                if (!origin.selected) {
+                    origin.selected = true;
+                    if (origin.selected_stake == dest.selected_stake)
+                        dest.move_right();
+                    dest.show = true;
+                }
+                else {
+                    dest.selected = true;
+                    move = true;
+                }
+            }
+
+            redraw = true;
+            break;
+        }
+
+        case ALLEGRO_EVENT_DISPLAY_CLOSE:
+            done = true;
+            exit(0);
+            break;
         }
 
         if (done)
             break;
-        
+
 
         if (redraw)
         {
@@ -217,9 +222,9 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
             dest.draw();
             origin.pointee()->PrintRodDiscs();
 
-            if(origin.selected_stake != _LEFT_S) init.PrintRodDiscs();
-            if(origin.selected_stake != _MIDDLE_S) aux.PrintRodDiscs();
-            if(origin.selected_stake != _RIGHT_S) fin.PrintRodDiscs();
+            if (origin.selected_stake != _LEFT_S) init.PrintRodDiscs();
+            if (origin.selected_stake != _MIDDLE_S) aux.PrintRodDiscs();
+            if (origin.selected_stake != _RIGHT_S) fin.PrintRodDiscs();
 
             DisplayNMoves(moves_done, move_count_font);
 
@@ -257,11 +262,12 @@ int DiskNumber(ALLEGRO_EVENT_QUEUE* queue) {
     try {
         initialize_al_component(font, "font");
         initialize_al_component(font_title, "font titulo");
-    } catch (const std::runtime_error& e) {
+    }
+    catch (const std::runtime_error& e) {
         std::cerr << e.what() << '\n';
         return 0;
     }
-    
+
     bool done = false;
     bool redraw = true;
     ALLEGRO_EVENT event;
@@ -294,14 +300,15 @@ int DiskNumber(ALLEGRO_EVENT_QUEUE* queue) {
 
                 if (Disks > _MIN_DISCS)
                     Disks--;
-            } else if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER)
+            }
+            else if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER)
                 done = true;
             else if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
                 return 0;
 
             break;
 
-            
+
 
         case ALLEGRO_EVENT_DISPLAY_CLOSE:
             done = true;
@@ -345,7 +352,7 @@ void NumberOfDisksDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, int Disks) {
     std::string tmp = std::to_string(Disks);
     char const* num_char = tmp.c_str();
 
-    al_draw_text(title, WHITE, 2.5 * _WINDOW_WIDTH / 5, 2.25* _WINDOW_HEIGHT / 5, ALLEGRO_ALIGN_CENTER, num_char);
+    al_draw_text(title, WHITE, 2.5 * _WINDOW_WIDTH / 5, 2.25 * _WINDOW_HEIGHT / 5, ALLEGRO_ALIGN_CENTER, num_char);
 
     //Add Button
     al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 2 * _WINDOW_HEIGHT / 5, 2.35 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGHT / 5, 2.65 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGHT / 5, YELLOW);
@@ -361,12 +368,12 @@ void ChangeDiskNumberDisplay(int Button) {
 
     switch (Button)
     {
-        case _ADD:
-            al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 2 * _WINDOW_HEIGHT / 5, 2.35 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGHT / 5, 2.65 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGHT / 5, VERY_PALE_YELLOW);
-            break;
-        case _SUBSTRACT:
-            al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 3 * _WINDOW_HEIGHT / 5, 2.35 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGHT / 5, 2.65 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGHT / 5, VERY_PALE_YELLOW);
-            break;
+    case _ADD:
+        al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 2 * _WINDOW_HEIGHT / 5, 2.35 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGHT / 5, 2.65 * _WINDOW_WIDTH / 5, 2.2 * _WINDOW_HEIGHT / 5, VERY_PALE_YELLOW);
+        break;
+    case _SUBSTRACT:
+        al_draw_filled_triangle(2.5 * _WINDOW_WIDTH / 5, 3 * _WINDOW_HEIGHT / 5, 2.35 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGHT / 5, 2.65 * _WINDOW_WIDTH / 5, 2.8 * _WINDOW_HEIGHT / 5, VERY_PALE_YELLOW);
+        break;
     }
 }
 
@@ -377,7 +384,7 @@ int MinNMoves(int n_discs) {
 }
 
 
-void DisplayNMoves (unsigned n_moves, ALLEGRO_FONT* font) {
+void DisplayNMoves(unsigned n_moves, ALLEGRO_FONT* font) {
     try {
         initialize_al_component(font, "move count font.");
 
@@ -386,7 +393,8 @@ void DisplayNMoves (unsigned n_moves, ALLEGRO_FONT* font) {
 
         al_draw_text(font, UNITED_NATIONS_BLUE, 30, _WINDOW_HEIGHT - 50, 0, s.c_str());
 
-    } catch (const std::runtime_error& e) {
+    }
+    catch (const std::runtime_error& e) {
         std::cerr << e.what() << '\n';
     }
 }
@@ -399,7 +407,7 @@ void DisplayMinMoves(unsigned numDiscs, ALLEGRO_FONT* font) {
         unsigned min_moves = pow(2, numDiscs) - 1;
         s.append(std::to_string(min_moves));
 
-        al_draw_text(font, UNITED_NATIONS_BLUE, 350, _WINDOW_HEIGHT - 50 , 0, s.c_str());
+        al_draw_text(font, UNITED_NATIONS_BLUE, 350, _WINDOW_HEIGHT - 50, 0, s.c_str());
 
     }
     catch (const std::runtime_error& e) {
