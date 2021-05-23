@@ -105,6 +105,11 @@ void DisplayNMoves(unsigned n_moves, ALLEGRO_FONT* font);
  */
 void DisplayMinMoves(unsigned numDiscs, ALLEGRO_FONT* font);
 
+bool EscapeGame(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_FONT* font, ALLEGRO_SAMPLE* escape_sound,
+    ALLEGRO_SAMPLE* move_sound);
+
+void DisplayEscapeGame( ALLEGRO_FONT* font);
+
 /**
  * \brief Finaliza el juego.
  *
