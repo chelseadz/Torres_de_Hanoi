@@ -18,14 +18,13 @@
 #include <cmath>
 #include <string>
 #include <allegro5/allegro_image.h>
-#include <allegro5/allegro_audio.h>
-#include <allegro5/allegro_acodec.h>
 
 
 enum EST_POS {
     INIT_X = 297,
     Y_ESTS = 512,
     AUX_X = 602,
+
     FIN_X = 917
 };
 
@@ -40,6 +39,8 @@ enum {
 #define _ARROW_SPACE 65
 
 #define _BASE_FILENAME "base_con_estacas_delgada.png"
+#define _COLUMN_PORTION_FILENAME "estaca_larga.png"
+
 #define _ERROR_SOUND_FILENAME "gnome_error.wav"
 
 #define _TITLE_FONT_FILENAME "ROBOTECH_GP.ttf"
@@ -51,9 +52,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
         initialize_al_component(al_init_image_addon(), "image component.");
         initialize_al_component(al_install_audio(), "audio addon.");
         initialize_al_component(al_init_acodec_addon(), "audio codecs.");
-        initialize_al_component(al_reserve_samples(8), "audio samples.");
-        
-      
+        initialize_al_component(al_reserve_samples(8), "audio samples.");     
     }
     catch (const std::runtime_error& e) {
         std::cout << e.what() << '\n';
@@ -61,14 +60,20 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     }
 
     ALLEGRO_BITMAP* base_and_stakes = al_load_bitmap(_BASE_FILENAME);
+    ALLEGRO_BITMAP* column_portion = al_load_bitmap(_COLUMN_PORTION_FILENAME);
     ALLEGRO_SAMPLE* error_sound = al_load_sample(_ERROR_SOUND_FILENAME);
+    ALLEGRO_SAMPLE* select_sound = al_load_sample(_SELECT_SOUND_FILENAME);
+    ALLEGRO_SAMPLE* move_sound = al_load_sample(_MOVE_SOUND_FILENAME);
     ALLEGRO_FONT* font_title = al_load_font(_TITLE_FONT_FILENAME, 72, 0);
     ALLEGRO_FONT* move_count_font = al_load_font(_TITLE_FONT_FILENAME, 38, 0);
 
     try {
         initialize_al_component(base_and_stakes, "base image.");
+        initialize_al_component(column_portion, "column portion image.");
         initialize_al_component(error_sound, "error sound.");
         initialize_al_component(font_title, "font titulo");
+        initialize_al_component(select_sound, "Select sound");
+        initialize_al_component(move_sound, "Move sound");
 
     } catch (const std::runtime_error& e) {
         std::cout << e.what() << '\n';
@@ -76,8 +81,10 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     }
 
     int Game_discs;
-    Game_discs = DiskNumber(queue);
+    Game_discs = DiskNumber(queue, move_sound, select_sound);
     if (Game_discs == 0) return;
+
+    int min_moves = MinNMoves(Game_discs);
 
     Estaca::Initialize_stakes(_STICK_SIZE, 20, Game_discs);
 
@@ -117,6 +124,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
                 if (move) {
                     if (origin.pointee()->move_to_stake(dest.pointee(), move, finish_movement)) {
+                        
                         if (move) {
                             origin.show = false;
                             dest.show = false;
@@ -129,6 +137,17 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
                             dest.selected_stake = _LEFT_S;
 
                             ++moves_done;
+
+                            if (fin.full()) {
+
+                                al_clear_to_color(al_map_rgb(0, 0, 0));
+
+                                DisplayNMoves(moves_done, move_count_font);
+                                DisplayMinMoves(Game_discs, move_count_font);
+
+                                Ending(queue, moves_done, min_moves);
+                                done = true;
+                            }
 
                         }
                     } else {
@@ -153,9 +172,12 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
                         dest.show = false;
                     } else
                         done = true;
-
                 }
+
                 else if (key == ALLEGRO_KEY_RIGHT || key == ALLEGRO_KEY_D) {
+
+                    al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
+
                     if (!move) {
                         if (!origin.selected) {
                             origin.move_right();
@@ -168,7 +190,11 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
                     }
                   
 
+
                 } else if (key == ALLEGRO_KEY_LEFT || key == ALLEGRO_KEY_A) {
+
+                    al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
+
                     if (!move) {
                         if (!origin.selected) {
                             origin.move_left();
@@ -181,7 +207,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
                     }
                 }
                 else if (key == ALLEGRO_KEY_SPACE || key == ALLEGRO_KEY_ENTER) {
-
+                    al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
                     if (!origin.selected) {
                         origin.selected = true;
                         if (origin.selected_stake == dest.selected_stake)
@@ -216,13 +242,14 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
             origin.draw();
             dest.draw();
-            origin.pointee()->PrintRodDiscs();
+            origin.pointee()->PrintRodDiscs(column_portion);
 
-            if(origin.selected_stake != _LEFT_S) init.PrintRodDiscs();
-            if(origin.selected_stake != _MIDDLE_S) aux.PrintRodDiscs();
-            if(origin.selected_stake != _RIGHT_S) fin.PrintRodDiscs();
+            if(origin.selected_stake != _LEFT_S) init.PrintRodDiscs(column_portion);
+            if(origin.selected_stake != _MIDDLE_S) aux.PrintRodDiscs(column_portion);
+            if(origin.selected_stake != _RIGHT_S) fin.PrintRodDiscs(column_portion);
 
             DisplayNMoves(moves_done, move_count_font);
+            DisplayMinMoves(Game_discs, move_count_font);
 
             al_flip_display();
 
@@ -232,6 +259,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     }
 
     al_destroy_bitmap(base_and_stakes);
+    al_destroy_bitmap(column_portion);
     al_destroy_sample(error_sound);
     al_destroy_font(font_title);
     al_destroy_font(move_count_font);
@@ -239,7 +267,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     al_flush_event_queue(queue);
 }
 
-int DiskNumber(ALLEGRO_EVENT_QUEUE* queue) {
+int DiskNumber(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_SAMPLE* move_sound, ALLEGRO_SAMPLE* select_sound) {
 
     ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 48, 0);
     ALLEGRO_FONT* font = al_load_font("ROBOTECH_GP.ttf", 36, 0);
@@ -271,6 +299,8 @@ int DiskNumber(ALLEGRO_EVENT_QUEUE* queue) {
             break;
 
         case ALLEGRO_EVENT_KEY_DOWN:
+
+            al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
 
             if (event.keyboard.keycode == ALLEGRO_KEY_UP) {
                 button_place = _ADD;
@@ -379,4 +409,105 @@ void DisplayNMoves (unsigned n_moves, ALLEGRO_FONT* font) {
     } catch (const std::runtime_error& e) {
         std::cerr << e.what() << '\n';
     }
+}
+
+void DisplayMinMoves(unsigned numDiscs, ALLEGRO_FONT* font) {
+    try {
+        initialize_al_component(font, "min move font.");
+        std::string s("Min Moves: ");
+        unsigned min_moves = MinNMoves(numDiscs);
+        s.append(std::to_string(min_moves));
+        al_draw_text(font, UNITED_NATIONS_BLUE, 350, _WINDOW_HEIGHT - 50, 0, s.c_str());
+    }
+    catch (const std::runtime_error& e) {
+        std::cerr << e.what() << '\n';
+    }
+}
+
+void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves) {
+
+    ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 72, 0);
+    ALLEGRO_FONT* font = al_load_font("ROBOTECH_GP.ttf", 36, 0);
+    ALLEGRO_FONT* font_paragraph = al_load_font("HelveticaLTStdLight.ttf", 36, 0);
+
+    initialize_al_component(font, "font");
+    initialize_al_component(font_title, "font titulo");
+    initialize_al_component(font_paragraph, "font parrafo");
+
+    bool done = false;
+    bool redraw = true;
+    ALLEGRO_EVENT event;
+
+
+    while (1)
+    {
+        al_wait_for_event(queue, &event);
+
+        switch (event.type)
+        {
+        case ALLEGRO_EVENT_TIMER:
+            redraw = true;
+            break;
+
+        case ALLEGRO_EVENT_KEY_DOWN:
+            if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) done = true;
+
+            if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER) done = true;
+            break;
+
+        case ALLEGRO_EVENT_DISPLAY_CLOSE:
+            done = true;
+            exit(0);
+            break;
+        }
+
+        if (done)
+            break;
+
+        if (redraw && al_is_event_queue_empty(queue))
+        {
+            EndingDisplay(font_title, font, font_paragraph, moves, min_moves);
+
+            al_flip_display();
+
+            redraw = false;
+        }
+    }
+    //Destruir fuentes creadas
+    al_destroy_font(font);
+    al_destroy_font(font_title);
+    al_destroy_font(font_paragraph);
+
+}
+
+void EndingDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph, int moves, int min_moves) {
+
+    //Pantalla
+   // al_clear_to_color(HANBLUE);
+
+    DrawLogo(text, 36, _WINDOW_WIDTH / 9, 0.1 * _WINDOW_HEIGHT / 9);
+
+    if (moves == min_moves) {
+        //Titulo Origen
+        al_draw_text(title, YELLOW_RED, _WINDOW_WIDTH / 2, 1.5 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_CENTER,
+            "PERFECT!");
+        //Cuerpo Origen
+
+        al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 2, 3.7 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_CENTER,
+            "You won the game with the least possible number of moves!");
+    }
+    else {
+        //Titulo Origen
+        al_draw_text(title, YELLOW_RED, _WINDOW_WIDTH / 2, 1.5 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_CENTER,
+            "YOU WIN!");
+        //Cuerpo Origen
+
+        al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 2, 3.7 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_CENTER,
+            "However, you have made too many moves ...");
+    }
+
+    //BOTON REGRESAR
+    DrawButton(_WINDOW_WIDTH / 5, 6.5 * _WINDOW_HEIGHT / 9, 4 * _WINDOW_WIDTH / 5,
+        7.5 * _WINDOW_HEIGHT / 9, text, "Press ESC, SPACE or ENTER to go home.");
+
 }

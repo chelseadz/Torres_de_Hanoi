@@ -34,6 +34,10 @@ const ALLEGRO_COLOR WHITE = al_map_rgb(255, 255, 255),
 	HANBLUE = al_map_rgb(19, 40, 107),
 	BLACK = al_map_rgb(0, 0, 0);
 
+/** Sonidos de movimiento y selección de botones */
+#define _SELECT_SOUND_FILENAME "seleccionar_boton.wav"
+#define _MOVE_SOUND_FILENAME "cambiar_botones.wav"
+
  /*< Medidas en px de la pantalla. */
 enum {
 	_WINDOW_HEIGHT = 684, /*< Altura de la pantalla del programa en pixeles. */

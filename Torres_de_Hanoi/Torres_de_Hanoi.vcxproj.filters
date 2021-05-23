@@ -87,16 +87,10 @@
     </Font>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="base_con_estacas.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="estaca_media.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="estaca_media_mas_larga.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="base_con_estacas_delgada.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="estaca_larga.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

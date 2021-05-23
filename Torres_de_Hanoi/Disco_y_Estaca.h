@@ -101,7 +101,7 @@ public:
 	/**
 	 * \brief Imprime todos los discos que tiene la estaca, cada uno en su posición adecuada.
 	 */
-	void PrintRodDiscs();
+	void PrintRodDiscs(ALLEGRO_BITMAP* column_portion);
 
 	/**
 	 * \brief Inicializar estaca, llenandose hasta su capacidad máxima con discos de color y tamaño apropiado.

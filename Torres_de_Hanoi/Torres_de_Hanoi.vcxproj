@@ -213,16 +213,21 @@
     <Font Include="ROBOTECH_GP.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="base_con_estacas.png" />
     <Image Include="base_con_estacas_delgada.png" />
-    <Image Include="estaca_media.png" />
-    <Image Include="estaca_media_mas_larga.png" />
+    <Image Include="estaca_larga.png" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="cambiar_botones.wav" />
     <Media Include="seleccionar_boton.wav" />
     <Media Include="gnome_error.wav" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Media Include="cambiar_botones.wav" />
+    <Media Include="seleccionar_boton.wav" />
+    <Media Include="gnome_error.wav" />
+  </ItemGroup>
+
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\AllegroDeps.1.12.0\build\native\AllegroDeps.targets" Condition="Exists('..\packages\AllegroDeps.1.12.0\build\native\AllegroDeps.targets')" />

@@ -6,34 +6,48 @@
  * \date   3/05/2021
  *********************************************************************/
 
+#include <iostream>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include "Menu.h"
 #include "Instrucciones.h"
 #include "Juego.h"
 #include "Creditos.h"
 #include "Utileria.h"
 
-enum {
-    _PLAY = 0,
-    _INSTRUCTIONS,
-    _CREDITS,
-    _LEAVE
-};
 
 void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
-    //Esta función se tiene que encargar de mostrar un menú
-    //y de tomar acción cuando el usuario de una entrada.
+    //Esta funciÃ³n se tiene que encargar de mostrar un menÃº
+    //y de tomar acciÃ³n cuando el usuario de una entrada.
 
-    //Inicializar texto.
-    initialize_al_component(al_init_font_addon(), "font component");
-    //Inicializar ttf (True Type Font)
-    initialize_al_component(al_init_ttf_addon(), "ttf font componenent");
+    try {
+        initialize_al_component(al_init_font_addon(), "font component");
+        initialize_al_component(al_init_ttf_addon(), "ttf font componenent");
+        initialize_al_component(al_init_primitives_addon(), "primitives");
+        initialize_al_component(al_install_audio(), "audio addon.");
+        initialize_al_component(al_init_acodec_addon(), "audio codecs.");
+        initialize_al_component(al_reserve_samples(8), "audio samples.");
+    }
+    catch (const std::runtime_error& e) {
+        std::cout << e.what() << '\n';
+    }
 
+    
     ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 72, 0);
     ALLEGRO_FONT* font = al_load_font("ROBOTECH_GP.ttf", 36, 0);
+    ALLEGRO_SAMPLE* select_sound = al_load_sample(_SELECT_SOUND_FILENAME);
+    ALLEGRO_SAMPLE* move_sound = al_load_sample(_MOVE_SOUND_FILENAME);
 
-    initialize_al_component(font, "font");
-    initialize_al_component(font_title, "font titulo");
-    initialize_al_component(al_init_primitives_addon(), "primitives");
+    try {
+        initialize_al_component(font, "font");
+        initialize_al_component(font_title, "font titulo");
+        initialize_al_component(select_sound, "Select sound");
+        initialize_al_component(move_sound, "Move sound");
+    }
+    catch (const std::runtime_error& e) {
+        std::cout << e.what() << '\n';
+    }
+    
 
     bool done = false;
     bool redraw = true;
@@ -57,7 +71,9 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
                 done = true;
 
             if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
-                switch (button_place)
+              
+              al_play_sample(select_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
+              switch (button_place)
                 {
                 case _PLAY:
                 {
@@ -84,6 +100,8 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
             break;
 
         case ALLEGRO_EVENT_KEY_CHAR:
+
+            al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
 
             if (event.keyboard.keycode == ALLEGRO_KEY_UP) {
                 button_place = (button_place - 1) % 4;
@@ -151,18 +169,17 @@ void MoveSelection(int Button) {
 
     switch (Button)
     {
-    case _PLAY:
-        al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 3 * _WINDOW_HEIGHT / 9, 2 * _WINDOW_WIDTH / 3, 4 * _WINDOW_HEIGHT / 9, al_map_rgba_f(0.3, 0.3, 0.3, 0.3));
-        break;
-    case _INSTRUCTIONS:
-        al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 4.5 * _WINDOW_HEIGHT / 9, 2 * _WINDOW_WIDTH / 3, 5.5 * _WINDOW_HEIGHT / 9, al_map_rgba_f(0.3, 0.3, 0.3, 0.3));
-        break;
-    case _CREDITS:
-        al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 6 * _WINDOW_HEIGHT / 9, 2 * _WINDOW_WIDTH / 3, 7 * _WINDOW_HEIGHT / 9, al_map_rgba_f(0.3, 0.3, 0.3, 0.3));
-        break;
-    case _LEAVE:
-        al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 7.5 * _WINDOW_HEIGHT / 9, 2 * _WINDOW_WIDTH / 3, 8.5 * _WINDOW_HEIGHT / 9, al_map_rgba_f(0.3, 0.3, 0.3, 0.3));
-        break;
+        case _PLAY:
+            al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 3 * _WINDOW_HEIGHT / 9, 2 * _WINDOW_WIDTH / 3, 4 * _WINDOW_HEIGHT / 9, al_map_rgba_f(0.3, 0.3, 0.3, 0.3));
+            break;
+        case _INSTRUCTIONS:
+            al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 4.5 * _WINDOW_HEIGHT / 9, 2 * _WINDOW_WIDTH / 3, 5.5 * _WINDOW_HEIGHT / 9, al_map_rgba_f(0.3, 0.3, 0.3, 0.3));
+            break;
+        case _CREDITS:
+            al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 6 * _WINDOW_HEIGHT / 9, 2 * _WINDOW_WIDTH / 3, 7 * _WINDOW_HEIGHT / 9, al_map_rgba_f(0.3, 0.3, 0.3, 0.3));
+            break;
+        case _LEAVE:
+            al_draw_filled_rectangle(_WINDOW_WIDTH / 3, 7.5 * _WINDOW_HEIGHT / 9, 2 * _WINDOW_WIDTH / 3, 8.5 * _WINDOW_HEIGHT / 9, al_map_rgba_f(0.3, 0.3, 0.3, 0.3));
+            break;
     }
-
 }
