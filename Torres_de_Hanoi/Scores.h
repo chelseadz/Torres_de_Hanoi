@@ -35,7 +35,15 @@ struct Score {
  * \return Puntero a arreglo de Score en el heap ordenado de menor a mayor.
  *		   Regresa NULL si hubo algún problema para hacer al lectura.
  */
-Score* GetPreviousScores(const char* filename);
+Score* GetPreviousScores(const char* filename, int& n_scores);
+
+/**
+ * \brief Agrega un puntaje a un archivo de texto.
+ * 
+ * \param filename nombre del archivo. Puede ser un archivo que ya tenga puntajes.
+ * \return void 
+ */
+void AddScoresToFile(const char* filename, const Score* score, int size, const Score& last);
 
 
 #endif

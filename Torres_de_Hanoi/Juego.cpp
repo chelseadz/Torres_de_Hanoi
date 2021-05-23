@@ -10,6 +10,7 @@
 #include "Disco_y_Estaca.h"
 #include "Selector_flecha.h"
 #include "Scores.h"
+#include "Utileria.h"
 
 
 #include <iostream>
@@ -23,7 +24,7 @@
 
 enum EST_POS {
     INIT_X = 297,
-    Y_ESTS = 497,
+    Y_ESTS = 512,
     AUX_X = 602,
     FIN_X = 917
 };
@@ -89,7 +90,6 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
     ALLEGRO_EVENT event;
 
-    //Score* scores = GetPreviousScores("Scores.txt");
 
     bool done = false;
     bool redraw = true;
@@ -126,6 +126,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
                             origin.selected = false;
                             dest.selected = false;
                             origin.selected_stake = _LEFT_S;
+                            dest.selected_stake = _LEFT_S;
 
                             ++moves_done;
 
@@ -154,7 +155,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
                         done = true;
 
                 }
-                else if (key == ALLEGRO_KEY_RIGHT) {
+                else if (key == ALLEGRO_KEY_RIGHT || key == ALLEGRO_KEY_D) {
                     if (!move) {
                         if (!origin.selected) {
                             origin.move_right();
@@ -167,7 +168,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
                     }
                   
 
-                } else if (key == ALLEGRO_KEY_LEFT) {
+                } else if (key == ALLEGRO_KEY_LEFT || key == ALLEGRO_KEY_A) {
                     if (!move) {
                         if (!origin.selected) {
                             origin.move_left();

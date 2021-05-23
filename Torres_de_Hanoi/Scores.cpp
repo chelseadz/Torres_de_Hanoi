@@ -16,7 +16,7 @@ bool Score::operator< (const Score& s) {
 	return moves < s.moves;
 }
 
-Score* GetPreviousScores(const char* filename) {
+Score* GetPreviousScores(const char* filename, int& n_scores) {
 	std::ifstream file(filename);
 
 	if (file.is_open() && file.good()) {
@@ -30,6 +30,8 @@ Score* GetPreviousScores(const char* filename) {
 			} catch (const std::bad_alloc&) {
 				return NULL;
 			}
+
+			n_scores = n;
 
 			for (int i = 0; i < n; ++i) {
 				file >> scores[i].name >> scores[i].moves;
@@ -48,4 +50,22 @@ Score* GetPreviousScores(const char* filename) {
 	} else {
 		return NULL;
 	}
+}
+
+
+void AddScoresToFile(const char* filename, const Score* scores, int size, const Score& last) {
+
+	std::ofstream file(filename);
+
+	if (file.is_open() && file.good()) {
+		file << size + 1 << '\n';
+
+		for (int i = 0; i < size; ++i)
+			file << scores[i].name << ' ' << scores[i].moves << '\n';
+
+		file << last.name << ' ' << last.moves << '\n';
+	
+		file.close();
+	}
+
 }
