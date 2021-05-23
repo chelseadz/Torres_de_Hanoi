@@ -81,7 +81,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     Game_discs = DiskNumber(queue, move_sound, select_sound);
     if (Game_discs == 0) return;
 
-    unsigned min_moves = pow(2, Game_discs) - 1;
+    int min_moves = MinNMoves(Game_discs);
 
     Estaca::Initialize_stakes(_STICK_SIZE, 20, Game_discs);
 
@@ -227,6 +227,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
             if(origin.selected_stake != _RIGHT_S) fin.PrintRodDiscs(column_portion);
 
             DisplayNMoves(moves_done, move_count_font);
+            DisplayMinMoves(Game_discs, move_count_font);
 
             al_flip_display();
 
@@ -477,20 +478,20 @@ void EndingDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragr
 
     if (moves == min_moves) {
         //Titulo Origen
-        al_draw_text(title, YELLOW_RED, _WINDOW_WIDTH / 2, 0.5 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_CENTER,
+        al_draw_text(title, YELLOW_RED, _WINDOW_WIDTH / 2, 1.5 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_CENTER,
             "PERFECT!");
         //Cuerpo Origen
 
-        al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 2, 2.7 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_CENTER,
+        al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 2, 3.7 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_CENTER,
             "You won the game with the least possible number of moves!");
     }
     else {
         //Titulo Origen
-        al_draw_text(title, YELLOW_RED, _WINDOW_WIDTH / 2, 0.5 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_CENTER,
+        al_draw_text(title, YELLOW_RED, _WINDOW_WIDTH / 2, 1.5 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_CENTER,
             "YOU WIN!");
         //Cuerpo Origen
 
-        al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 2, 2.7 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_CENTER,
+        al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 2, 3.7 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_CENTER,
             "However, you have made too many moves ...");
     }
 
