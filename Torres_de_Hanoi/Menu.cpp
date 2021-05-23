@@ -10,6 +10,7 @@
 #include "Instrucciones.h"
 #include "Juego.h"
 #include "Creditos.h"
+#include "Utileria.h"
 
 enum {
     _PLAY = 0,

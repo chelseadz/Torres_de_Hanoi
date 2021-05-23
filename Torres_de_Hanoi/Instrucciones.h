@@ -13,7 +13,7 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_primitives.h>
-#include "Utileria.h"
+//#include "Utileria.h"
 
  /**
   * \brief Función que se encarga de mostrar las Instrucciones

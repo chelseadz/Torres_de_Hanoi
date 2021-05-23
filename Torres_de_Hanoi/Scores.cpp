@@ -8,6 +8,8 @@
 
 #include "Scores.h"
 
+#include "Utileria.h"
+
 #include <fstream>
 
 bool Score::operator< (const Score& s) {
