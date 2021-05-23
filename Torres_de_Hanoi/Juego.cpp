@@ -85,7 +85,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
     int Game_discs;
     Game_discs = DiskNumber(queue, move_sound, select_sound, error_sound);
-    if (Game_discs == 0) return;
+    if (Game_discs < 2) return;
 
     int min_moves = MinNMoves(Game_discs);
 
