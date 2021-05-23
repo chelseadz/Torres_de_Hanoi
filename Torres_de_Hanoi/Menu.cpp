@@ -44,7 +44,7 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
         initialize_al_component(move_sound, "Move sound");
     }
     catch (const std::runtime_error& e) {
-        std::cout << e.what() << '\n';
+        std::cerr << e.what() << '\n';
     }
     
 
@@ -74,26 +74,26 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
               al_play_sample(select_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
               switch (button_place)
                 {
-                case _PLAY:
-                {
-                    Juego(queue, display);
-                    break;
-                }
-                case _INSTRUCTIONS:
-                {
-                    Instructions(queue);
-                    break;
-                }
-                case _CREDITS:
-                {
-                    Credits(queue);
-                    break;
-                }
-                case _LEAVE:
-                {
-                    done = true;
-                    break;
-                }
+                    case _PLAY:
+                    {
+                        Juego(queue, display);
+                        break;
+                    }
+                    case _INSTRUCTIONS:
+                    {
+                        Instructions(queue);
+                        break;
+                    }
+                    case _CREDITS:
+                    {
+                        Credits(queue);
+                        break;
+                    }
+                    case _LEAVE:
+                    {
+                        done = true;
+                        break;
+                    }
                 }
             }
             break;
@@ -137,6 +137,8 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     //Destruir fuentes creadas
     al_destroy_font(font);
     al_destroy_font(font_title);
+    al_destroy_sample(move_sound);
+    al_destroy_sample(select_sound);
 }
 
 void MenuDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text) {

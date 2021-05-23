@@ -7,7 +7,7 @@
  *********************************************************************/
 
 #include "Creditos.h"
-
+#include <iostream>
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
@@ -20,10 +20,20 @@ void Credits(ALLEGRO_EVENT_QUEUE* queue) {
     ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 36, 0);
     ALLEGRO_FONT* font = al_load_font("ROBOTECH_GP.ttf", 36, 0);
     ALLEGRO_FONT* font_paragraph = al_load_font("HelveticaLTStdLight.ttf", 22, 0);
+    ALLEGRO_SAMPLE* select_sound = al_load_sample(_SELECT_SOUND_FILENAME);
+    ALLEGRO_SAMPLE* move_sound = al_load_sample(_MOVE_SOUND_FILENAME);
 
-    initialize_al_component(font, "font");
-    initialize_al_component(font_title, "font titulo");
-    initialize_al_component(font_paragraph, "font parrafo");
+    try {
+        initialize_al_component(font, "font");
+        initialize_al_component(font_title, "font titulo");
+        initialize_al_component(font_paragraph, "font parrafo");
+        initialize_al_component(select_sound, "Select sound");
+        initialize_al_component(move_sound, "Move sound");
+    }
+    catch (const std::runtime_error& e) {
+        std::cerr << e.what() << '\n';
+        return;
+    }
 
     bool done = false;
     bool redraw = true;
@@ -40,6 +50,8 @@ void Credits(ALLEGRO_EVENT_QUEUE* queue) {
                 break;
 
             case ALLEGRO_EVENT_KEY_DOWN:
+
+                al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
 
                 if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
                     done = true;
@@ -71,6 +83,8 @@ void Credits(ALLEGRO_EVENT_QUEUE* queue) {
     al_destroy_font(font);
     al_destroy_font(font_title);
     al_destroy_font(font_paragraph);
+    al_destroy_sample(move_sound);
+    al_destroy_sample(select_sound);
 }
 
 void CreditsDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph) {
