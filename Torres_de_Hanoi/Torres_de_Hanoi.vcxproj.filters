@@ -92,9 +92,6 @@
     <Media Include="seleccionar_boton.wav">
       <Filter>Resource Files</Filter>
     </Media>
-    <Media Include="..\..\..\..\..\Desktop\perfect_win.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
   </ItemGroup>
   <ItemGroup>
     <Media Include="gnome_error.wav">
