@@ -17,8 +17,8 @@
 #include <allegro5/allegro_acodec.h>
 #include <string>
 
-#include "Utileria.h"
-#include "Disco_y_Estaca.h"
+//#include "Utileria.h"
+//#include "Disco_y_Estaca.h"
 
 
 #define _MIN_DISCS 2 /*< Mínima cantidad de discos que el usuario puede elegir. */

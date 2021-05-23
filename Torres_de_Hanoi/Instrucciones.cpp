@@ -8,6 +8,8 @@
 
 #include "Instrucciones.h"
 
+#include "Utileria.h"
+
 enum {
     _MENU = 0,
     _NEXT

@@ -13,6 +13,7 @@
 #include "Instrucciones.h"
 #include "Juego.h"
 #include "Creditos.h"
+#include "Utileria.h"
 
 
 void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
