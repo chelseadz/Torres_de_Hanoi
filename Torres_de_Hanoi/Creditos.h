@@ -1,6 +1,6 @@
 /*****************************************************************//**
  * \file   Creditos.h
- * \brief  Encargado de p·gina de creditos.
+ * \brief  Encargado de p√°gina de creditos.
  * 
  * \author Equipo Rocket
  * \date   3/05/2021
@@ -18,7 +18,7 @@
 #include "Utileria.h"
 
  /**
-  * \brief FunciÛn que se encarga de mostrar los ccrÈditos
+  * \brief Funci√≥n que se encarga de mostrar los ccr√©ditos
   *
   * \param queue Cola de eventos principal.
   * \return void
@@ -26,9 +26,9 @@
 void Credits(ALLEGRO_EVENT_QUEUE* queue);
 
 /**
- * \brief Muesta el texto de crÈditos en pantalla
+ * \brief Muesta el texto de cr√©ditos en pantalla
  *
- * \param title Fuente definida para el tÌtulo
+ * \param title Fuente definida para el t√≠tulo
  * \param text Fuente definida para los botones
  * \param paragraph Fuente definida para el cuerpo
  * 

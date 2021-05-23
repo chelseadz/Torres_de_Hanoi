@@ -8,6 +8,7 @@
 
 #include "Disco_y_Estaca.h"
 
+#include "Utileria.h"
 
 #include <cstdlib>
 #include <climits>
@@ -66,9 +67,9 @@ bool Estaca::push_back(const Disco& disc) {
 	discs[curr_n_discs] = disc;
 
 	discs[curr_n_discs].x_pos = x_base_pos;
-	discs[curr_n_discs].y_pos = y_base_pos - curr_disc_column_height - discs[curr_n_discs].height / 2;
+	discs[curr_n_discs].y_pos = y_base_pos - curr_disc_column_height -  discs[curr_n_discs].height / 2;
 
-	curr_disc_column_height += disc.height / 2.0f;
+	curr_disc_column_height += y_base_pos - discs[curr_n_discs].y_pos - curr_disc_column_height;
 
 	++curr_n_discs;
 
@@ -114,9 +115,11 @@ void Estaca::PrintRodDiscs(ALLEGRO_BITMAP* column_portion) {
 	if (curr_n_discs != 0) {
 		int dif = discs[curr_n_discs - 1].y_pos - (y_base_pos - stick_height);
 		if (dif > 0) {
-			if (dif > discs[curr_n_discs - 1].height / 2.0f)
+			if (curr_n_discs > 1 && dif > discs[curr_n_discs - 2].height / 2.0f) {
+				dif = discs[curr_n_discs - 2].height / 2.0f;
+			} else if (dif > discs[curr_n_discs - 1].height / 2.0f) {
 				dif = discs[curr_n_discs - 1].height / 2.0f;
-
+			}
 			if (dif > _COLUMN_HEIGHT) 
 				dif = _COLUMN_HEIGHT;
 
@@ -124,7 +127,7 @@ void Estaca::PrintRodDiscs(ALLEGRO_BITMAP* column_portion) {
 			try {
 				al_draw_bitmap_region(column_portion, 0, _COLUMN_HEIGHT - dif, _COLUMN_WIDTH, dif,
 					discs[curr_n_discs -1].x_pos - _COLUMN_WIDTH / 2.0f,
-					discs[curr_n_discs - 1].y_pos - 3 * discs[curr_n_discs - 1].height/ 8.0f,	0);
+					discs[curr_n_discs - 1].y_pos - dif,	0);
 
 			} catch (const std::runtime_error& e) {
 				std::cerr << e.what() << '\n';
@@ -141,7 +144,7 @@ void Estaca::InitDiscsAndRods() {
 	if (curr_n_discs != 0) throw std::logic_error("La estaca no se puede inicializar.");
 
 	const float _INIT_D_WIDTH = _LARGEST_DISC_WIDTH;
-	const float _INIT_D_HEIGHT = _LARGEST_DISC_HEIGTH;
+	const float _INIT_D_HEIGHT = _LARGEST_DISC_HEIGHT;
 	
 	for (int i = 0; i < max_discs; i++) {
 		ALLEGRO_COLOR disc_color;

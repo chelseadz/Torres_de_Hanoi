@@ -15,13 +15,13 @@
 #include <allegro5/allegro_primitives.h>
 #include <stdexcept>
 
-#include "Utileria.h"
+//#include "Utileria.h"
 
 #define _MIN_DISC_CAPACITY 1 /*< Capacidad mínima de discos para una estaca. */
 #define _MAX_DISC_CAPACTITY 10 /*< Capacidad máxima de discos para una estaca. */
 
 #define _LARGEST_DISC_WIDTH 300 /*< Ancho del disco más grande para las estacas. */
-#define _LARGEST_DISC_HEIGTH 100 /*< Alto del disco más grande para las estacas. */
+#define _LARGEST_DISC_HEIGHT 100 /*< Alto del disco más grande para las estacas. */
 
 #define _AN_TIME 0.5f /*< Tiempo en segundos que dura la animación de movimiento de una estaca a otra. */
 

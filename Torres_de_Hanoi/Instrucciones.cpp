@@ -9,6 +9,12 @@
 #include "Instrucciones.h"
 #include <iostream>
 
+#include "Utileria.h"
+
+#include <iostream>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
+
 enum {
     _MENU = 0,
     _NEXT
@@ -34,7 +40,7 @@ void Instructions(ALLEGRO_EVENT_QUEUE* queue) {
         std::cerr << e.what() << '\n';
         return;
     }
-
+       
     bool done = false;
     bool redraw = true;
     ALLEGRO_EVENT event;
@@ -56,18 +62,23 @@ void Instructions(ALLEGRO_EVENT_QUEUE* queue) {
             al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
 
             if (event.keyboard.keycode == ALLEGRO_KEY_UP || event.keyboard.keycode == ALLEGRO_KEY_LEFT) {
-                button_place = (button_place - 1) % 2;
-                if (button_place < 0)
-                    button_place = _MENU;
+                al_play_sample(move_sound, 1.0f, 1.0f, 1.0f, ALLEGRO_PLAYMODE_ONCE, NULL);
+                if (--button_place < _MENU) button_place = _NEXT;
+                //button_place = (button_place - 1) % 2;
+                //if (button_place < 0)
+                //    button_place = _MENU;
             }
 
-            if (event.keyboard.keycode == ALLEGRO_KEY_DOWN || event.keyboard.keycode == ALLEGRO_KEY_RIGHT)
+            if (event.keyboard.keycode == ALLEGRO_KEY_DOWN || event.keyboard.keycode == ALLEGRO_KEY_RIGHT) {
+                al_play_sample(move_sound, 1.0f, 1.0f, 1.0f, ALLEGRO_PLAYMODE_ONCE, NULL);
                 button_place = (button_place + 1) % 2;
+            }
 
             if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
                 done = true;
 
             if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
+                al_play_sample(select_sound, 1.0f, 1.0f, 1.0f, ALLEGRO_PLAYMODE_ONCE, NULL);
                 switch (button_place) {
                     case _MENU:
                         done = true;
@@ -76,7 +87,7 @@ void Instructions(ALLEGRO_EVENT_QUEUE* queue) {
                     case _NEXT:
                         Origin(queue);
                         break;
-                    }
+                }
             }
 
             break;

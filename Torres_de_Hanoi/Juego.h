@@ -17,8 +17,8 @@
 #include <allegro5/allegro_acodec.h>
 #include <string>
 
-#include "Utileria.h"
-#include "Disco_y_Estaca.h"
+//#include "Utileria.h"
+//#include "Disco_y_Estaca.h"
 
 
 #define _MIN_DISCS 2 /*< Mínima cantidad de discos que el usuario puede elegir. */
@@ -48,7 +48,8 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display);
  * \param queue cola de evento que recibe entrada de usuario.
  * \return numero de discos
  */
-int DiskNumber(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_SAMPLE* move, ALLEGRO_SAMPLE* select);
+int DiskNumber(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_SAMPLE* move, 
+    ALLEGRO_SAMPLE* select, ALLEGRO_SAMPLE* error_sound);
 
 /**
  * \brief Muestra en pantalla el numero de discos que se estan capturando para jugar.

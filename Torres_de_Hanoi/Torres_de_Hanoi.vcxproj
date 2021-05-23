@@ -189,12 +189,14 @@
     <ClCompile Include="Juego.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Scores.cpp" />
     <ClCompile Include="Selector_flecha.cpp" />
     <ClCompile Include="Utileria.cpp" />
     <ClCompile Include="Utileria.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Utileria.tpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Creditos.h" />
@@ -202,6 +204,7 @@
     <ClInclude Include="Instrucciones.h" />
     <ClInclude Include="Juego.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="Scores.h" />
     <ClInclude Include="Selector_flecha.h" />
   </ItemGroup>
   <ItemGroup>
@@ -219,6 +222,7 @@
     <Media Include="seleccionar_boton.wav" />
     <Media Include="gnome_error.wav" />
   </ItemGroup>
+
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\AllegroDeps.1.12.0\build\native\AllegroDeps.targets" Condition="Exists('..\packages\AllegroDeps.1.12.0\build\native\AllegroDeps.targets')" />
