@@ -9,6 +9,7 @@
 #include "Juego.h"
 #include "Disco_y_Estaca.h"
 #include "Selector_flecha.h"
+#include "Scores.h"
 
 
 #include <iostream>
@@ -87,6 +88,8 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     init.InitDiscsAndRods();
 
     ALLEGRO_EVENT event;
+
+    //Score* scores = GetPreviousScores("Scores.txt");
 
     bool done = false;
     bool redraw = true;
