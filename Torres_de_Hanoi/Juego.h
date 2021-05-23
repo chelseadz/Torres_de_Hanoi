@@ -13,6 +13,8 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include <string>
 
 #include "Utileria.h"
@@ -45,7 +47,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display);
  * \param queue cola de evento que recibe entrada de usuario.
  * \return numero de discos
  */
-int DiskNumber(ALLEGRO_EVENT_QUEUE* queue);
+int DiskNumber(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_SAMPLE* move, ALLEGRO_SAMPLE* select);
 
 /**
  * \brief Muestra en pantalla el numero de discos que es estan capturando
