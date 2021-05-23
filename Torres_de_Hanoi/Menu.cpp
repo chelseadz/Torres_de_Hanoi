@@ -24,9 +24,9 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
         initialize_al_component(al_init_font_addon(), "font component");
         initialize_al_component(al_init_ttf_addon(), "ttf font componenent");
         initialize_al_component(al_init_primitives_addon(), "primitives");
-        initialize_al_component(al_install_audio(), "audio addon.");
-        initialize_al_component(al_init_acodec_addon(), "audio codecs.");
-        initialize_al_component(al_reserve_samples(8), "audio samples.");
+        initialize_al_component(al_install_audio(), "audio addon");
+        initialize_al_component(al_init_acodec_addon(), "audio codecs");
+        initialize_al_component(al_reserve_samples(8), "audio samples");
     }
     catch (const std::runtime_error& e) {
         std::cout << e.what() << '\n';
@@ -101,7 +101,7 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
         case ALLEGRO_EVENT_KEY_CHAR:
 
-            al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
+            al_play_sample(move_sound, 1.0f, 1.0f, 1.1f, ALLEGRO_PLAYMODE_ONCE, NULL);
 
             if (event.keyboard.keycode == ALLEGRO_KEY_UP) {
                 button_place = (button_place - 1) % 4;

@@ -24,7 +24,7 @@ enum EST_POS {
     INIT_X = 297,
     Y_ESTS = 512,
     AUX_X = 603,
-    FIN_X = 918
+    FIN_X = 917
 };
 
 enum {
@@ -48,10 +48,7 @@ enum {
 void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
     try {
-        initialize_al_component(al_init_image_addon(), "image component.");
-        initialize_al_component(al_install_audio(), "audio addon.");
-        initialize_al_component(al_init_acodec_addon(), "audio codecs.");
-        initialize_al_component(al_reserve_samples(8), "audio samples.");     
+        initialize_al_component(al_init_image_addon(), "image component");
     }
     catch (const std::runtime_error& e) {
         std::cout << e.what() << '\n';
@@ -67,12 +64,13 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     ALLEGRO_FONT* move_count_font = al_load_font(_TITLE_FONT_FILENAME, 38, 0);
 
     try {
-        initialize_al_component(base_and_stakes, "base image.");
-        initialize_al_component(column_portion, "column portion image.");
-        initialize_al_component(error_sound, "error sound.");
+        initialize_al_component(base_and_stakes, "base image");
+        initialize_al_component(column_portion, "column portion image");
+        initialize_al_component(error_sound, "error sound");
         initialize_al_component(font_title, "font titulo");
         initialize_al_component(select_sound, "Select sound");
         initialize_al_component(move_sound, "Move sound");
+        initialize_al_component(move_count_font, "move count font");
 
     } catch (const std::runtime_error& e) {
         std::cout << e.what() << '\n';
@@ -80,7 +78,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     }
 
     int Game_discs;
-    Game_discs = DiskNumber(queue, move_sound, select_sound);
+    Game_discs = DiskNumber(queue, move_sound, select_sound, error_sound);
     if (Game_discs == 0) return;
 
     int min_moves = MinNMoves(Game_discs);
@@ -260,13 +258,16 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     al_destroy_bitmap(base_and_stakes);
     al_destroy_bitmap(column_portion);
     al_destroy_sample(error_sound);
+    al_destroy_sample(select_sound);
+    al_destroy_sample(move_sound);
     al_destroy_font(font_title);
     al_destroy_font(move_count_font);
 
     al_flush_event_queue(queue);
 }
 
-int DiskNumber(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_SAMPLE* move_sound, ALLEGRO_SAMPLE* select_sound) {
+int DiskNumber(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_SAMPLE* move_sound,
+    ALLEGRO_SAMPLE* select_sound, ALLEGRO_SAMPLE* error_sound) {
 
     ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 48, 0);
     ALLEGRO_FONT* font = al_load_font("ROBOTECH_GP.ttf", 36, 0);
@@ -297,9 +298,15 @@ int DiskNumber(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_SAMPLE* move_sound, ALLEGRO_S
             redraw = true;
             break;
 
-        case ALLEGRO_EVENT_KEY_DOWN:
+        case ALLEGRO_EVENT_KEY_DOWN: {
+            int key = event.keyboard.keycode;
 
-            al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
+            if ((key == ALLEGRO_KEY_UP && Disks + 1 > _MAX_DISCS) ||
+                (key == ALLEGRO_KEY_DOWN && Disks - 1 < _MIN_DISCS)) {
+                al_play_sample(error_sound, 1.0f, 1.0f, 1.0f, ALLEGRO_PLAYMODE_ONCE, NULL);
+            }
+            else
+                al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
 
             if (event.keyboard.keycode == ALLEGRO_KEY_UP) {
                 button_place = _ADD;
@@ -313,15 +320,18 @@ int DiskNumber(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_SAMPLE* move_sound, ALLEGRO_S
 
                 if (Disks > _MIN_DISCS)
                     Disks--;
-            } else if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER)
+            }
+            else if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
                 done = true;
+                al_play_sample(select_sound, 1.0f, 1.0f, 1.2f, ALLEGRO_PLAYMODE_ONCE, NULL);
+            }
+
             else if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
                 return 0;
 
             break;
 
-            
-
+        }
         case ALLEGRO_EVENT_DISPLAY_CLOSE:
             done = true;
             exit(0);
@@ -398,7 +408,7 @@ int MinNMoves(int n_discs) {
 
 void DisplayNMoves (unsigned n_moves, ALLEGRO_FONT* font) {
     try {
-        initialize_al_component(font, "move count font.");
+        initialize_al_component(font, "move count font");
 
         std::string s("Moves made: ");
         s.append(std::to_string(n_moves));
@@ -412,7 +422,7 @@ void DisplayNMoves (unsigned n_moves, ALLEGRO_FONT* font) {
 
 void DisplayMinMoves(unsigned numDiscs, ALLEGRO_FONT* font) {
     try {
-        initialize_al_component(font, "min move font.");
+        initialize_al_component(font, "min move font");
         std::string s("Min Moves: ");
         unsigned min_moves = MinNMoves(numDiscs);
         s.append(std::to_string(min_moves));

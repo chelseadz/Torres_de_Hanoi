@@ -10,6 +10,10 @@
 
 #include "Utileria.h"
 
+#include <iostream>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
+
 enum {
     _MENU = 0,
     _NEXT
@@ -22,10 +26,19 @@ void Instructions(ALLEGRO_EVENT_QUEUE* queue) {
     ALLEGRO_FONT* font = al_load_font("ROBOTECH_GP.ttf", 36, 0);
     ALLEGRO_FONT* font_paragraph = al_load_font("HelveticaLTStdLight.ttf", 22, 0);
 
-    initialize_al_component(font, "font");
-    initialize_al_component(font_title, "font titulo");
-    initialize_al_component(font_paragraph, "font parrafo");
+    ALLEGRO_SAMPLE* select_sound = al_load_sample(_SELECT_SOUND_FILENAME);
+    ALLEGRO_SAMPLE* move_sound = al_load_sample(_MOVE_SOUND_FILENAME);
 
+    try {
+        initialize_al_component(font, "font");
+        initialize_al_component(font_title, "font titulo.");
+        initialize_al_component(font_paragraph, "font parrafo");
+        initialize_al_component(select_sound, "select sound");
+
+    } catch (const std::runtime_error& e) {
+        std::cerr << e.what() << '\n';
+    }
+    
     bool done = false;
     bool redraw = true;
     ALLEGRO_EVENT event;
@@ -45,18 +58,23 @@ void Instructions(ALLEGRO_EVENT_QUEUE* queue) {
         case ALLEGRO_EVENT_KEY_DOWN:
 
             if (event.keyboard.keycode == ALLEGRO_KEY_UP || event.keyboard.keycode == ALLEGRO_KEY_LEFT) {
-                button_place = (button_place - 1) % 2;
-                if (button_place < 0)
-                    button_place = _MENU;
+                al_play_sample(move_sound, 1.0f, 1.0f, 1.0f, ALLEGRO_PLAYMODE_ONCE, NULL);
+                if (--button_place < _MENU) button_place = _NEXT;
+                //button_place = (button_place - 1) % 2;
+                //if (button_place < 0)
+                //    button_place = _MENU;
             }
 
-            if (event.keyboard.keycode == ALLEGRO_KEY_DOWN || event.keyboard.keycode == ALLEGRO_KEY_RIGHT)
+            if (event.keyboard.keycode == ALLEGRO_KEY_DOWN || event.keyboard.keycode == ALLEGRO_KEY_RIGHT) {
+                al_play_sample(move_sound, 1.0f, 1.0f, 1.0f, ALLEGRO_PLAYMODE_ONCE, NULL);
                 button_place = (button_place + 1) % 2;
+            }
 
             if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
                 done = true;
 
             if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
+                al_play_sample(select_sound, 1.0f, 1.0f, 1.0f, ALLEGRO_PLAYMODE_ONCE, NULL);
                 switch (button_place) {
                     case _MENU:
                         done = true;
@@ -65,7 +83,7 @@ void Instructions(ALLEGRO_EVENT_QUEUE* queue) {
                     case _NEXT:
                         Origin(queue);
                         break;
-                    }
+                }
             }
 
             break;
