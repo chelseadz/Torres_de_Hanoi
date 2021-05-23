@@ -15,14 +15,6 @@
 #include "Creditos.h"
 
 
-
-enum {
-    _PLAY = 0,
-    _INSTRUCTIONS,
-    _CREDITS,
-    _LEAVE
-};
-
 void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     //Esta función se tiene que encargar de mostrar un menú
     //y de tomar acción cuando el usuario de una entrada.

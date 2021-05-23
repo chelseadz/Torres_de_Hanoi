@@ -25,7 +25,7 @@
 #define _MAX_DISCS 8 /*< Máxima cantidad de discos que el usuario puede elegir. */
 
 /**
- * Opciones de seleccion
+ * Opciones de seleccion de la flecha que incrementa o disminuye el numero de discos para jugar.
  */
 enum {
     _ADD = 1,
@@ -36,7 +36,8 @@ enum {
 /**
  * \brief Función principal del juego
  * 
- * \param queue cola de evento que recibe entrada de usuario.
+ * \param queue Cola de evento que recibe entrada de usuario.
+ * \param display Pantalla
  * \return void
  */
 void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display);
@@ -50,9 +51,12 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display);
 int DiskNumber(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_SAMPLE* move, ALLEGRO_SAMPLE* select);
 
 /**
- * \brief Muestra en pantalla el numero de discos que es estan capturando
+ * \brief Muestra en pantalla el numero de discos que se estan capturando para jugar.
  *
  * \param queue cola de evento que recibe entrada de usuario.
+ * \param title Fuente definida para los titulos
+ * \param text Fuente definida para los textos
+ * \param Disks Numero de discos actual.
  * \return nada
  */
 void NumberOfDisksDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, int Disks);
@@ -60,7 +64,7 @@ void NumberOfDisksDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, int Disks);
 /**
  * \brief Cambia el numero de discos en pantalla
  *
- * \param queue cola de evento que recibe entrada de usuario.
+ * \param Button Botón donde se encuentra actualmente.
  * \return nada
  */
 
@@ -88,6 +92,38 @@ int MinNMoves(int n_discs);
  */
 void DisplayNMoves(unsigned n_moves, ALLEGRO_FONT* font);
 
+/**
+ * \brief Dibuja el número de movimientos minimos para ganar.
+ *
+ * \details Si la fuente que se le pasa a la función no está inicializada correctamente,
+ * la función solo imprime un mensaje de error en el flujo de errores std::cerr de la consola.
+ *
+ * \param n_moves Número de discos en el juego.
+ * \param font fuente con la que se imprime el texto del mensaje.
+ * \return void
+ */
+void DisplayMinMoves(unsigned numDiscs, ALLEGRO_FONT* font);
 
+/**
+ * \brief Finaliza el juego.
+ *
+ * \param queue Cola de evento que recibe entrada de usuario.
+ * \param moves Movimientos en los que se terminó el juego.
+ * \param min_moves Cantidad minima para ganar el juego.
+ * \return void
+ */
+void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves);
+
+/**
+ * \brief Muestra en pantalla el fin del juego.
+ *
+ * \param queue cola de evento que recibe entrada de usuario.
+ * \param title Fuente definida para los titulos
+ * \param text Fuente definida para los textos
+ * \param moves Movimientos en los que se terminó el juego.
+ * \param min_moves Cantidad minima para ganar el juego.
+ * \return nada
+ */
+void EndingDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph, int moves, int min_moves);
 
 #endif 
