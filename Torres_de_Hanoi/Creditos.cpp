@@ -12,7 +12,6 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_primitives.h>
-#include "Utileria.h"
 
 
 void Credits(ALLEGRO_EVENT_QUEUE* queue) {
