@@ -13,9 +13,9 @@
 #include <climits>
 #include <iostream>
 
-#define _COLUMN_PORTION_FILENAME "estaca_media_mas_larga.png"
-#define _COLUMN_WIDTH 27
-#define _COLUMN_HEIGHT 37
+
+#define _COLUMN_WIDTH 28
+#define _COLUMN_HEIGHT 71
 
 #define _NULL_DISCS INT_MAX
 
@@ -100,12 +100,12 @@ void Disco::draw() {
 		y_pos + height / 3, color);
 	//elipse de arriba
 	al_draw_filled_ellipse(x_pos, y_pos, width / 2, height / 3,
-		al_map_rgb(100, 60, 0));
+		al_map_rgb(100, 70, 0));
 
 }
 
 
-void Estaca::PrintRodDiscs() {
+void Estaca::PrintRodDiscs(ALLEGRO_BITMAP* column_portion) {
 
 	for (int i = 0; i < curr_n_discs; i++) {
 		discs[i].draw();
@@ -120,10 +120,8 @@ void Estaca::PrintRodDiscs() {
 			if (dif > _COLUMN_HEIGHT) 
 				dif = _COLUMN_HEIGHT;
 
-			ALLEGRO_BITMAP* column_portion = al_load_bitmap(_COLUMN_PORTION_FILENAME);
+			
 			try {
-				initialize_al_component(column_portion, "column portion image.");
-
 				al_draw_bitmap_region(column_portion, 0, _COLUMN_HEIGHT - dif, _COLUMN_WIDTH, dif,
 					discs[curr_n_discs -1].x_pos - _COLUMN_WIDTH / 2.0f,
 					discs[curr_n_discs - 1].y_pos - 3 * discs[curr_n_discs - 1].height/ 8.0f,	0);
@@ -132,7 +130,7 @@ void Estaca::PrintRodDiscs() {
 				std::cerr << e.what() << '\n';
 			}
 
-			al_destroy_bitmap(column_portion);
+			
 		}
 	}
 }
