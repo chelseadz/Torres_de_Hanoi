@@ -480,7 +480,7 @@ bool EscapeGame(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_FONT* font, ALLEGRO_SAMPLE* 
             switch (button_place)
             {
                 case _KEEP:
-                    al_draw_filled_rectangle(_WINDOW_WIDTH / 9, 1.1 * _WINDOW_HEIGHT / 2, 4 * _WINDOW_WIDTH / 9,
+                    al_draw_filled_rectangle(_WINDOW_WIDTH / 10, 1.1 * _WINDOW_HEIGHT / 2, 5 * _WINDOW_WIDTH / 10,
                         1.5 * _WINDOW_HEIGHT / 2, al_map_rgba_f(0.3, 0.3, 0.3, 0.3));
                 break;
                 case _HOME:
@@ -500,10 +500,10 @@ void DisplayEscapeGame(ALLEGRO_FONT* font) {
     al_clear_to_color(HANBLUE);
 
     al_draw_text(font, WHITE, _WINDOW_WIDTH / 2, 0.5 * _WINDOW_HEIGHT / 2, ALLEGRO_ALIGN_CENTER,
-        "Sure you want to go home?");
+        "Sure you want to leave?");
 
     //Boton seguir jugando
-    DrawButton(_WINDOW_WIDTH / 9, 1.1 * _WINDOW_HEIGHT / 2, 4 * _WINDOW_WIDTH / 9,
+    DrawButton(_WINDOW_WIDTH / 10, 1.1 * _WINDOW_HEIGHT / 2, 5 * _WINDOW_WIDTH / 10,
         1.5 * _WINDOW_HEIGHT / 2, font, "Keep playing");
     //Boton home
     DrawButton(5 * _WINDOW_WIDTH / 8, 1.1 * _WINDOW_HEIGHT / 2, 7 * _WINDOW_WIDTH / 8,
