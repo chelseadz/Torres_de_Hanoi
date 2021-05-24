@@ -18,6 +18,8 @@ struct Score {
 	char name[_MAX_NAME_CHARS];
 
 	bool operator < (const Score& s);
+
+	Score* operator = (const Score& s);
 };
 
 /**
@@ -40,10 +42,12 @@ Score* GetPreviousScores(const char* filename, int& n_scores);
 /**
  * \brief Agrega un puntaje a un archivo de texto.
  * 
+ * \details	Se imprimirán solo los mejores 5 puntajes en el archivo.
+ * 
  * \param filename nombre del archivo. Puede ser un archivo que ya tenga puntajes.
  * \return void 
  */
-void AddScoresToFile(const char* filename, const Score* score, int size, const Score& last);
+void AddScoresToFile(const char* filename, Score* score, int size, const Score& last);
 
 
 #endif

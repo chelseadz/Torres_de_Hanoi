@@ -17,8 +17,7 @@
 #include <allegro5/allegro_acodec.h>
 #include <string>
 
-//#include "Utileria.h"
-//#include "Disco_y_Estaca.h"
+#include "Scores.h"
 
 
 #define _MIN_DISCS 2 /*< Mínima cantidad de discos que el usuario puede elegir. */
@@ -113,7 +112,7 @@ void DisplayMinMoves(unsigned numDiscs, ALLEGRO_FONT* font);
  * \param min_moves Cantidad minima para ganar el juego.
  * \return void
  */
-void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves);
+void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves, int discs);
 
 /**
  * \brief Muestra en pantalla el fin del juego.
@@ -126,5 +125,9 @@ void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves);
  * \return nada
  */
 void EndingDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph, int moves, int min_moves);
+
+void DisplayHighScores(ALLEGRO_FONT* header, ALLEGRO_FONT* text, Score* scores, int n_scores);
+
+Score* GetHighScores(int n_discs, int& n_scores);
 
 #endif 

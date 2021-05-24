@@ -9,7 +9,6 @@
 #include "Juego.h"
 #include "Disco_y_Estaca.h"
 #include "Selector_flecha.h"
-#include "Scores.h"
 #include "Utileria.h"
 
 
@@ -17,6 +16,7 @@
 #include <stdexcept>
 #include <cmath>
 #include <string>
+#include <cstring>
 #include <allegro5/allegro_image.h>
 
 
@@ -43,6 +43,9 @@ enum {
 #define _ERROR_SOUND_FILENAME "gnome_error.wav"
 
 #define _TITLE_FONT_FILENAME "ROBOTECH_GP.ttf"
+#define _HELVETICA_LIGHT_FILENAME "HelveticaLTStdLight.ttf"
+
+#define _BASE_SCORES_FILENAME "highscores"
 
 
 void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
@@ -139,10 +142,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
                                 al_clear_to_color(al_map_rgb(0, 0, 0));
 
-                                DisplayNMoves(moves_done, move_count_font);
-                                DisplayMinMoves(Game_discs, move_count_font);
-
-                                Ending(queue, moves_done, min_moves);
+                                Ending(queue, moves_done, min_moves, Game_discs);
                                 done = true;
                             }
 
@@ -433,11 +433,11 @@ void DisplayMinMoves(unsigned numDiscs, ALLEGRO_FONT* font) {
     }
 }
 
-void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves) {
+void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves, int discs) {
 
-    ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 72, 0);
-    ALLEGRO_FONT* font = al_load_font("ROBOTECH_GP.ttf", 36, 0);
-    ALLEGRO_FONT* font_paragraph = al_load_font("HelveticaLTStdLight.ttf", 36, 0);
+    ALLEGRO_FONT* font_title = al_load_font(_TITLE_FONT_FILENAME, 72, 0);
+    ALLEGRO_FONT* font = al_load_font(_TITLE_FONT_FILENAME, 36, 0);
+    ALLEGRO_FONT* font_paragraph = al_load_font(_HELVETICA_LIGHT_FILENAME, 36, 0);
 
     initialize_al_component(font, "font");
     initialize_al_component(font_title, "font titulo");
@@ -447,6 +447,13 @@ void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves) {
     bool redraw = true;
     ALLEGRO_EVENT event;
 
+    bool saving = false;
+    bool done_saving = false;
+    bool first_char = false;
+    ALLEGRO_USTR* save_name = al_ustr_new("");
+
+    int n_scores;
+    Score* highscores = GetHighScores(discs, n_scores);
 
     while (1)
     {
@@ -458,11 +465,55 @@ void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves) {
             redraw = true;
             break;
 
+        case ALLEGRO_EVENT_KEY_CHAR:
+            if (saving && event.keyboard.repeat == false) {
+
+                int c = event.keyboard.unichar;
+                if (c > 31)
+                    al_ustr_append_chr(save_name, c);
+            }
+
+            break;
+
         case ALLEGRO_EVENT_KEY_DOWN:
             if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) done = true;
 
-            if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER) done = true;
+            if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER)
+                if (saving && !done_saving) {
+                    done_saving = true;
+                    saving = false;
+
+                    std::string filename(_BASE_SCORES_FILENAME);
+                    filename.append(std::to_string(discs));
+                    filename.append(".txt");
+
+                    std::string name(al_cstr(save_name));
+
+                    Score user_score{ (short)moves };
+                    
+                    strncpy_s(user_score.name, _MAX_NAME_CHARS, name.c_str(), name.length());
+
+                    AddScoresToFile(filename.c_str(), highscores, n_scores, user_score);
+
+                    
+                } else 
+                    done = true;
+
+            if (!saving && event.keyboard.keycode == ALLEGRO_KEY_TAB) {
+                if (!done_saving) saving = true;
+                first_char = true;
+                al_flush_event_queue(queue);
+            }
+
+            if (saving && !done_saving && event.keyboard.keycode == ALLEGRO_KEY_BACKSPACE) {
+                int pos = al_ustr_size(save_name) - 1;
+                if (pos < 0) break;
+
+                al_ustr_remove_chr(save_name, pos);
+            }
+
             break;
+
 
         case ALLEGRO_EVENT_DISPLAY_CLOSE:
             done = true;
@@ -473,9 +524,30 @@ void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves) {
         if (done)
             break;
 
-        if (redraw && al_is_event_queue_empty(queue))
+        if (redraw /*&& al_is_event_queue_empty(queue)*/)
         {
+            al_clear_to_color(BLACK);
+
+            DisplayNMoves(moves, font);
+            DisplayMinMoves(discs, font);
+            
             EndingDisplay(font_title, font, font_paragraph, moves, min_moves);
+
+            DisplayHighScores(font_title, font_paragraph, highscores, n_scores);
+
+            if (!saving && !done_saving) {
+                al_draw_text(font_paragraph, WHITE, 1.5 * _WINDOW_WIDTH / 16, 6 * _WINDOW_HEIGHT / 9,
+                    0, "Press TAB if you want to save your score...");
+            } else if (saving && !done_saving) {
+                al_draw_text(font_paragraph, VERY_PALE_YELLOW, 1.5 * _WINDOW_WIDTH / 16,
+                    6 * _WINDOW_HEIGHT / 9, 0, "Name: ");
+                al_draw_text(font_paragraph, VERY_PALE_YELLOW, 3 * _WINDOW_WIDTH / 16,
+                    6 * _WINDOW_HEIGHT / 9, 0, al_cstr(save_name));
+            }
+            else if (done_saving) {
+                al_draw_text(font_paragraph, VERY_PALE_YELLOW, 1.5 * _WINDOW_WIDTH / 16,
+                    6 * _WINDOW_HEIGHT / 9, 0, "New score saved. Press ENTER or SPACE to quit to menu.");
+            }
 
             al_flip_display();
 
@@ -486,6 +558,9 @@ void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves) {
     al_destroy_font(font);
     al_destroy_font(font_title);
     al_destroy_font(font_paragraph);
+    al_ustr_free(save_name);
+
+    delete[] highscores;
 
 }
 
@@ -498,25 +573,62 @@ void EndingDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragr
 
     if (moves == min_moves) {
         //Titulo Origen
-        al_draw_text(title, YELLOW_RED, _WINDOW_WIDTH / 2, 1.5 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_CENTER,
+        al_draw_text(title, YELLOW_RED, _WINDOW_WIDTH / 2, 1 * _WINDOW_HEIGHT / 18, ALLEGRO_ALIGN_CENTER,
             "PERFECT!");
         //Cuerpo Origen
 
-        al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 2, 3.7 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_CENTER,
+        al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 2, 3.2 * _WINDOW_HEIGHT / 18, ALLEGRO_ALIGN_CENTER,
             "You won the game with the least possible number of moves!");
     }
     else {
         //Titulo Origen
-        al_draw_text(title, YELLOW_RED, _WINDOW_WIDTH / 2, 1.5 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_CENTER,
+        al_draw_text(title, YELLOW_RED, _WINDOW_WIDTH / 2, 1 * _WINDOW_HEIGHT / 18, ALLEGRO_ALIGN_CENTER,
             "YOU WIN!");
         //Cuerpo Origen
 
-        al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 2, 3.7 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_CENTER,
+        al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 2, 3.2 * _WINDOW_HEIGHT / 18, ALLEGRO_ALIGN_CENTER,
             "However, you have made too many moves ...");
     }
 
     //BOTON REGRESAR
-    DrawButton(_WINDOW_WIDTH / 5, 6.5 * _WINDOW_HEIGHT / 9, 4 * _WINDOW_WIDTH / 5,
-        7.5 * _WINDOW_HEIGHT / 9, text, "Press ESC, SPACE or ENTER to go home.");
+    DrawButton(_WINDOW_WIDTH / 5, 7 * _WINDOW_HEIGHT / 9, 4 * _WINDOW_WIDTH / 5,
+        8 * _WINDOW_HEIGHT / 9, text, "Press ESC, SPACE or ENTER to go home.");
 
+}
+
+void DisplayHighScores(ALLEGRO_FONT* header, ALLEGRO_FONT* text, Score* scores, int n_scores) {
+    try {
+        initialize_al_component(header, "header font");
+        initialize_al_component(text, "text font");
+
+        al_draw_text(header, UNITED_NATIONS_BLUE, 1 * _WINDOW_WIDTH / 16, 2 * _WINDOW_HEIGHT / 9,
+            0, "Highscores: ");
+
+
+        if (n_scores == 0) {
+            al_draw_text(text, WHITE, 1.5 * _WINDOW_WIDTH / 16, 3.2 * _WINDOW_HEIGHT / 9, 0,
+                "No saved scores yet...");
+        } else {
+            for (int i = 0; i < n_scores; ++i) {
+                al_draw_text(text, VERY_PALE_YELLOW, 1.5 * _WINDOW_WIDTH / 16,
+                    (3.2 + i / 2.0f) * _WINDOW_HEIGHT / 9, 0,
+                    scores[i].name);
+            
+                al_draw_text(text, VERY_PALE_YELLOW, 12 * _WINDOW_WIDTH / 16,
+                    (3.2 + i/ 2.0f) * _WINDOW_HEIGHT / 9, 0,
+                    std::to_string(scores[i].moves).c_str());
+            }
+        }
+
+    } catch (const std::runtime_error& e) {
+        std::cerr << e.what();
+    }
+}
+
+Score* GetHighScores(int n_discs, int& n_scores) {
+    std::string filename(_BASE_SCORES_FILENAME);
+    filename.append(std::to_string(n_discs));
+    filename.append(".txt");
+
+    return GetPreviousScores(filename.c_str(), n_scores);
 }
