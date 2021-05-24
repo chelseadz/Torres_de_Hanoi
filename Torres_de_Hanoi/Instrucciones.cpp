@@ -163,10 +163,10 @@ void InstructionsDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* 
 
        //Boton Regresar
     DrawButton(_WINDOW_WIDTH / 5, 7.8 * _WINDOW_HEIGHT / 9, 2 * _WINDOW_WIDTH / 5,
-        8.8 * _WINDOW_HEIGHT / 9, text, "REGRESAR");
+        8.8 * _WINDOW_HEIGHT / 9, text, "GO BACK");
     //Boton Origen
     DrawButton(3 * _WINDOW_WIDTH / 5, 7.8 * _WINDOW_HEIGHT / 9, 4 * _WINDOW_WIDTH / 5,
-        8.8 * _WINDOW_HEIGHT / 9, text, "ORIGEN");
+        8.8 * _WINDOW_HEIGHT / 9, text, "ORIGIN");
 }
 
 void MoveSelection_Instructions(int Button) {
