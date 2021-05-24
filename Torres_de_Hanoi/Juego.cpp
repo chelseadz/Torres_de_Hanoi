@@ -181,7 +181,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue) {
                         origin.selected = false;
                         origin.show = true;
                         dest.show = false;
-                    } else if (EscapeGame(queue, font_title, move_sound, move_sound) ){
+                    } else if (EscapeGame(queue, font_title, move_sound) ){
                         done = true;
                     }
                         
@@ -452,8 +452,7 @@ void DisplayMinMoves(unsigned numDiscs, ALLEGRO_FONT* font) {
 }
 
 
-bool EscapeGame(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_FONT* font, ALLEGRO_SAMPLE* escape_sound,
-                ALLEGRO_SAMPLE* move_sound) {
+bool EscapeGame(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_FONT* font, ALLEGRO_SAMPLE* move_sound) {
 
     bool redraw = true;
     ALLEGRO_EVENT event;
@@ -487,11 +486,8 @@ bool EscapeGame(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_FONT* font, ALLEGRO_SAMPLE* 
                     
                     switch (button_place)
                     {
-                        case _KEEP: 
-                           return false;
-                        case _HOME: 
-                            al_play_sample(escape_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
-                            return true;
+                        case _KEEP: return false;
+                        case _HOME: return true;
                     }
                 }
 

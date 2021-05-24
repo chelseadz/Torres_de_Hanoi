@@ -57,6 +57,7 @@ int DiskNumber(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_SAMPLE* move,
  * \param title Fuente definida para los titulos
  * \param text Fuente definida para los textos
  * \param Disks Numero de discos actual.
+ * 
  * \return nada
  */
 void NumberOfDisksDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, int Disks);
@@ -65,6 +66,7 @@ void NumberOfDisksDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, int Disks);
  * \brief Cambia el numero de discos en pantalla
  *
  * \param Button Botón donde se encuentra actualmente.
+ * 
  * \return nada
  */
 
@@ -76,6 +78,7 @@ void ChangeDiskNumberDisplay(int Button);
  * \details Si n_discs es negativo, tira excepción de tipo std::invalid_argument.
  *
  * \param n_discs cantidad de discos en el juego.
+ * 
  * \return Número mínimo de movimientos.
  */
 int MinNMoves(int n_discs);
@@ -88,6 +91,7 @@ int MinNMoves(int n_discs);
  * 
  * \param n_moves Número de movimientos que el jugador ha hecho.
  * \param font fuente con la que se imprime el texto del mensaje.
+ * 
  * \return void
  */
 void DisplayNMoves(unsigned n_moves, ALLEGRO_FONT* font);
@@ -100,13 +104,29 @@ void DisplayNMoves(unsigned n_moves, ALLEGRO_FONT* font);
  *
  * \param n_moves Número de discos en el juego.
  * \param font fuente con la que se imprime el texto del mensaje.
+ * 
  * \return void
  */
 void DisplayMinMoves(unsigned numDiscs, ALLEGRO_FONT* font);
 
-bool EscapeGame(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_FONT* font, ALLEGRO_SAMPLE* escape_sound,
-    ALLEGRO_SAMPLE* move_sound);
+/**
+ * \brief Gestiona los movimientos del usuario si pulsa ESC para salir.
+ * 
+ * \param queue Cola de eventos.
+ * \param font fuente con la que se imprime el texto.
+ * \param move_sound Sonido de movimiento ente botones.
+ * 
+ * \return void
+ */
+bool EscapeGame(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_FONT* font, ALLEGRO_SAMPLE* move_sound);
 
+/**
+ * \brief Imprime lo que se ve en la pantalla de ESCAPE.
+ * 
+ * \param font fuente con la que se imprime el texto.
+ * 
+ * \return void
+ */
 void DisplayEscapeGame( ALLEGRO_FONT* font);
 
 /**
