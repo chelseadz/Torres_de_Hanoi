@@ -33,7 +33,7 @@ enum {
  * \param display Pantalla.
  * \return void
  */
-void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display);
+void Menu(ALLEGRO_EVENT_QUEUE* queue);
 
 void DrawKeyArrows(float x, float y);
 

@@ -39,7 +39,7 @@ enum {
  * \param display Pantalla
  * \return void
  */
-void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display);
+void Juego(ALLEGRO_EVENT_QUEUE* queue);
 
 /**
  * \brief Captura el numero de discos iniciales

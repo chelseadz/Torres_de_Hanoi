@@ -55,7 +55,7 @@ enum {
 #define _BASE_SCORES_FILENAME "highscores"
 
 
-void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
+void Juego(ALLEGRO_EVENT_QUEUE* queue) {
 
     try {
 
@@ -636,7 +636,7 @@ void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves, int discs) {
 
         if (redraw /*&& al_is_event_queue_empty(queue)*/)
         {
-            al_clear_to_color(BLACK);
+            al_clear_to_color(HANBLUE);
 
             DisplayNMoves(moves, font);
             DisplayMinMoves(discs, font);
@@ -656,7 +656,7 @@ void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves, int discs) {
             }
             else if (done_saving) {
                 al_draw_text(font_paragraph, VERY_PALE_YELLOW, 1.5 * _WINDOW_WIDTH / 16,
-                    6 * _WINDOW_HEIGHT / 9, 0, "New score saved. Press ENTER or SPACE to quit to menu.");
+                    6 * _WINDOW_HEIGHT / 9, 0, "New score saved.");
             }
 
             al_flip_display();
@@ -675,9 +675,6 @@ void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves, int discs) {
 }
 
 void EndingDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph, int moves, int min_moves) {
-
-    //Pantalla
-    al_clear_to_color(HANBLUE);
 
     DrawLogo(text, 36, _WINDOW_WIDTH / 9, 0.1 * _WINDOW_HEIGHT / 9);
 
