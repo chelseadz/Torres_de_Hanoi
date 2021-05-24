@@ -114,6 +114,8 @@ void CreditsDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* parag
 
     al_draw_text(title, UNITED_NATIONS_BLUE, _WINDOW_WIDTH / 2, 5 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_CENTER,
         "Sound from Zapsplat.com");
+    al_draw_text(title, UNITED_NATIONS_BLUE, _WINDOW_WIDTH / 2, 5.7 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_CENTER,
+        "Typography: ROBOTECH GP from Gustavo Paz");
 
     //BOTON REGRESAR
     DrawButton(_WINDOW_WIDTH / 5, 7.5 * _WINDOW_HEIGHT / 9, 4 * _WINDOW_WIDTH / 5,
