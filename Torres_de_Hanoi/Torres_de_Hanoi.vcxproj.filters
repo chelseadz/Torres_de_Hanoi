@@ -93,6 +93,9 @@
     <Image Include="estaca_larga.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="fondo_juego.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Media Include="cambiar_botones.wav">

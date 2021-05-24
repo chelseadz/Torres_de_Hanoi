@@ -215,6 +215,7 @@
   <ItemGroup>
     <Image Include="base_con_estacas_delgada.png" />
     <Image Include="estaca_larga.png" />
+    <Image Include="fondo_juego.png" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="cambiar_botones.wav" />

@@ -44,6 +44,7 @@ enum {
 
 #define _BASE_FILENAME "base_con_estacas_delgada.png"
 #define _COLUMN_PORTION_FILENAME "estaca_larga.png"
+#define _BACKGROUND_FILENAME "fondo_juego.png"
 
 #define _ERROR_SOUND_FILENAME "gnome_error.wav"
 #define _WINNER_SOUND_FILENAME "winner.wav"
@@ -66,6 +67,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     }
 
     ALLEGRO_BITMAP* base_and_stakes = al_load_bitmap(_BASE_FILENAME);
+    ALLEGRO_BITMAP* background = al_load_bitmap(_BACKGROUND_FILENAME);
     ALLEGRO_BITMAP* column_portion = al_load_bitmap(_COLUMN_PORTION_FILENAME);
     ALLEGRO_SAMPLE* error_sound = al_load_sample(_ERROR_SOUND_FILENAME);
     ALLEGRO_SAMPLE* winner_sound = al_load_sample(_WINNER_SOUND_FILENAME);
@@ -76,6 +78,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
     try {
         initialize_al_component(base_and_stakes, "base image");
+        initialize_al_component(background, "background image");
         initialize_al_component(column_portion, "column portion image");
         initialize_al_component(error_sound, "error sound");
         initialize_al_component(winner_sound, "winner sound");
@@ -184,7 +187,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
                         
                 }
 
-                else if (key == ALLEGRO_KEY_RIGHT || key == ALLEGRO_KEY_D) {
+                else if (key == ALLEGRO_KEY_RIGHT) {
 
                     al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
 
@@ -201,7 +204,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
                   
 
 
-                } else if (key == ALLEGRO_KEY_LEFT || key == ALLEGRO_KEY_A) {
+                } else if (key == ALLEGRO_KEY_LEFT) {
 
                     al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
 
@@ -246,7 +249,9 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
 
-            DrawLogo(font_title, 72, _WINDOW_WIDTH / 2, 0.2 * _WINDOW_HEIGHT / 12);
+            al_draw_bitmap(background, 0, 0, 0);
+
+            DrawLogo(font_title, 72, 1.5 * _WINDOW_WIDTH / 2, 0.2 * _WINDOW_HEIGHT / 12);
 
             al_draw_bitmap(base_and_stakes, 0, 0, 0);
 
@@ -426,7 +431,7 @@ void DisplayNMoves (unsigned n_moves, ALLEGRO_FONT* font) {
         std::string s("Moves made: ");
         s.append(std::to_string(n_moves));
 
-        al_draw_text(font, UNITED_NATIONS_BLUE, 30, _WINDOW_HEIGHT - 50, 0, s.c_str());
+        al_draw_text(font, INDIGO, 30, _WINDOW_HEIGHT - 50, 0, s.c_str());
 
     } catch (const std::runtime_error& e) {
         std::cerr << e.what() << '\n';
@@ -439,7 +444,7 @@ void DisplayMinMoves(unsigned numDiscs, ALLEGRO_FONT* font) {
         std::string s("Min Moves: ");
         unsigned min_moves = MinNMoves(numDiscs);
         s.append(std::to_string(min_moves));
-        al_draw_text(font, UNITED_NATIONS_BLUE, 350, _WINDOW_HEIGHT - 50, 0, s.c_str());
+        al_draw_text(font, INDIGO, 950, _WINDOW_HEIGHT - 50, 0, s.c_str());
     }
     catch (const std::runtime_error& e) {
         std::cerr << e.what() << '\n';
