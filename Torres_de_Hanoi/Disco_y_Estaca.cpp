@@ -22,15 +22,14 @@
 
 int Estaca::max_discs = _NULL_DISCS;
 int Estaca::stick_height;
-int Estaca::stick_width;
 
-bool Estaca::Initialize_stakes(int height, int width, int _max_discs) {
+
+bool Estaca::Initialize_stakes(int height, int _max_discs) {
 	if ((_max_discs < 0 || _max_discs > _MAX_DISC_CAPACTITY) && _max_discs != _NULL_DISCS)
 		return false;
 
 	Estaca::max_discs = _max_discs;
 	Estaca::stick_height = height;
-	Estaca::stick_width = width;
 
 	return true;
 }

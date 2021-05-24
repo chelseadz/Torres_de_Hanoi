@@ -97,7 +97,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue) {
 
     int min_moves = MinNMoves(Game_discs);
 
-    Estaca::Initialize_stakes(_STICK_SIZE, 20, Game_discs);
+    Estaca::Initialize_stakes(_STICK_SIZE, Game_discs);
 
     Estaca init(EST_POS::INIT_X, EST_POS::Y_ESTS);
     Estaca aux(EST_POS::AUX_X, EST_POS::Y_ESTS);
