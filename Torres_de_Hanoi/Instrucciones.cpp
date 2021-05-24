@@ -157,9 +157,9 @@ void InstructionsDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* 
     al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 6.1 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_LEFT,
         "Use the arrow keys for moving the discs or navigate in the game.");
     al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 6.6 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_LEFT,
-        "Use SPACE or ENTER to select a disc, and to choose the target stake.");
+        "Use SPACE or ENTER to grab a disc, and to choose the target stake.");
     al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 7.1 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_LEFT,
-        "Press ESC to cancel a move o go back to a previous page.");
+        "Press ESC to cancel a movement or, go back to a previous page.");
 
        //Boton Regresar
     DrawButton(_WINDOW_WIDTH / 5, 7.8 * _WINDOW_HEIGHT / 9, 2 * _WINDOW_WIDTH / 5,

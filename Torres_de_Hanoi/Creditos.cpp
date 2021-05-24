@@ -103,13 +103,13 @@ void CreditsDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* parag
         "Final project made by Team Rocket for the computer programming course taught ");
     al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 1.9 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_LEFT,
         "by teacher Irene Rodriguez from Universidad de Sonora.");
-    al_draw_text(title, UNITED_NATIONS_BLUE, _WINDOW_WIDTH / 9, 2.4 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_LEFT,
+    al_draw_text(title, UNITED_NATIONS_BLUE, _WINDOW_WIDTH / 9, 2.6 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_LEFT,
         "Team members: ");
-    al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 3.1 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_LEFT,
+    al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 3.3 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_LEFT,
         "Chelsea Durazo Duarte");
-    al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 3.6 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_LEFT,
+    al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 3.8 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_LEFT,
         "Enrique Alejandro Giottonini Herrera");
-    al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 4.1 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_LEFT,
+    al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 4.3 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_LEFT,
         "Diego Torres Gonzalez");
 
     //BOTON REGRESAR
