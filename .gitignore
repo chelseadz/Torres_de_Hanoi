@@ -57,3 +57,5 @@
 *.log
 *.sqlite-journal
 /Debug/Scores.txt
+/Torres_de_Hanoi/highscores3.txt
+/Torres_de_Hanoi/highscores2.txt

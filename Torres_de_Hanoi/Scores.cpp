@@ -11,9 +11,17 @@
 #include "Utileria.h"
 
 #include <fstream>
+#include <cstring>
+
 
 bool Score::operator< (const Score& s) {
 	return moves < s.moves;
+}
+
+Score* Score::operator=(const Score& s) {
+	moves = s.moves;
+	strncpy_s(name, _MAX_NAME_CHARS, s.name, _MAX_NAME_CHARS);
+	return this;
 }
 
 Score* GetPreviousScores(const char* filename, int& n_scores) {
@@ -28,6 +36,7 @@ Score* GetPreviousScores(const char* filename, int& n_scores) {
 			try {
 				scores = new Score[n];
 			} catch (const std::bad_alloc&) {
+				n_scores = 0;
 				return NULL;
 			}
 
@@ -42,22 +51,26 @@ Score* GetPreviousScores(const char* filename, int& n_scores) {
 				return scores;
 			} else {
 				delete[] scores;
+				n_scores = 0;
 				return NULL;
 			}
 		}
-		return NULL;
-
-	} else {
-		return NULL;
 	}
+
+	n_scores = 0;
+	return NULL;
 }
 
 
-void AddScoresToFile(const char* filename, const Score* scores, int size, const Score& last) {
+void AddScoresToFile(const char* filename, Score* scores, int size, const Score& last) {
 
 	std::ofstream file(filename);
 
 	if (file.is_open() && file.good()) {
+		Quicksort(scores, 0, size - 1);
+
+		if (size > 4 && last.moves <= scores[size - 1].moves) size = 4;
+
 		file << size + 1 << '\n';
 
 		for (int i = 0; i < size; ++i)
