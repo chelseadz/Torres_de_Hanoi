@@ -16,7 +16,7 @@
 #include "Utileria.h"
 
 
-void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
+void Menu(ALLEGRO_EVENT_QUEUE* queue) {
     //Esta función se tiene que encargar de mostrar un menú
     //y de tomar acción cuando el usuario de una entrada.
 
@@ -77,7 +77,7 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
                 {
                     case _PLAY:
                     {
-                        Juego(queue, display);
+                        Juego(queue);
                         break;
                     }
                     case _INSTRUCTIONS:
