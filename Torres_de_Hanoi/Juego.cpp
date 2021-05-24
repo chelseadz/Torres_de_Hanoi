@@ -58,10 +58,9 @@ enum {
 void Juego(ALLEGRO_EVENT_QUEUE* queue) {
 
     try {
-
         initialize_al_component(al_init_image_addon(), "image component");
-    }
-    catch (const std::runtime_error& e) {
+
+    } catch (const std::runtime_error& e) {
         std::cout << e.what() << '\n';
         return;
     }
@@ -94,7 +93,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue) {
 
     int Game_discs;
     Game_discs = DiskNumber(queue, move_sound, select_sound, error_sound);
-    if (Game_discs < 2) return;
+    if (Game_discs < _MIN_DISCS) return;
 
     int min_moves = MinNMoves(Game_discs);
 
@@ -140,8 +139,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue) {
                         if (move) {
                             origin.show = false;
                             dest.show = false;
-                        }
-                        else {
+                        } else {
                             origin.show = true;
                             origin.selected = false;
                             dest.selected = false;
@@ -185,9 +183,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue) {
                         done = true;
                     }
                         
-                }
-
-                else if (key == ALLEGRO_KEY_RIGHT) {
+                } else if (key == ALLEGRO_KEY_RIGHT) {
 
                     al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
 
@@ -218,8 +214,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue) {
                                 dest.move_left();
                         }
                     }
-                }
-                else if (key == ALLEGRO_KEY_SPACE || key == ALLEGRO_KEY_ENTER) {
+                } else if (key == ALLEGRO_KEY_SPACE || key == ALLEGRO_KEY_ENTER) {
                     al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
                     if (!origin.selected) {
                         origin.selected = true;
@@ -311,49 +306,49 @@ int DiskNumber(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_SAMPLE* move_sound,
 
         switch (event.type)
         {
-        case ALLEGRO_EVENT_TIMER:
-            // nada por ahora.
-            redraw = true;
-            break;
+            case ALLEGRO_EVENT_TIMER:
+                // nada por ahora.
+                redraw = true;
+                break;
 
-        case ALLEGRO_EVENT_KEY_DOWN: {
-            int key = event.keyboard.keycode;
+            case ALLEGRO_EVENT_KEY_DOWN: {
+                int key = event.keyboard.keycode;
 
-            if ((key == ALLEGRO_KEY_UP && Disks + 1 > _MAX_DISCS) ||
-                (key == ALLEGRO_KEY_DOWN && Disks - 1 < _MIN_DISCS)) {
-                al_play_sample(error_sound, 1.0f, 1.0f, 1.0f, ALLEGRO_PLAYMODE_ONCE, NULL);
+                if ((key == ALLEGRO_KEY_UP && Disks + 1 > _MAX_DISCS) ||
+                    (key == ALLEGRO_KEY_DOWN && Disks - 1 < _MIN_DISCS)) {
+                    al_play_sample(error_sound, 1.0f, 1.0f, 1.0f, ALLEGRO_PLAYMODE_ONCE, NULL);
+                }
+                else
+                    al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
+
+                if (event.keyboard.keycode == ALLEGRO_KEY_UP) {
+                    button_place = _ADD;
+
+                    if (Disks < _MAX_DISCS)
+                        Disks++;
+                }
+                else if (event.keyboard.keycode == ALLEGRO_KEY_DOWN) {
+
+                    button_place = _SUBSTRACT;
+
+                    if (Disks > _MIN_DISCS)
+                        Disks--;
+                }
+                else if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
+                    done = true;
+                    al_play_sample(select_sound, 1.0f, 1.0f, 1.2f, ALLEGRO_PLAYMODE_ONCE, NULL);
+                }
+
+                else if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
+                    return 0;
+
+                break;
+
             }
-            else
-                al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
-
-            if (event.keyboard.keycode == ALLEGRO_KEY_UP) {
-                button_place = _ADD;
-
-                if (Disks < _MAX_DISCS)
-                    Disks++;
-            }
-            else if (event.keyboard.keycode == ALLEGRO_KEY_DOWN) {
-
-                button_place = _SUBSTRACT;
-
-                if (Disks > _MIN_DISCS)
-                    Disks--;
-            }
-            else if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
+            case ALLEGRO_EVENT_DISPLAY_CLOSE:
                 done = true;
-                al_play_sample(select_sound, 1.0f, 1.0f, 1.2f, ALLEGRO_PLAYMODE_ONCE, NULL);
-            }
-
-            else if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
-                return 0;
-
-            break;
-
-        }
-        case ALLEGRO_EVENT_DISPLAY_CLOSE:
-            done = true;
-            exit(0);
-            break;
+                exit(0);
+                break;
         }
 
         if (done)
@@ -567,64 +562,64 @@ void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves, int discs) {
 
         switch (event.type)
         {
-        case ALLEGRO_EVENT_TIMER:
-            redraw = true;
-            break;
+            case ALLEGRO_EVENT_TIMER:
+                redraw = true;
+                break;
 
-        case ALLEGRO_EVENT_KEY_CHAR:
-            if (saving && event.keyboard.repeat == false) {
+            case ALLEGRO_EVENT_KEY_CHAR:
+                if (saving && event.keyboard.repeat == false) {
 
-                int c = event.keyboard.unichar;
-                if (c > 31)
-                    al_ustr_append_chr(save_name, c);
-            }
+                    int c = event.keyboard.unichar;
+                    if (c > 31)
+                        al_ustr_append_chr(save_name, c);
+                }
 
-            break;
+                break;
 
-        case ALLEGRO_EVENT_KEY_DOWN:
-            if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) done = true;
+            case ALLEGRO_EVENT_KEY_DOWN:
+                if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) done = true;
 
-            if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER)
-                if (saving && !done_saving) {
-                    done_saving = true;
-                    saving = false;
+                if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER)
+                    if (saving && !done_saving) {
+                        done_saving = true;
+                        saving = false;
 
-                    std::string filename(_BASE_SCORES_FILENAME);
-                    filename.append(std::to_string(discs));
-                    filename.append(".txt");
+                        std::string filename(_BASE_SCORES_FILENAME);
+                        filename.append(std::to_string(discs));
+                        filename.append(".txt");
 
-                    std::string name(al_cstr(save_name));
+                        std::string name(al_cstr(save_name));
 
-                    Score user_score{ (short)moves };
+                        Score user_score{ (short)moves };
                     
-                    strncpy_s(user_score.name, _MAX_NAME_CHARS, name.c_str(), name.length());
+                        strncpy_s(user_score.name, _MAX_NAME_CHARS, name.c_str(), name.length());
 
-                    AddScoresToFile(filename.c_str(), highscores, n_scores, user_score);
+                        AddScoresToFile(filename.c_str(), highscores, n_scores, user_score);
 
                     
-                } else 
-                    done = true;
+                    } else 
+                        done = true;
 
-            if (!saving && event.keyboard.keycode == ALLEGRO_KEY_TAB) {
-                if (!done_saving) saving = true;
-                first_char = true;
-                al_flush_event_queue(queue);
-            }
+                if (!saving && event.keyboard.keycode == ALLEGRO_KEY_TAB) {
+                    if (!done_saving) saving = true;
+                    first_char = true;
+                    al_flush_event_queue(queue);
+                }
 
-            if (saving && !done_saving && event.keyboard.keycode == ALLEGRO_KEY_BACKSPACE) {
-                int pos = al_ustr_size(save_name) - 1;
-                if (pos < 0) break;
+                if (saving && !done_saving && event.keyboard.keycode == ALLEGRO_KEY_BACKSPACE) {
+                    int pos = al_ustr_size(save_name) - 1;
+                    if (pos < 0) break;
 
-                al_ustr_remove_chr(save_name, pos);
-            }
+                    al_ustr_remove_chr(save_name, pos);
+                }
 
-            break;
+                break;
 
 
-        case ALLEGRO_EVENT_DISPLAY_CLOSE:
-            done = true;
-            exit(0);
-            break;
+            case ALLEGRO_EVENT_DISPLAY_CLOSE:
+                done = true;
+                exit(0);
+                break;
         }
 
         if (done)

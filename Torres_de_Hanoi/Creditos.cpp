@@ -30,8 +30,8 @@ void Credits(ALLEGRO_EVENT_QUEUE* queue) {
         initialize_al_component(font_paragraph, "font parrafo");
         initialize_al_component(select_sound, "Select sound");
         initialize_al_component(move_sound, "Move sound");
-    }
-    catch (const std::runtime_error& e) {
+
+    } catch (const std::runtime_error& e) {
         std::cerr << e.what() << '\n';
         return;
     }

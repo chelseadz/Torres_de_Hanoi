@@ -27,8 +27,7 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue) {
         initialize_al_component(al_install_audio(), "audio addon");
         initialize_al_component(al_init_acodec_addon(), "audio codecs");
         initialize_al_component(al_reserve_samples(8), "audio samples");
-    }
-    catch (const std::runtime_error& e) {
+    } catch (const std::runtime_error& e) {
         std::cout << e.what() << '\n';
     }
 
@@ -43,8 +42,7 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue) {
         initialize_al_component(font_title, "font titulo");
         initialize_al_component(select_sound, "Select sound");
         initialize_al_component(move_sound, "Move sound");
-    }
-    catch (const std::runtime_error& e) {
+    } catch (const std::runtime_error& e) {
         std::cerr << e.what() << '\n';
     }
     
@@ -61,63 +59,63 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue) {
 
         switch (event.type)
         {
-        case ALLEGRO_EVENT_TIMER:
-            // nada por ahora.
-            redraw = true;
-            break;
+            case ALLEGRO_EVENT_TIMER:
+                // nada por ahora.
+                redraw = true;
+                break;
 
-        case ALLEGRO_EVENT_KEY_DOWN:
-            if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
-                done = true;
+            case ALLEGRO_EVENT_KEY_DOWN:
+                if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
+                    done = true;
 
-            if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
+                if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
               
-              al_play_sample(select_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
-              switch (button_place)
-                {
-                    case _PLAY:
+                    al_play_sample(select_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
+                    switch (button_place)
                     {
-                        Juego(queue);
-                        break;
-                    }
-                    case _INSTRUCTIONS:
-                    {
-                        Instructions(queue);
-                        break;
-                    }
-                    case _CREDITS:
-                    {
-                        Credits(queue);
-                        break;
-                    }
-                    case _LEAVE:
-                    {
-                        done = true;
-                        break;
+                        case _PLAY:
+                        {
+                            Juego(queue);
+                            break;
+                        }
+                        case _INSTRUCTIONS:
+                        {
+                            Instructions(queue);
+                            break;
+                        }
+                        case _CREDITS:
+                        {
+                            Credits(queue);
+                            break;
+                        }
+                        case _LEAVE:
+                        {
+                            done = true;
+                            break;
+                        }
                     }
                 }
-            }
-            break;
+                break;
 
-        case ALLEGRO_EVENT_KEY_CHAR:
+            case ALLEGRO_EVENT_KEY_CHAR:
 
-            al_play_sample(move_sound, 1.0f, 1.0f, 1.1f, ALLEGRO_PLAYMODE_ONCE, NULL);
+                al_play_sample(move_sound, 1.0f, 1.0f, 1.1f, ALLEGRO_PLAYMODE_ONCE, NULL);
 
-            if (event.keyboard.keycode == ALLEGRO_KEY_UP) {
-                button_place = (button_place - 1) % 4;
-                if (button_place < 0)
-                    button_place = _LEAVE;
-            }
+                if (event.keyboard.keycode == ALLEGRO_KEY_UP) {
+                    button_place = (button_place - 1) % 4;
+                    if (button_place < 0)
+                        button_place = _LEAVE;
+                }
                
-            if (event.keyboard.keycode == ALLEGRO_KEY_DOWN)
-                button_place = (button_place + 1) % 4;
+                if (event.keyboard.keycode == ALLEGRO_KEY_DOWN)
+                    button_place = (button_place + 1) % 4;
 
-            break;
+                break;
  
            
-        case ALLEGRO_EVENT_DISPLAY_CLOSE:
-            done = true;
-            break;
+            case ALLEGRO_EVENT_DISPLAY_CLOSE:
+                done = true;
+                break;
         }
 
         if (done)
