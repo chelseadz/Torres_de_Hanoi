@@ -35,6 +35,13 @@ enum {
  */
 void Menu(ALLEGRO_EVENT_QUEUE* queue);
 
+/**
+ * \brief Dibuja en pantalla flechas para indicar al usuario que use sus flechsa en el teclado.
+ *
+ * \param x Posicion en el eje x de la pantalla.
+ * \param y Posicion en el eje y de la pantalla.
+ * \return void
+ */
 void DrawKeyArrows(float x, float y);
 
 /**
