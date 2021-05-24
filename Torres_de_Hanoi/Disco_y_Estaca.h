@@ -46,7 +46,6 @@ public:
 	 * un objeto Estaca.
 	 * 
 	 * \param height Altura de los palos de cada estaca.
-	 * \param width Ancho de los palos de cada estaca.
 	 * \param max_discs Máxima cantidad de discos que una estaca puede recibir.
 	 * \return True si la inicialización fue exitosa. False si algún parametro fue invalido.
 	 */
