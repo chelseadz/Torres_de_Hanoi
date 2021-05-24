@@ -45,7 +45,7 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
         initialize_al_component(move_sound, "Move sound");
     }
     catch (const std::runtime_error& e) {
-        std::cout << e.what() << '\n';
+        std::cerr << e.what() << '\n';
     }
     
 
@@ -75,26 +75,26 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
               al_play_sample(select_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
               switch (button_place)
                 {
-                case _PLAY:
-                {
-                    Juego(queue, display);
-                    break;
-                }
-                case _INSTRUCTIONS:
-                {
-                    Instructions(queue);
-                    break;
-                }
-                case _CREDITS:
-                {
-                    Credits(queue);
-                    break;
-                }
-                case _LEAVE:
-                {
-                    done = true;
-                    break;
-                }
+                    case _PLAY:
+                    {
+                        Juego(queue, display);
+                        break;
+                    }
+                    case _INSTRUCTIONS:
+                    {
+                        Instructions(queue);
+                        break;
+                    }
+                    case _CREDITS:
+                    {
+                        Credits(queue);
+                        break;
+                    }
+                    case _LEAVE:
+                    {
+                        done = true;
+                        break;
+                    }
                 }
             }
             break;
@@ -138,6 +138,8 @@ void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     //Destruir fuentes creadas
     al_destroy_font(font);
     al_destroy_font(font_title);
+    al_destroy_sample(move_sound);
+    al_destroy_sample(select_sound);
 }
 
 void MenuDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text) {
@@ -162,7 +164,22 @@ void MenuDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text) {
     //Boton Salir
     DrawButton(_WINDOW_WIDTH / 3, 7.5 * _WINDOW_HEIGHT / 9, 2 * _WINDOW_WIDTH / 3,
         8.5 * _WINDOW_HEIGHT / 9, text, "LEAVE");
-    
+
+    al_draw_text(text, MAXIMUM_YELLOW_RED, 5*_WINDOW_WIDTH / 6, 5 * _WINDOW_HEIGHT / 9, 
+                ALLEGRO_ALIGN_CENTER, "USE THE KEY ARROWS");
+    DrawKeyArrows(5*_WINDOW_WIDTH / 6, 7 * _WINDOW_HEIGHT / 9);
+}
+
+void DrawKeyArrows(float x, float y) {
+    float side = 70;
+    al_draw_filled_rectangle(x + side / 2, y - 1.2 * side, x - side / 2, y - 0.2 * side, YELLOW_RED);
+    al_draw_filled_triangle(x + side / 3, y - 0.7 * side, x - side / 3, y - 0.7 * side,
+                           x, y - side, MAXIMUM_YELLOW_RED);
+    al_draw_filled_rectangle(x + side / 6, y - 0.7 * side, x - side / 6, y - 0.4 * side, MAXIMUM_YELLOW_RED);
+    al_draw_filled_rectangle(x + side / 2, y + 1.2 * side, x - side / 2, y + 0.2 * side, YELLOW_RED);
+    al_draw_filled_triangle(x + side / 3, y + 0.7 * side, x - side / 3, y + 0.7 * side,
+                            x, y + side, MAXIMUM_YELLOW_RED);
+    al_draw_filled_rectangle(x + side / 6, y + 0.7 * side, x - side / 6, y + 0.4 * side, MAXIMUM_YELLOW_RED);
 }
 
 void MoveSelection(int Button) {

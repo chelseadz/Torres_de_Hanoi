@@ -33,6 +33,11 @@ enum {
     _FIN
 };
 
+enum {
+    _KEEP = 0,
+    _HOME
+};
+
 #define _STICK_SIZE 316
 
 #define _ARROW_SPACE 65
@@ -41,6 +46,7 @@ enum {
 #define _COLUMN_PORTION_FILENAME "estaca_larga.png"
 
 #define _ERROR_SOUND_FILENAME "gnome_error.wav"
+#define _WINNER_SOUND_FILENAME "winner.wav"
 
 #define _TITLE_FONT_FILENAME "ROBOTECH_GP.ttf"
 #define _HELVETICA_LIGHT_FILENAME "HelveticaLTStdLight.ttf"
@@ -51,6 +57,7 @@ enum {
 void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
     try {
+
         initialize_al_component(al_init_image_addon(), "image component");
     }
     catch (const std::runtime_error& e) {
@@ -61,6 +68,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     ALLEGRO_BITMAP* base_and_stakes = al_load_bitmap(_BASE_FILENAME);
     ALLEGRO_BITMAP* column_portion = al_load_bitmap(_COLUMN_PORTION_FILENAME);
     ALLEGRO_SAMPLE* error_sound = al_load_sample(_ERROR_SOUND_FILENAME);
+    ALLEGRO_SAMPLE* winner_sound = al_load_sample(_WINNER_SOUND_FILENAME);
     ALLEGRO_SAMPLE* select_sound = al_load_sample(_SELECT_SOUND_FILENAME);
     ALLEGRO_SAMPLE* move_sound = al_load_sample(_MOVE_SOUND_FILENAME);
     ALLEGRO_FONT* font_title = al_load_font(_TITLE_FONT_FILENAME, 72, 0);
@@ -70,6 +78,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
         initialize_al_component(base_and_stakes, "base image");
         initialize_al_component(column_portion, "column portion image");
         initialize_al_component(error_sound, "error sound");
+        initialize_al_component(winner_sound, "winner sound");
         initialize_al_component(font_title, "font titulo");
         initialize_al_component(select_sound, "Select sound");
         initialize_al_component(move_sound, "Move sound");
@@ -82,7 +91,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
 
     int Game_discs;
     Game_discs = DiskNumber(queue, move_sound, select_sound, error_sound);
-    if (Game_discs == 0) return;
+    if (Game_discs < 2) return;
 
     int min_moves = MinNMoves(Game_discs);
 
@@ -139,6 +148,7 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
                             ++moves_done;
 
                             if (fin.full()) {
+                                al_play_sample(winner_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
 
                                 al_clear_to_color(al_map_rgb(0, 0, 0));
 
@@ -162,13 +172,16 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
                 int key = event.keyboard.keycode;
 
                 if (key == ALLEGRO_KEY_ESCAPE) {
+                    al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
                     if (move) finish_movement = true;
                     else if (origin.selected) {
                         origin.selected = false;
                         origin.show = true;
                         dest.show = false;
-                    } else
+                    } else if (EscapeGame(queue, font_title, move_sound, move_sound) ){
                         done = true;
+                    }
+                        
                 }
 
                 else if (key == ALLEGRO_KEY_RIGHT || key == ALLEGRO_KEY_D) {
@@ -258,8 +271,8 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
     al_destroy_bitmap(base_and_stakes);
     al_destroy_bitmap(column_portion);
     al_destroy_sample(error_sound);
-    al_destroy_sample(select_sound);
     al_destroy_sample(move_sound);
+    al_destroy_sample(select_sound);
     al_destroy_font(font_title);
     al_destroy_font(move_count_font);
 
@@ -433,6 +446,98 @@ void DisplayMinMoves(unsigned numDiscs, ALLEGRO_FONT* font) {
     }
 }
 
+
+bool EscapeGame(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_FONT* font, ALLEGRO_SAMPLE* escape_sound,
+                ALLEGRO_SAMPLE* move_sound) {
+
+    bool redraw = true;
+    ALLEGRO_EVENT event;
+
+    int button_place = _KEEP;
+
+    while (1)
+    {
+        al_wait_for_event(queue, &event);
+
+        switch (event.type)
+        {
+            case ALLEGRO_EVENT_TIMER:
+                redraw = true;
+                break;
+
+            case ALLEGRO_EVENT_KEY_DOWN:
+                
+                al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
+
+                if (event.keyboard.keycode == ALLEGRO_KEY_LEFT) {
+                    button_place = (button_place - 1) % 2;
+                    if (button_place < 0)
+                        button_place = _HOME;
+                }
+
+                if (event.keyboard.keycode == ALLEGRO_KEY_RIGHT)
+                    button_place = (button_place + 1) % 2;
+
+                if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
+                    
+                    switch (button_place)
+                    {
+                        case _KEEP: 
+                           return false;
+                        case _HOME: 
+                            al_play_sample(escape_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
+                            return true;
+                    }
+                }
+
+                else if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
+                    return false;
+
+                break;
+
+            case ALLEGRO_EVENT_DISPLAY_CLOSE:
+                exit(0);
+                break;
+        }
+
+        if (redraw && al_is_event_queue_empty(queue))
+        {
+            DisplayEscapeGame(font);
+
+            switch (button_place)
+            {
+                case _KEEP:
+                    al_draw_filled_rectangle(_WINDOW_WIDTH / 10, 1.1 * _WINDOW_HEIGHT / 2, 5 * _WINDOW_WIDTH / 10,
+                        1.5 * _WINDOW_HEIGHT / 2, al_map_rgba_f(0.3, 0.3, 0.3, 0.3));
+                break;
+                case _HOME:
+                    al_draw_filled_rectangle(5 * _WINDOW_WIDTH / 8, 1.1 * _WINDOW_HEIGHT / 2, 7 * _WINDOW_WIDTH / 8,
+                        1.5 * _WINDOW_HEIGHT / 2, al_map_rgba_f(0.3, 0.3, 0.3, 0.3));
+                break;
+            }
+
+            al_flip_display();
+
+            redraw = false;
+        }
+    }
+}
+void DisplayEscapeGame(ALLEGRO_FONT* font) {
+
+    al_clear_to_color(HANBLUE);
+
+    al_draw_text(font, WHITE, _WINDOW_WIDTH / 2, 0.5 * _WINDOW_HEIGHT / 2, ALLEGRO_ALIGN_CENTER,
+        "Sure you want to leave?");
+
+    //Boton seguir jugando
+    DrawButton(_WINDOW_WIDTH / 10, 1.1 * _WINDOW_HEIGHT / 2, 5 * _WINDOW_WIDTH / 10,
+        1.5 * _WINDOW_HEIGHT / 2, font, "Keep playing");
+    //Boton home
+    DrawButton(5 * _WINDOW_WIDTH / 8, 1.1 * _WINDOW_HEIGHT / 2, 7 * _WINDOW_WIDTH / 8,
+        1.5 * _WINDOW_HEIGHT / 2, font, "Go home");
+}
+
+
 void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves, int discs) {
 
     ALLEGRO_FONT* font_title = al_load_font(_TITLE_FONT_FILENAME, 72, 0);
@@ -567,7 +672,7 @@ void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves, int discs) {
 void EndingDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph, int moves, int min_moves) {
 
     //Pantalla
-   // al_clear_to_color(HANBLUE);
+    al_clear_to_color(HANBLUE);
 
     DrawLogo(text, 36, _WINDOW_WIDTH / 9, 0.1 * _WINDOW_HEIGHT / 9);
 

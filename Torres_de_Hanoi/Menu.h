@@ -35,6 +35,8 @@ enum {
  */
 void Menu(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display);
 
+void DrawKeyArrows(float x, float y);
+
 /**
  * \brief Muesta el titulo y los botones en pantalla.
  *

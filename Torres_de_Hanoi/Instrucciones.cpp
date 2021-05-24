@@ -7,6 +7,7 @@
  *********************************************************************/
 
 #include "Instrucciones.h"
+#include <iostream>
 
 #include "Utileria.h"
 
@@ -25,20 +26,21 @@ void Instructions(ALLEGRO_EVENT_QUEUE* queue) {
     ALLEGRO_FONT* font_title = al_load_font("ROBOTECH_GP.ttf", 36, 0);
     ALLEGRO_FONT* font = al_load_font("ROBOTECH_GP.ttf", 36, 0);
     ALLEGRO_FONT* font_paragraph = al_load_font("HelveticaLTStdLight.ttf", 22, 0);
-
     ALLEGRO_SAMPLE* select_sound = al_load_sample(_SELECT_SOUND_FILENAME);
     ALLEGRO_SAMPLE* move_sound = al_load_sample(_MOVE_SOUND_FILENAME);
 
-    try {
+    try{
         initialize_al_component(font, "font");
-        initialize_al_component(font_title, "font titulo.");
+        initialize_al_component(font_title, "font titulo");
         initialize_al_component(font_paragraph, "font parrafo");
-        initialize_al_component(select_sound, "select sound");
-
-    } catch (const std::runtime_error& e) {
-        std::cerr << e.what() << '\n';
+        initialize_al_component(select_sound, "Select sound");
+        initialize_al_component(move_sound, "Move sound");
     }
-    
+    catch (const std::runtime_error& e) {
+        std::cerr << e.what() << '\n';
+        return;
+    }
+       
     bool done = false;
     bool redraw = true;
     ALLEGRO_EVENT event;
@@ -56,6 +58,8 @@ void Instructions(ALLEGRO_EVENT_QUEUE* queue) {
             break;
 
         case ALLEGRO_EVENT_KEY_DOWN:
+
+            al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
 
             if (event.keyboard.keycode == ALLEGRO_KEY_UP || event.keyboard.keycode == ALLEGRO_KEY_LEFT) {
                 al_play_sample(move_sound, 1.0f, 1.0f, 1.0f, ALLEGRO_PLAYMODE_ONCE, NULL);
@@ -113,6 +117,8 @@ void Instructions(ALLEGRO_EVENT_QUEUE* queue) {
     al_destroy_font(font);
     al_destroy_font(font_title);
     al_destroy_font(font_paragraph);
+    al_destroy_sample(move_sound);
+    al_destroy_sample(select_sound);
 }
 
 void InstructionsDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragraph) {
@@ -151,9 +157,9 @@ void InstructionsDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* 
     al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 6.1 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_LEFT,
         "Use the arrow keys for moving the discs or navigate in the game.");
     al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 6.6 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_LEFT,
-        "Use SPACE or ENTER to select a disc, and to choose the target stake.");
+        "Use SPACE or ENTER to grab a disc, and to choose the target stake.");
     al_draw_text(paragraph, WHITE, _WINDOW_WIDTH / 9, 7.1 * _WINDOW_HEIGHT / 9, ALLEGRO_ALIGN_LEFT,
-        "Press ESC to cancel a move o go back to a previous page.");
+        "Press ESC to cancel a movement or, go back to a previous page.");
 
        //Boton Regresar
     DrawButton(_WINDOW_WIDTH / 5, 7.8 * _WINDOW_HEIGHT / 9, 2 * _WINDOW_WIDTH / 5,
