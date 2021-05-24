@@ -45,7 +45,7 @@ int main() {
 
 	//Pasar control a función menu hasta que el usuario quiera salir.
 	try {
-		Menu(queue, disp);
+		Menu(queue);
 	} catch (const std::runtime_error& e) {
 		std::cerr << e.what();
 	}

@@ -54,7 +54,7 @@ enum {
 #define _BASE_SCORES_FILENAME "highscores"
 
 
-void Juego(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display) {
+void Juego(ALLEGRO_EVENT_QUEUE* queue) {
 
     try {
 
