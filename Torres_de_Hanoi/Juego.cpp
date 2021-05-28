@@ -418,7 +418,6 @@ int MinNMoves(int n_discs) {
     return std::pow(2, n_discs) - 1;
 }
 
-
 void DisplayNMoves (unsigned n_moves, ALLEGRO_FONT* font) {
     try {
         initialize_al_component(font, "move count font");
@@ -445,7 +444,6 @@ void DisplayMinMoves(unsigned numDiscs, ALLEGRO_FONT* font) {
         std::cerr << e.what() << '\n';
     }
 }
-
 
 bool EscapeGame(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_FONT* font, ALLEGRO_SAMPLE* move_sound) {
 
@@ -518,6 +516,7 @@ bool EscapeGame(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_FONT* font, ALLEGRO_SAMPLE* 
         }
     }
 }
+
 void DisplayEscapeGame(ALLEGRO_FONT* font) {
 
     al_clear_to_color(HANBLUE);
@@ -532,7 +531,6 @@ void DisplayEscapeGame(ALLEGRO_FONT* font) {
     DrawButton(5 * _WINDOW_WIDTH / 8, 1.1 * _WINDOW_HEIGHT / 2, 7 * _WINDOW_WIDTH / 8,
         1.5 * _WINDOW_HEIGHT / 2, font, "Go home");
 }
-
 
 void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves, int discs) {
 
@@ -596,11 +594,16 @@ void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves, int discs) {
 
                         AddScoresToFile(filename.c_str(), highscores, n_scores, user_score);
 
+                        delete[] highscores;
+
+                        highscores = GetHighScores(discs, n_scores);
+
                     
                     } else 
                         done = true;
 
                 if (!saving && event.keyboard.keycode == ALLEGRO_KEY_TAB) {
+                    if (n_scores == 5 && highscores[4].moves < moves) break;
                     if (!done_saving) saving = true;
                     first_char = true;
                     al_flush_event_queue(queue);
@@ -636,7 +639,10 @@ void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves, int discs) {
 
             DisplayHighScores(font_title, font_paragraph, highscores, n_scores);
 
-            if (!saving && !done_saving) {
+            if (!saving && !done_saving && n_scores == 5 && highscores[4].moves < moves) {
+                al_draw_text(font_paragraph, WHITE, 1.5 * _WINDOW_WIDTH / 16, 6 * _WINDOW_HEIGHT / 9,
+                    0, "Sorry, your score doesn't get into the highscores table...");
+            } else if (!saving && !done_saving) {
                 al_draw_text(font_paragraph, WHITE, 1.5 * _WINDOW_WIDTH / 16, 6 * _WINDOW_HEIGHT / 9,
                     0, "Press TAB if you want to save your score...");
             } else if (saving && !done_saving) {
