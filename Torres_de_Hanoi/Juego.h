@@ -16,6 +16,7 @@
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 #include <string>
+#include <utility>
 
 #include "Scores.h"
 
@@ -154,5 +155,7 @@ void EndingDisplay(ALLEGRO_FONT* title, ALLEGRO_FONT* text, ALLEGRO_FONT* paragr
 void DisplayHighScores(ALLEGRO_FONT* header, ALLEGRO_FONT* text, Score* scores, int n_scores);
 
 Score* GetHighScores(int n_discs, int& n_scores);
+
+std::string MoveSequenceGenerator(int n_discs, char start, char target);
 
 #endif 
