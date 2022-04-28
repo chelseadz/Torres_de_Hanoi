@@ -12,6 +12,8 @@
 #include "Utileria.h"
 #include "Menu.h"
 
+#include "Juego.h"
+
 int main() {
 
 	//Inicializar componentes principal de Allegro.

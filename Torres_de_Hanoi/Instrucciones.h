@@ -15,7 +15,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
-#include "Utileria.h"
+//#include "Utileria.h"
 
  /**
   * \brief Función que se encarga de mostrar las Instrucciones.

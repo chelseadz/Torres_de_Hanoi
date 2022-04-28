@@ -124,6 +124,10 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue) {
     Arrow_selector dest(_MIDDLE_S, 0);
 
     unsigned moves_done = 0;
+    bool auto_solve_mode = false;
+    std::string pressed_str = std::string();
+
+    std::string solve_sequence = MoveSequenceGenerator(Game_discs, '0', '2');
 
     while (1)
     {
@@ -167,12 +171,30 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue) {
                         al_play_sample(error_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
                     }
                 }
+                else if (auto_solve_mode) {
+                    if (solve_sequence.size() != 0) {
+                        al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
+
+                        origin.selected_stake = solve_sequence[0] - '0';
+                        origin.show = true;
+                        origin.selected = true;
+                        solve_sequence.erase(0, 1);
+                        dest.selected_stake = solve_sequence[0] - '0';
+                        dest.show = true;
+                        dest.selected = true;
+                        solve_sequence.erase(0, 1);
+
+                        move = true;
+                    }
+                    else auto_solve_mode = false;
+                }
 
 
             case ALLEGRO_EVENT_KEY_DOWN: {
                 int key = event.keyboard.keycode;
 
                 if (key == ALLEGRO_KEY_ESCAPE) {
+
                     al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
                     if (move) finish_movement = true;
                     else if (origin.selected) {
@@ -185,9 +207,9 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue) {
                         
                 } else if (key == ALLEGRO_KEY_RIGHT) {
 
-                    al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
-
                     if (!move) {
+                        al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
+                        
                         if (!origin.selected) {
                             origin.move_right();
                         }
@@ -202,9 +224,9 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue) {
 
                 } else if (key == ALLEGRO_KEY_LEFT) {
 
-                    al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
-
                     if (!move) {
+                        al_play_sample(move_sound, 1.0f, 1.0f, 0.9f, ALLEGRO_PLAYMODE_ONCE, NULL);
+
                         if (!origin.selected) {
                             origin.move_left();
                         }
@@ -225,6 +247,45 @@ void Juego(ALLEGRO_EVENT_QUEUE* queue) {
                         dest.selected = true;
                         move = true;
                     }
+                }
+                else if (!auto_solve_mode && (key == 1 || key == 21 || key == 20 || key == 15 || 
+                    key == 72 || key == 19 || key == 12 || key == 22 || key == 5))  {
+                    
+                    char key_pressed = '0';
+
+                    switch (key) {
+                        case ALLEGRO_KEY_A :
+                            key_pressed = 'a';
+                            break;
+                        case ALLEGRO_KEY_U :
+                            key_pressed = 'u';
+                            break;
+                        case ALLEGRO_KEY_T :
+                            key_pressed = 't';
+                            break;
+                        case ALLEGRO_KEY_O :
+                            key_pressed = 'o';
+                            break;
+                        case ALLEGRO_KEY_COMMA :
+                            key_pressed = ',';
+                            break;
+                        case ALLEGRO_KEY_S :
+                            key_pressed = 's';
+                            break;
+                        case ALLEGRO_KEY_L :
+                            key_pressed = 'l';
+                            break;
+                        case ALLEGRO_KEY_V :
+                            key_pressed = 'v';
+                            break;
+                        case ALLEGRO_KEY_E :
+                            key_pressed = 'e';
+                            break;
+                    }
+
+                    pressed_str.push_back(key_pressed);
+
+                    if (pressed_str == "auto,solve") auto_solve_mode = true;
                 }
 
                 redraw = true;
@@ -735,4 +796,43 @@ Score* GetHighScores(int n_discs, int& n_scores) {
     filename.append(".txt");
 
     return GetPreviousScores(filename.c_str(), n_scores);
+}
+
+// 0 : left stake
+// 1 : middle stake
+// 2 : right stake
+std::string MoveSequenceGenerator(int n_discs, char start, char target)
+{
+    std::string moves = std::string();
+
+    char aux;
+    if (start == '0' && target == '1' || start == '1' && target == '0') aux = '2';
+    else if (start == '0' && target == '2' || start == '2' && target == '0') aux = '1';
+    else aux = '0';
+
+    if (n_discs == 1) {
+        moves.push_back(start);
+        moves.push_back(target);
+    }
+    else if (n_discs == 2) {
+        moves.push_back(start);
+        moves.push_back(aux);
+        //moves.push_back(' ');
+        moves.push_back(start);
+        moves.push_back(target);
+        //moves.push_back(' ');
+        moves.push_back(aux);
+        moves.push_back(target);
+    }
+    else
+    { 
+        moves.append(MoveSequenceGenerator(n_discs - 1, start, aux));
+        //moves.push_back(' ');
+        moves.push_back(start);
+        moves.push_back(target);
+        //moves.push_back(' ');
+        moves.append(MoveSequenceGenerator(n_discs - 1, aux, target));
+    }
+
+    return moves;
 }
