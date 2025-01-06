@@ -1,6 +1,6 @@
 /*****************************************************************//**
  * \file   Scores.cpp
- * \brief  Implementación de "Scores.h"
+ * \brief  Implementaciï¿½n de "Scores.h"
  * 
  * \author Equipo Rocket
  * \date   22/05/2021
@@ -20,7 +20,8 @@ bool Score::operator< (const Score& s) {
 
 Score* Score::operator=(const Score& s) {
 	moves = s.moves;
-	strncpy_s(name, _MAX_NAME_CHARS, s.name, _MAX_NAME_CHARS);
+	//strncpy_s(name, _MAX_NAME_CHARS, s.name, _MAX_NAME_CHARS);
+	strncpy(name, s.name, _MAX_NAME_CHARS);
 	return this;
 }
 

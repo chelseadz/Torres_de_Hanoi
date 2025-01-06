@@ -14,7 +14,7 @@
 
 #include "Juego.h"
 
-int main() {
+int main(int argc, char** argv){
 
 	//Inicializar componentes principal de Allegro.
 	initialize_al_component(al_init(), "Allegro");
@@ -34,7 +34,7 @@ int main() {
 	ALLEGRO_DISPLAY* disp = al_create_display(_WINDOW_WIDTH, _WINDOW_HEIGHT);
 	initialize_al_component(disp, "pantalla");
 
-	//Mover pantalla a posición inicial.
+	//Mover pantalla a posiciï¿½n inicial.
 	al_set_window_position(disp, _WINDOW_POS_X, _WINDOW_POS_Y);
 
 
@@ -45,7 +45,7 @@ int main() {
 
 	al_start_timer(timer);
 
-	//Pasar control a función menu hasta que el usuario quiera salir.
+	//Pasar control a funciï¿½n menu hasta que el usuario quiera salir.
 	try {
 		Menu(queue);
 	} catch (const std::runtime_error& e) {

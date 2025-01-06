@@ -638,7 +638,7 @@ void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves, int discs) {
             case ALLEGRO_EVENT_KEY_DOWN:
                 if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) done = true;
 
-                if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER)
+                if (event.keyboard.keycode == ALLEGRO_KEY_SPACE || event.keyboard.keycode == ALLEGRO_KEY_ENTER){
                     if (saving && !done_saving) {
                         done_saving = true;
                         saving = false;
@@ -651,7 +651,10 @@ void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves, int discs) {
 
                         Score user_score{ (short)moves };
                     
-                        strncpy_s(user_score.name, _MAX_NAME_CHARS, name.c_str(), name.length());
+                        //strncpy_s(user_score.name, _MAX_NAME_CHARS, name.c_str(), name.length());
+
+                        strncpy(const_cast<char*>(name.c_str()), user_score.name, _MAX_NAME_CHARS);
+                        user_score.name[_MAX_NAME_CHARS - 1] = '\0';
 
                         AddScoresToFile(filename.c_str(), highscores, n_scores, user_score);
 
@@ -660,9 +663,10 @@ void Ending(ALLEGRO_EVENT_QUEUE* queue, int moves, int min_moves, int discs) {
                         highscores = GetHighScores(discs, n_scores);
 
                     
-                    } else 
+                    } else {
                         done = true;
-
+                    }
+                }
                 if (!saving && event.keyboard.keycode == ALLEGRO_KEY_TAB) {
                     if (n_scores == 5 && highscores[4].moves < moves) break;
                     if (!done_saving) saving = true;
