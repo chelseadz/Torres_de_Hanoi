@@ -1,0 +1,44 @@
+Dimensiones de la pantalla:
+1216x684 px
+
+Paleta de colores de los discos:
+1: Very pale yellow
+  al_map_rgb(253, 250, 195)
+  
+2: 
+  al_map_rgb(252, 233, 165)
+  
+3: 
+  al_map_rgb(251, 216, 136)
+  
+4:
+  al_map_rgb(249, 198, 106)
+  
+5: Maximum Yellow Red
+  al_map_rgb(248, 181, 76)
+
+6.
+  al_map_rgb(229, 167, 73)
+
+7:
+  al_map_rgb(210, 153, 71)
+
+8:
+  al_map_rgb(190, 139, 68)
+
+9: Metalic Bronze
+  al_map_rgb(171, 125, 65)
+  
+Colores Generales del juego:
+https://www.schemecolor.com/guardians-of-the-galaxy-theme-colors.php
+  a: Rainbow  indigo al_map_rgb(19, 40, 107)
+  
+  b: Han Blue  al_map_rgb(56, 112, 189)
+  
+  c: United Nations Blue  al_map_rgb(82, 158, 233)
+  
+  d: Very pale yellow  al_map_rgb(253, 250, 195)
+  
+  d: Maximum Yellow Red  al_map_rgb(248, 181, 76)
+  
+  e: Metalic Bronze  al_map_rgb(171, 125, 65)
